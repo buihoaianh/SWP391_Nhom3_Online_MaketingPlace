@@ -18,25 +18,26 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "DashboardController", urlPatterns = {"/admin"})
 public class DashboardController extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        request.getRequestDispatcher("/jsp/admin/Dashboard.jsp").forward(request, response);
-    }
+private static final long serialVersionUID = 1L;
+//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        response.setContentType("text/html;charset=UTF-8");
+//        
+//        request.getRequestDispatcher("/jsp/admin/Dashboard.jsp").forward(request, response);
+//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         request.getRequestDispatcher("/jsp/admin/Dashboard.jsp")
+               .forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         doGet(request, response);
     }
 
     /**
