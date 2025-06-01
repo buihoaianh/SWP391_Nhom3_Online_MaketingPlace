@@ -73,7 +73,7 @@
                             <ul class="pagination">
                                 <li class="page-item <%= currentPage==1 ? "disabled" : ""%>"><a class="page-link" href="#">Previous</a></li>
                                 <%for(int i = 1; i <= totalPage; i++) { %>
-                                <li class="page-item"><a class="page-link" href="#"><%=i%></a></li>
+                                <li class="page-item <%= i==1 ? "disabled" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=i%>"><%=i%></a></li>
                                 <%}%>
                                 <li class="page-item <%= currentPage==totalPage ? "disabled" : ""%>"><a class="page-link" href="#">Next</a></li>
                             </ul>
