@@ -28,7 +28,7 @@ public class UserDAO extends ConnectDB {
         }
         return rs;
     }
-
+    
     public ResultSet getDetailCustomer(int customerId) {
         ResultSet rs = null;
             String sql = "Select p.ProductName, od.Quantity, od.UnitPrice from OrderDetails od "
@@ -44,4 +44,5 @@ public class UserDAO extends ConnectDB {
         }
         return rs;
     }
+    
 }
