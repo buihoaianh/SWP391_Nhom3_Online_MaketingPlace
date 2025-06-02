@@ -51,7 +51,7 @@
             <!-- Spinner End -->
 
 
-            <%@include file="../../components/NavbarAdmin.jsp" %>
+            <%@ include file="../../components/sidebarAdmin.jsp" %>
 
             <div class="content">
                 <h1>List Seller</h1>

@@ -45,7 +45,7 @@
             <!-- Spinner End -->
 
             <!-- Include Navbar/sidebar -->
-            <%@include file="../../components/NavbarAdmin.jsp" %>
+            <%@ include file="../../components/sidebarAdmin.jsp" %>
 
             <!-- Main Content: Seller Profile Card -->
             <div class="content py-4 px-5">
@@ -61,14 +61,22 @@
                                         <c:when test="${not empty sellerDetail.imageURL}">
                                             <img src="${sellerDetail.imageURL}"
                                                  alt="Avatar"
-                                                 class="rounded-circle mb-3"
-                                                 style="width: 220px; height: 220px; object-fit: cover;">
+                                                 class="mb-3"
+                                                 style="width: 230px;
+                                                 height: 280px;
+                                                 object-fit: cover;
+                                                 border-radius: 12px;
+                                                 border: 2px solid #ddd;">
                                         </c:when>
                                         <c:otherwise>
                                             <img src="${sellerDetail.imageURL}"
                                                  alt="Avatar"
-                                                 class="rounded-circle mb-3"
-                                                 style="width: 220px; height: 220px; object-fit: cover;">
+                                                 class="mb-3"
+                                                 style="width: 230px;
+                                                 height: 280px;
+                                                 object-fit: cover;
+                                                 border-radius: 12px;
+                                                 border: 2px solid #ddd;">
                                         </c:otherwise>
                                     </c:choose>
 
@@ -134,7 +142,7 @@
                         </c:if>
 
                         <c:if test="${empty sellerDetail}">
-                            <div class="alert alert-danger">Không tìm thấy thông tin Seller.</div>
+                            <div class="alert alert-danger">Not find seller's information</div>
                             <a href="${pageContext.request.contextPath}/admin/list-seller"
                                class="btn btn-secondary btn-sm">
                                 ← Back to List

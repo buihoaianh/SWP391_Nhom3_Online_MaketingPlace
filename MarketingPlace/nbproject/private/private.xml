@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/Header.jsp</file>
             <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/NavbarAdmin.jsp</file>
-            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/SellerDao.java</file>
             <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/ListSellerController.java</file>
             <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/ListSellerAdmin.jsp</file>
-            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/GetListUser.java</file>
-            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
-            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Role.java</file>
+            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/ListSellerDetail.jsp</file>
             <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/Dashboard.jsp</file>
             <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/css/list-seller.css</file>
-            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Account.java</file>
+            <file>file:/C:/Users/Admin/Downloads/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/home.jsp</file>
         </group>
     </open-files>
 </project-private>
