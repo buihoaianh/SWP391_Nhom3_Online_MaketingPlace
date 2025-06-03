@@ -4,7 +4,6 @@
  */
 package controller.UserController;
 
-import static controller.UserController.GetListCustomer.PAGE_SIZE;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
