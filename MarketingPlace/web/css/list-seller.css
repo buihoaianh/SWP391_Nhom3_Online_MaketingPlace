@@ -1,0 +1,156 @@
+/* File: list-seller.css */
+/* ======================================
+   Container chung cho khu vực List Seller
+   ====================================== */
+.content {
+    width: 100%;
+    margin: 30px 30px 30px 280px;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ======================================
+   Tiêu đề (heading) của List Seller
+   ====================================== */
+.content h1 {
+    color: #2c3e50;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.content h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    border-radius: 2px;
+}
+
+/* ======================================
+   Bảng List Seller
+   ====================================== */
+.content table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Header của bảng */
+.content table thead {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.content table thead th {
+    color: #ffffff;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+/* Ô dữ liệu trong bảng */
+.content table tbody td {
+    padding: 15px 20px;
+    font-size: 14px;
+    color: #2c3e50;
+    border-bottom: 1px solid #ecf0f1;
+    transition: all 0.3s ease;
+}
+
+/* Màu xen kẽ cho các dòng */
+.content table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Hiệu ứng hover */
+.content table tbody tr:hover {
+    background-color: #f1f9ff;
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Link trong bảng */
+.content table a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.content table a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Thông báo không có dữ liệu */
+.content table tbody tr.no-data td {
+    text-align: center;
+    padding: 30px;
+    color: #7f8c8d;
+    font-style: italic;
+    font-size: 15px;
+}
+
+/* ======================================
+   Responsive
+   ====================================== */
+@media screen and (max-width: 768px) {
+    .content {
+        margin: 20px 15px;
+        padding: 15px;
+    }
+    
+    .content h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    .content table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .content table thead th,
+    .content table tbody td {
+        padding: 12px 15px;
+    }
+}
+
+/* ======================================
+   Animation
+   ====================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content {
+    animation: fadeIn 0.5s ease-out;
+}
