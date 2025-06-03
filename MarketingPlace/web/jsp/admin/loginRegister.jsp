@@ -1,10 +1,17 @@
+<%-- 
+    Document   : Resgister
+    Created on : May 23, 2025, 12:19:25 AM
+    Author     : Hi Windows 11 Home
+--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - eStore Bootstrap Template</title>
+  <title>Login Register - eStore Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -37,7 +44,7 @@
   ======================================================== -->
 </head>
 
-<body class="index-page">
+<body class="login-register-page">
 
   <header id="header" class="header position-relative">
     <!-- Top Bar -->
@@ -162,8 +169,8 @@
                   </a>
                 </div>
                 <div class="dropdown-footer">
-                  <a href="jsp/admin/loginRegister.jsp" class="btn btn-primary w-100 mb-2">Sign In</a>
-                  <a href="jsp/admin/loginRegister.jsp" class="btn btn-outline-primary w-100">Register</a>
+                  <a href="loginRegister.jsp" class="btn btn-primary w-100 mb-2">Sign In</a>
+                  <a href="loginRegister.jsp" class="btn btn-outline-primary w-100">Register</a>
                 </div>
               </div>
             </div>
@@ -194,7 +201,7 @@
         <div class="position-relative">
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="index.html">Home</a></li>
               <li><a href="about.html">About</a></li>
               <li><a href="category.html">Category</a></li>
               <li><a href="product-details.html">Product Details</a></li>
@@ -800,728 +807,156 @@
 
   <main class="main">
 
-    <!-- Hero Section -->
-    <section class="ecommerce-hero-1 hero section" id="hero">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6 content-col" data-aos="fade-right" data-aos-delay="100">
-            <div class="content">
-              <span class="promo-badge">New Collection 2025</span>
-              <h1>Discover Stylish <span>Fashion</span> For Every Season</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Vestibulum ante ipsum primis in faucibus.</p>
-              <div class="hero-cta">
-                <a href="#" class="btn btn-shop">Shop Now <i class="bi bi-arrow-right"></i></a>
-                <a href="#" class="btn btn-collection">View Collection</a>
-              </div>
-              <div class="hero-features">
-                <div class="feature-item">
-                  <i class="bi bi-truck"></i>
-                  <span>Free Shipping</span>
-                </div>
-                <div class="feature-item">
-                  <i class="bi bi-shield-check"></i>
-                  <span>Secure Payment</span>
-                </div>
-                <div class="feature-item">
-                  <i class="bi bi-arrow-repeat"></i>
-                  <span>Easy Returns</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 image-col" data-aos="fade-left" data-aos-delay="200">
-            <div class="hero-image">
-              <img src="assets/img/product/product-f-9.webp" alt="Fashion Product" class="main-product" loading="lazy">
-              <div class="floating-product product-1" data-aos="fade-up" data-aos-delay="300">
-                <img src="assets/img/product/product-4.webp" alt="Product 2">
-                <div class="product-info">
-                  <h4>Summer Collection</h4>
-                  <span class="price">$89.99</span>
-                </div>
-              </div>
-              <div class="floating-product product-2" data-aos="fade-up" data-aos-delay="400">
-                <img src="assets/img/product/product-3.webp" alt="Product 3">
-                <div class="product-info">
-                  <h4>Casual Wear</h4>
-                  <span class="price">$59.99</span>
-                </div>
-              </div>
-              <div class="discount-badge" data-aos="zoom-in" data-aos-delay="500">
-                <span class="percent">30%</span>
-                <span class="text">OFF</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Login</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Login</li>
+          </ol>
+        </nav>
       </div>
-    </section><!-- /Hero Section -->
+    </div><!-- End Page Title -->
 
-    <!-- Info Cards Section -->
-    <section id="info-cards" class="info-cards section light-background">
+    <!-- Login Register Section -->
+    <section id="login-register" class="login-register section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row g-4 justify-content-center">
-          <!-- Info Card 1 -->
-          <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-            <div class="info-card text-center">
-              <div class="icon-box">
-                <i class="bi bi-truck"></i>
-              </div>
-              <h3>Free Shipping</h3>
-              <p>Nulla sit morbi vestibulum eros duis amet, consectetur vitae lacus. Ut quis tempor felis sed nunc viverra.</p>
-            </div>
-          </div><!-- End Info Card 1 -->
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="login-register-wraper">
 
-          <!-- Info Card 2 -->
-          <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-            <div class="info-card text-center">
-              <div class="icon-box">
-                <i class="bi bi-piggy-bank"></i>
-              </div>
-              <h3>Money Back Guarantee</h3>
-              <p>Nullam gravida felis ac nunc tincidunt, sed malesuada justo pulvinar. Vestibulum nec diam vitae eros.</p>
-            </div>
-          </div><!-- End Info Card 2 -->
-
-          <!-- Info Card 3 -->
-          <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-            <div class="info-card text-center">
-              <div class="icon-box">
-                <i class="bi bi-percent"></i>
-              </div>
-              <h3>Discount Offers</h3>
-              <p>Nulla ipsum nisi vel adipiscing amet, dignissim consectetur ornare. Vestibulum quis posuere elit auctor.</p>
-            </div>
-          </div><!-- End Info Card 3 -->
-
-          <!-- Info Card 4 -->
-          <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-            <div class="info-card text-center">
-              <div class="icon-box">
-                <i class="bi bi-headset"></i>
-              </div>
-              <h3>24/7 Support</h3>
-              <p>Ipsum dolor amet sit consectetur adipiscing, nullam vitae euismod tempor nunc felis vestibulum ornare.</p>
-            </div>
-          </div><!-- End Info Card 4 -->
-        </div>
-
-      </div>
-
-    </section><!-- /Info Cards Section -->
-
-    <!-- Category Cards Section -->
-    <section id="category-cards" class="category-cards section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="category-slider swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "autoplay": {
-                "delay": 5000,
-                "disableOnInteraction": false
-              },
-              "grabCursor": true,
-              "speed": 600,
-              "slidesPerView": "auto",
-              "spaceBetween": 20,
-              "navigation": {
-                "nextEl": ".swiper-button-next",
-                "prevEl": ".swiper-button-prev"
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 2,
-                  "spaceBetween": 15
-                },
-                "576": {
-                  "slidesPerView": 3,
-                  "spaceBetween": 15
-                },
-                "768": {
-                  "slidesPerView": 4,
-                  "spaceBetween": 20
-                },
-                "992": {
-                  "slidesPerView": 5,
-                  "spaceBetween": 20
-                },
-                "1200": {
-                  "slidesPerView": 6,
-                  "spaceBetween": 20
-                }
-              }
-            }
-          </script>
-
-          <div class="swiper-wrapper">
-            <!-- Category Card 1 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="category-image">
-                  <img src="assets/img/product/product-1.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Vestibulum ante</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 2 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="category-image">
-                  <img src="assets/img/product/product-6.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Maecenas nec</h3>
-                <p class="category-count">8 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 3 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="category-image">
-                  <img src="assets/img/product/product-9.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Aenean tellus</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 4 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="category-image">
-                  <img src="assets/img/product/product-f-1.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Donec quam</h3>
-                <p class="category-count">12 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 5 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="category-image">
-                  <img src="assets/img/product/product-10.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Phasellus leo</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 6 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="600">
-                <div class="category-image">
-                  <img src="assets/img/product/product-m-1.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Quisque rutrum</h3>
-                <p class="category-count">2 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 7 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="700">
-                <div class="category-image">
-                  <img src="assets/img/product/product-10.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Etiam ultricies</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 8 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="800">
-                <div class="category-image">
-                  <img src="assets/img/product/product-2.webp" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Fusce fermentum</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-
-      </div>
-
-    </section><!-- /Category Cards Section -->
-
-    <!-- Best Sellers Section -->
-    <section id="best-sellers" class="best-sellers section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Best Sellers</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-          <!-- Product 1 -->
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-1.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                <img src="assets/img/product/product-1-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                <div class="product-tags">
-                  <span class="badge bg-accent">New</span>
-                </div>
-                <div class="product-actions">
-                  <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                    <i class="bi bi-heart"></i>
+              <!-- Tab Navigation -->
+              <ul class="nav nav-tabs nav-tabs-bordered justify-content-center mb-4" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#login-register-login-form" type="button" role="tab" aria-selected="true">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>Login
                   </button>
-                  <button class="btn-quickview" type="button" aria-label="Quick view">
-                    <i class="bi bi-eye"></i>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#login-register-registration-form" type="button" role="tab" aria-selected="false">
+                    <i class="bi bi-person-plus me-1"></i>Register
                   </button>
-                </div>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h3>
-                <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span class="rating-count">(42)</span>
-                </div>
-                <button class="btn btn-add-to-cart">
-                  <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                </button>
-              </div>
-            </div>
-          </div><!-- End Product 1 -->
-
-          <!-- Product 2 -->
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-4.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                <img src="assets/img/product/product-4-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                <div class="product-tags">
-                  <span class="badge bg-sale">Sale</span>
-                </div>
-                <div class="product-actions">
-                  <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                    <i class="bi bi-heart"></i>
-                  </button>
-                  <button class="btn-quickview" type="button" aria-label="Quick view">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title"><a href="product-details.html">Consectetur adipiscing elit</a></h3>
-                <div class="product-price">
-                  <span class="current-price">$64.99</span>
-                  <span class="original-price">$79.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star"></i>
-                  <span class="rating-count">(28)</span>
-                </div>
-                <button class="btn btn-add-to-cart">
-                  <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                </button>
-              </div>
-            </div>
-          </div><!-- End Product 2 -->
-
-          <!-- Product 3 -->
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-7.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                <img src="assets/img/product/product-7-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                <div class="product-actions">
-                  <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                    <i class="bi bi-heart"></i>
-                  </button>
-                  <button class="btn-quickview" type="button" aria-label="Quick view">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title"><a href="product-details.html">Sed do eiusmod tempor incididunt</a></h3>
-                <div class="product-price">
-                  <span class="current-price">$119.00</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <span class="rating-count">(56)</span>
-                </div>
-                <button class="btn btn-add-to-cart">
-                  <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                </button>
-              </div>
-            </div>
-          </div><!-- End Product 3 -->
-
-          <!-- Product 4 -->
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-12.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                <img src="assets/img/product/product-12-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                <div class="product-tags">
-                  <span class="badge bg-sold-out">Sold Out</span>
-                </div>
-                <div class="product-actions">
-                  <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                    <i class="bi bi-heart"></i>
-                  </button>
-                  <button class="btn-quickview" type="button" aria-label="Quick view">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title"><a href="product-details.html">Ut labore et dolore magna aliqua</a></h3>
-                <div class="product-price">
-                  <span class="current-price">$75.50</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star"></i>
-                  <i class="bi bi-star"></i>
-                  <span class="rating-count">(15)</span>
-                </div>
-                <button class="btn btn-add-to-cart btn-disabled" disabled="">
-                  <i class="bi bi-bag-plus me-2"></i>Sold Out
-                </button>
-              </div>
-            </div>
-          </div><!-- End Product 4 -->
-        </div>
-
-      </div>
-
-    </section><!-- /Best Sellers Section -->
-
-    <!-- Product List Section -->
-    <section id="product-list" class="product-list section">
-
-      <div class="container isotope-layout" data-aos="fade-up" data-aos-delay="100" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-        <div class="row">
-          <div class="col-12">
-            <div class="product-filters isotope-filters mb-5 d-flex justify-content-center" data-aos="fade-up">
-              <ul class="d-flex flex-wrap gap-2 list-unstyled">
-                <li class="filter-active" data-filter="*">All</li>
-                <li data-filter=".filter-clothing">Clothing</li>
-                <li data-filter=".filter-accessories">Accessories</li>
-                <li data-filter=".filter-electronics">Electronics</li>
+                </li>
               </ul>
+
+              <!-- Tab Content -->
+              <div class="tab-content">
+
+                <!-- Login Form -->
+                <div class="tab-pane fade show active" id="login-register-login-form" role="tabpanel">
+                  <form action="${pageContext.request.contextPath}/loginAccount" method="post">
+                    <div class="mb-4">
+                      <label for="login-register-login-email" class="form-label">Email address</label>
+                      <input type="email" name="email" class="form-control" id="login-register-login-email" required="">
+                    </div>
+
+                    <div class="mb-4">
+                      <label for="login-register-login-password" class="form-label">Password</label>
+                      <input type="password" name="pass" class="form-control" id="login-register-login-password" required="">
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="login-register-remember-me">
+                        <label class="form-check-label" for="login-register-remember-me">Remember me</label>
+                      </div>
+                      <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                      
+                    <% String mess = (String) request.getAttribute("mess"); %>
+                        <% if (mess != null) { %>
+                          <div style="color: red; font-weight: bold;">
+                              <%= mess %>
+                          </div>
+                     <% } %>
+
+
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="tab-pane fade" id="login-register-registration-form" role="tabpanel">
+                  <form action="${pageContext.request.contextPath}/registerAccount" method="POST">
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <div class="mb-4">
+                          <label for="login-register-reg-firstname" class="form-label">Full name</label>
+                          <input type="text" class="form-control" id="login-register-reg-firstname" name="fullName" required="">
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="mb-4">
+                          <label for="login-register-reg-lastname" class="form-label">Phone</label>
+                          <input type="text" class="form-control" id="login-register-reg-lastname" name="phone" required="">
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="mb-4">
+                            <label for="login-register-reg-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="login-register-reg-email" name="email" required="">
+
+                            <% 
+                                String msg = (String) request.getAttribute("msg");
+                                if (msg != null) {
+                            %>
+                                <small class="text-danger"><%= msg %></small>
+                            <% 
+                                }
+                            %>
+                        </div>
+
+                      </div>
+
+                      <div class="col-12">
+                        <div class="mb-4">
+                          <label for="login-register-reg-password" class="form-label">Password</label>
+                          <input type="password" class="form-control" id="login-register-reg-password" name="password" required="">
+                        </div>
+                      </div>
+                       
+                      <div class="col-12">
+                        <div class="mb-4">
+                          <label for="login-register-reg-confirm-password" class="form-label">Local address</label>
+                          <input type="password" class="form-control" id="login-register-reg-confirm-password" name="localAddress" required="">
+                        </div>
+                      </div>
+                          
+                      <div class="col-12">
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="login-register-terms" required>
+                          <label class="form-check-label" for="login-register-terms">
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="d-grid">
+                          <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+
             </div>
           </div>
         </div>
 
-        <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-          <!-- Product Item 1 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-            <div class="product-card">
-              <div class="product-image">
-                <span class="badge">Sale</span>
-                <img src="assets/img/product/product-11.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-11-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                  <span class="old-price">$129.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span>(24)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 2 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-electronics">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-9.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-9-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Consectetur adipiscing elit</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$249.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star"></i>
-                  <span>(18)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 3 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-accessories">
-            <div class="product-card">
-              <div class="product-image">
-                <span class="badge">New</span>
-                <img src="assets/img/product/product-3.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-3-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Sed do eiusmod tempor</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$59.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star"></i>
-                  <i class="bi bi-star"></i>
-                  <span>(7)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 4 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-4.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-4-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Incididunt ut labore et dolore</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$79.99</span>
-                  <span class="old-price">$99.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <span>(32)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 5 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-electronics">
-            <div class="product-card">
-              <div class="product-image">
-                <span class="badge">Sale</span>
-                <img src="assets/img/product/product-5.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-5-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Magna aliqua ut enim ad minim</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$199.99</span>
-                  <span class="old-price">$249.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <i class="bi bi-star"></i>
-                  <span>(15)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 6 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-accessories">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-6.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-6-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Veniam quis nostrud exercitation</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$45.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star"></i>
-                  <span>(21)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 7 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-            <div class="product-card">
-              <div class="product-image">
-                <span class="badge">New</span>
-                <img src="assets/img/product/product-7.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-7-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Ullamco laboris nisi ut aliquip</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$69.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <i class="bi bi-star"></i>
-                  <span>(11)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-          <!-- Product Item 8 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-electronics">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/img/product/product-8.webp" alt="Product" class="img-fluid main-img">
-                <img src="assets/img/product/product-8-variant.webp" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Ex ea commodo consequat</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$159.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <span>(29)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up">
-          <a href="#" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
-        </div>
-
       </div>
 
-    </section><!-- /Product List Section -->
+    </section><!-- /Login Register Section -->
 
   </main>
 
@@ -1702,45 +1137,6 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-  
-  <div id="msg-box" style="color: green; font-weight: bold; display: none;"></div>
-
-<!-- Hộp hiển thị thông báo -->
-<div id="message-box" style="display: none; background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px; margin: 10px 0; text-align: center;"></div>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const msg = localStorage.getItem("flash");
-  if (msg) {
-    // Tạo khung thông báo giữa màn hình
-    const box = document.createElement("div");
-    box.textContent = msg;
-    Object.assign(box.style, {
-      position: "fixed",
-      top: "20px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      background: "#d4edda",
-      color: "#155724",
-      padding: "12px 24px",
-      borderRadius: "8px",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-      zIndex: 9999,
-      fontSize: "18px"
-    });
-    document.body.appendChild(box);
-
-    // Ẩn sau 3 giây
-    setTimeout(() => box.remove(), 3000);
-
-    // Xóa để không hiện lại sau lần refresh tiếp theo
-    localStorage.removeItem("flash");
-  }
-});
-</script>
-
-
-
 
 </body>
 
