@@ -17,8 +17,8 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -26,15 +26,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="../assets/css/main.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: eStore
@@ -119,7 +119,7 @@
           <!-- Logo -->
           <a href="index.html" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.webp" alt=""> -->
+            <!-- <img src="../assets/img/logo.webp" alt=""> -->
             <h1 class="sitename">eStore</h1>
           </a>
 
@@ -306,7 +306,7 @@
                       <div class="product-grid">
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-1.webp" alt="Featured Product" loading="lazy">
+                            <img src="../assets/img/product/product-1.webp" alt="Featured Product" loading="lazy">
                           </div>
                           <div class="product-info">
                             <h5>Premium Headphones</h5>
@@ -316,7 +316,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-2.webp" alt="Featured Product" loading="lazy">
+                            <img src="../assets/img/product/product-2.webp" alt="Featured Product" loading="lazy">
                           </div>
                           <div class="product-info">
                             <h5>Smart Watch</h5>
@@ -326,7 +326,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-3.webp" alt="Featured Product" loading="lazy">
+                            <img src="../assets/img/product/product-3.webp" alt="Featured Product" loading="lazy">
                           </div>
                           <div class="product-info">
                             <h5>Wireless Earbuds</h5>
@@ -336,7 +336,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-4.webp" alt="Featured Product" loading="lazy">
+                            <img src="../assets/img/product/product-4.webp" alt="Featured Product" loading="lazy">
                           </div>
                           <div class="product-info">
                             <h5>Bluetooth Speaker</h5>
@@ -352,7 +352,7 @@
                       <div class="product-grid">
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-5.webp" alt="New Arrival" loading="lazy">
+                            <img src="../assets/img/product/product-5.webp" alt="New Arrival" loading="lazy">
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -363,7 +363,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-6.webp" alt="New Arrival" loading="lazy">
+                            <img src="../assets/img/product/product-6.webp" alt="New Arrival" loading="lazy">
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -374,7 +374,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-7.webp" alt="New Arrival" loading="lazy">
+                            <img src="../assets/img/product/product-7.webp" alt="New Arrival" loading="lazy">
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -385,7 +385,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-8.webp" alt="New Arrival" loading="lazy">
+                            <img src="../assets/img/product/product-8.webp" alt="New Arrival" loading="lazy">
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -402,7 +402,7 @@
                       <div class="product-grid">
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-9.webp" alt="Sale Product" loading="lazy">
+                            <img src="../assets/img/product/product-9.webp" alt="Sale Product" loading="lazy">
                             <span class="badge-sale">-30%</span>
                           </div>
                           <div class="product-info">
@@ -413,7 +413,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-10.webp" alt="Sale Product" loading="lazy">
+                            <img src="../assets/img/product/product-10.webp" alt="Sale Product" loading="lazy">
                             <span class="badge-sale">-25%</span>
                           </div>
                           <div class="product-info">
@@ -424,7 +424,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-11.webp" alt="Sale Product" loading="lazy">
+                            <img src="../assets/img/product/product-11.webp" alt="Sale Product" loading="lazy">
                             <span class="badge-sale">-40%</span>
                           </div>
                           <div class="product-info">
@@ -435,7 +435,7 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
-                            <img src="assets/img/product/product-12.webp" alt="Sale Product" loading="lazy">
+                            <img src="../assets/img/product/product-12.webp" alt="Sale Product" loading="lazy">
                             <span class="badge-sale">-20%</span>
                           </div>
                           <div class="product-info">
@@ -630,7 +630,7 @@
                         </div>
                         <div class="featured-section">
                           <div class="featured-image">
-                            <img src="assets/img/product/product-f-1.webp" alt="Women's Heels Collection">
+                            <img src="../assets/img/product/product-f-1.webp" alt="Women's Heels Collection">
                             <div class="featured-content">
                               <h3>Women's<br>Bags<br>Collection</h3>
                               <a href="#" class="btn-shop">Shop now</a>
@@ -698,7 +698,7 @@
                         </div>
                         <div class="featured-section">
                           <div class="featured-image">
-                            <img src="assets/img/product/product-m-4.webp" alt="Men's Footwear Collection">
+                            <img src="../assets/img/product/product-m-4.webp" alt="Men's Footwear Collection">
                             <div class="featured-content">
                               <h3>Men's<br>Footwear<br>Collection</h3>
                               <a href="#" class="btn-shop">Shop now</a>
@@ -766,7 +766,7 @@
                         </div>
                         <div class="featured-section">
                           <div class="featured-image">
-                            <img src="assets/img/product/product-9.webp" alt="Kids' New Arrivals">
+                            <img src="../assets/img/product/product-9.webp" alt="Kids' New Arrivals">
                             <div class="featured-content">
                               <h3>Kids<br>New<br>Arrivals</h3>
                               <a href="#" class="btn-shop">Shop now</a>
@@ -841,10 +841,10 @@
               <!-- User Info -->
               <div class="user-info" data-aos="fade-right">
                 <div class="user-avatar">
-                  <img src="assets/img/person/person-f-1.webp" alt="Profile" loading="lazy">
+                  <img src="../assets/img/person/person-f-1.webp" alt="Profile" loading="lazy">
                   <span class="status-badge"><i class="bi bi-shield-check"></i></span>
                 </div>
-                <h4>Sarah Anderson</h4>
+                <h4></h4>
                 <div class="user-status">
                   <i class="bi bi-award"></i>
                   <span>Premium Member</span>
@@ -949,9 +949,9 @@
                       </div>
                       <div class="order-content">
                         <div class="product-grid">
-                          <img src="assets/img/product/product-1.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-2.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-3.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-1.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-2.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-3.webp" alt="Product" loading="lazy">
                         </div>
                         <div class="order-info">
                           <div class="info-row">
@@ -1052,7 +1052,7 @@
                             <h5>Items (3)</h5>
                             <div class="order-items">
                               <div class="item">
-                                <img src="assets/img/product/product-1.webp" alt="Product" loading="lazy">
+                                <img src="../assets/img/product/product-1.webp" alt="Product" loading="lazy">
                                 <div class="item-info">
                                   <h6>Lorem ipsum dolor sit amet</h6>
                                   <div class="item-meta">
@@ -1064,7 +1064,7 @@
                               </div>
 
                               <div class="item">
-                                <img src="assets/img/product/product-2.webp" alt="Product" loading="lazy">
+                                <img src="../assets/img/product/product-2.webp" alt="Product" loading="lazy">
                                 <div class="item-info">
                                   <h6>Consectetur adipiscing elit</h6>
                                   <div class="item-meta">
@@ -1076,7 +1076,7 @@
                               </div>
 
                               <div class="item">
-                                <img src="assets/img/product/product-3.webp" alt="Product" loading="lazy">
+                                <img src="../assets/img/product/product-3.webp" alt="Product" loading="lazy">
                                 <div class="item-info">
                                   <h6>Sed do eiusmod tempor</h6>
                                   <div class="item-meta">
@@ -1133,8 +1133,8 @@
                       </div>
                       <div class="order-content">
                         <div class="product-grid">
-                          <img src="assets/img/product/product-4.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-5.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-4.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-5.webp" alt="Product" loading="lazy">
                         </div>
                         <div class="order-info">
                           <div class="info-row">
@@ -1240,7 +1240,7 @@
                             <h5>Items (2)</h5>
                             <div class="order-items">
                               <div class="item">
-                                <img src="assets/img/product/product-4.webp" alt="Product" loading="lazy">
+                                <img src="../assets/img/product/product-4.webp" alt="Product" loading="lazy">
                                 <div class="item-info">
                                   <h6>Ut enim ad minim veniam</h6>
                                   <div class="item-meta">
@@ -1252,7 +1252,7 @@
                               </div>
 
                               <div class="item">
-                                <img src="assets/img/product/product-5.webp" alt="Product" loading="lazy">
+                                <img src="../assets/img/product/product-5.webp" alt="Product" loading="lazy">
                                 <div class="item-info">
                                   <h6>Quis nostrud exercitation</h6>
                                   <div class="item-meta">
@@ -1309,7 +1309,7 @@
                       </div>
                       <div class="order-content">
                         <div class="product-grid">
-                          <img src="assets/img/product/product-6.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-6.webp" alt="Product" loading="lazy">
                         </div>
                         <div class="order-info">
                           <div class="info-row">
@@ -1343,9 +1343,9 @@
                       </div>
                       <div class="order-content">
                         <div class="product-grid">
-                          <img src="assets/img/product/product-7.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-8.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-9.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-7.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-8.webp" alt="Product" loading="lazy">
+                          <img src="../assets/img/product/product-9.webp" alt="Product" loading="lazy">
                           <span class="more-items">+2</span>
                         </div>
                         <div class="order-info">
@@ -1401,7 +1401,7 @@
                     <!-- Wishlist Item 1 -->
                     <div class="wishlist-card" data-aos="fade-up" data-aos-delay="100">
                       <div class="wishlist-image">
-                        <img src="assets/img/product/product-1.webp" alt="Product" loading="lazy">
+                        <img src="../assets/img/product/product-1.webp" alt="Product" loading="lazy">
                         <button class="btn-remove" type="button" aria-label="Remove from wishlist">
                           <i class="bi bi-trash"></i>
                         </button>
@@ -1430,7 +1430,7 @@
                     <!-- Wishlist Item 2 -->
                     <div class="wishlist-card" data-aos="fade-up" data-aos-delay="200">
                       <div class="wishlist-image">
-                        <img src="assets/img/product/product-2.webp" alt="Product" loading="lazy">
+                        <img src="../assets/img/product/product-2.webp" alt="Product" loading="lazy">
                         <button class="btn-remove" type="button" aria-label="Remove from wishlist">
                           <i class="bi bi-trash"></i>
                         </button>
@@ -1457,7 +1457,7 @@
                     <!-- Wishlist Item 3 -->
                     <div class="wishlist-card" data-aos="fade-up" data-aos-delay="300">
                       <div class="wishlist-image">
-                        <img src="assets/img/product/product-3.webp" alt="Product" loading="lazy">
+                        <img src="../assets/img/product/product-3.webp" alt="Product" loading="lazy">
                         <button class="btn-remove" type="button" aria-label="Remove from wishlist">
                           <i class="bi bi-trash"></i>
                         </button>
@@ -1576,7 +1576,7 @@
                     <!-- Review Card 1 -->
                     <div class="review-card" data-aos="fade-up" data-aos-delay="100">
                       <div class="review-header">
-                        <img src="assets/img/product/product-1.webp" alt="Product" class="product-image" loading="lazy">
+                        <img src="../assets/img/product/product-1.webp" alt="Product" class="product-image" loading="lazy">
                         <div class="review-meta">
                           <h4>Lorem ipsum dolor sit amet</h4>
                           <div class="rating">
@@ -1602,7 +1602,7 @@
                     <!-- Review Card 2 -->
                     <div class="review-card" data-aos="fade-up" data-aos-delay="200">
                       <div class="review-header">
-                        <img src="assets/img/product/product-2.webp" alt="Product" class="product-image" loading="lazy">
+                        <img src="../assets/img/product/product-2.webp" alt="Product" class="product-image" loading="lazy">
                         <div class="review-meta">
                           <h4>Consectetur adipiscing elit</h4>
                           <div class="rating">
@@ -1702,23 +1702,20 @@
                     <!-- Personal Information -->
                     <div class="settings-section" data-aos="fade-up">
                       <h3>Personal Information</h3>
-                      <form class="php-email-form settings-form">
+                      <form  method="post" action="${pageContext.request.contextPath}/updateProfile">
                         <div class="row g-3">
                           <div class="col-md-6">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" value="Sarah" required="">
+                            <label for="firstName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="fullName" id="firstName" value="${sessionScope.user.fullName}" required="">
                           </div>
-                          <div class="col-md-6">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" value="Anderson" required="">
-                          </div>
+                         
                           <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" value="sarah@example.com" required="">
+                            <input type="email" class="form-control" name="email" id="email" value="${sessionScope.user.email}" required="">
                           </div>
                           <div class="col-md-6">
                             <label for="phone" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phone" value="+1 (555) 123-4567">
+                            <input type="tel" class="form-control" id="phone" name="phoneNumber" value="${sessionScope.user.phoneNumber}">
                           </div>
                         </div>
 
@@ -1983,18 +1980,18 @@
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/drift-zoom/Drift.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/drift-zoom/Drift.min.js"></script>
+  <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="../assets/js/main.js"></script>
 
 </body>
 

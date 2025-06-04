@@ -166,5 +166,54 @@ public class UserDAO extends ConnectDB {
     }
     return false;
 }
+   public boolean updateUser(User user) {
+    String sql = "UPDATE Account SET fullName = ?, email = ?, phoneNumber = ?, roleID = ?, password = ?, address = ?, imageURL = ?, createDate = ?, status = ?, description = ? WHERE accountID = ?";
+    try (PreparedStatement stmt = connect.prepareStatement(sql)) {
+        stmt.setString(1, user.getFullName());
+        stmt.setString(2, user.getEmail());
+        stmt.setString(3, user.getPhoneNumber());
+        stmt.setInt(4, user.getRoleID());
+        stmt.setString(5, user.getPassword());
+        stmt.setString(6, user.getAddress());
+        stmt.setString(7, user.getImageURL());
+        stmt.setTimestamp(8, Timestamp.valueOf(user.getCreateDate()));
+        stmt.setBoolean(9, user.isStatus());
+        stmt.setString(10, user.getDescription());
+        stmt.setInt(11, user.getAccountID());
+        return stmt.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+
+}
+   public User getUserById(int id) {
+    String sql = "SELECT * FROM Account WHERE accountID = ?";
+    try (PreparedStatement stmt = connect.prepareStatement(sql)) {
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            User user = new User();
+            user.setAccountID(rs.getInt("AccountID"));
+            user.setFullName(rs.getString("FullName"));
+            user.setEmail(rs.getString("Email"));
+            user.setPhoneNumber(rs.getString("PhoneNumber"));
+            user.setPassword(rs.getString("Password"));
+            user.setRoleID(rs.getInt("RoleID"));
+            user.setAddress(rs.getString("Address"));
+            user.setImageURL(rs.getString("ImageURL"));
+            var ts = rs.getTimestamp("CreateDate");
+            if (ts != null) {
+            user.setCreateDate(ts.toLocalDateTime());
+            }
+            user.setStatus(rs.getBoolean("Status"));
+            user.setDescription(rs.getString("Description"));
+            return user;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
     
 }
