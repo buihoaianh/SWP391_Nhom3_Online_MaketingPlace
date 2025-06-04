@@ -23,6 +23,9 @@ public class User {
     private boolean status;
     private String description;
 
+    public User() {
+    }
+
     public User(int accountID, int roleID, String imageURL, String fullName, String email, String password, String phoneNumber, String address, LocalDateTime createDate, boolean status, String description) {
         this.accountID = accountID;
         this.roleID = roleID;

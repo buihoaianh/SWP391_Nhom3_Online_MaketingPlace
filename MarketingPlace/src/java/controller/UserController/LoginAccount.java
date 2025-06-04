@@ -84,7 +84,7 @@ public class LoginAccount extends HttpServlet {
             out.println("<html><head><meta charset='UTF-8'><title>Redirect…</title>");
             out.println("<script>");
             out.println("  localStorage.setItem('flash','Đăng nhập thành công!');");
-            out.println("  window.location = '" + context + "/index.html';");
+            out.println("  window.location = '" + context + "/jsp/Home.jsp';");
             out.println("</script></head><body></body></html>");
 
         }
