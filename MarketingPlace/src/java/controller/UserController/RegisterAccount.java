@@ -104,6 +104,7 @@ public class RegisterAccount extends HttpServlet {
         session.setAttribute("phone", phone);
         session.setAttribute("localAddress", localAddress);
 
+        //Redirect to verify screen
         response.sendRedirect("jsp/admin/verify.jsp");
     }
     
