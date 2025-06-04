@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 @WebServlet(name = "GetListCustomer", urlPatterns = {"/getListCustomer"})
 public class GetListCustomer extends HttpServlet {
 
-    public static final int PAGE_SIZE = 10;
+    public static final int PAGE_SIZE = 3;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,11 +55,11 @@ public class GetListCustomer extends HttpServlet {
                 : 1;
         ResultSet rsCus = userDao.getListCustomer(currentPage, PAGE_SIZE);
         int totalPage = 0;
-        int totalRecord = userDao.getTotalRecord("Select * from Account where RoleID = 2");
-        if (totalPage % PAGE_SIZE != 0) {
-            totalPage = totalRecord % PAGE_SIZE + 1;
+        int totalRecord = userDao.getTotalRecord("Select * from Account where RoleID = 3");
+        if (totalRecord % PAGE_SIZE != 0) {
+            totalPage = totalRecord / PAGE_SIZE + 1;
         } else {
-            totalPage = totalRecord % PAGE_SIZE;
+            totalPage = totalRecord / PAGE_SIZE;
         }
         request.setAttribute("rsCus", rsCus);
         request.setAttribute("currentPage", currentPage);

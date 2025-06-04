@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/CustomerManagement.jsp</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/CustomerDetail.jsp</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/GetDetailCustomer.java</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/GetListCustomer.java</file>
+            <file>file:/D:/Ky5/SWT/github_swp/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/User.java</file>
+            <file>file:/D:/Ky5/SWT/github_swp/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/index.html</file>
+            <file>file:/D:/Ky5/SWT/github_swp/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Ky5/SWT/github_swp/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/UserDAO.java</file>
         </group>
     </open-files>
 </project-private>
