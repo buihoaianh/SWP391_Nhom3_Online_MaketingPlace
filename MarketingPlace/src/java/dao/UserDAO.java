@@ -20,7 +20,7 @@ public class UserDAO extends ConnectDB {
 
     public ResultSet getListCustomer(int currentPage, int pageSize) {
         ResultSet rs = null;
-        String sql = "Select * from Account where RoleID = 2 order by AccountID offset ? rows fetch next ? rows only";
+        String sql = "Select * from Account where RoleID = 3 order by AccountID offset ? rows fetch next ? rows only";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             pre.setInt(1, (currentPage - 1) * pageSize);

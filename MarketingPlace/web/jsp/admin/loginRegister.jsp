@@ -19,12 +19,14 @@
   <link href="../../assets/img/favicon.png" rel="icon">
   <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
+
   <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
@@ -34,6 +36,7 @@
 
   <!-- Main CSS File -->
   <link href="../../assets/css/main.css" rel="stylesheet">
+
 
   <!-- =======================================================
   * Template Name: eStore
@@ -118,7 +121,9 @@
           <!-- Logo -->
           <a href="index.html" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
+
             <!-- <img src="../../assets/img/logo.webp" alt=""> -->
+
             <h1 class="sitename">eStore</h1>
           </a>
 
@@ -305,7 +310,9 @@
                       <div class="product-grid">
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-1.webp" alt="Featured Product" loading="lazy">
+
                           </div>
                           <div class="product-info">
                             <h5>Premium Headphones</h5>
@@ -315,7 +322,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-2.webp" alt="Featured Product" loading="lazy">
+
                           </div>
                           <div class="product-info">
                             <h5>Smart Watch</h5>
@@ -325,7 +334,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-3.webp" alt="Featured Product" loading="lazy">
+
                           </div>
                           <div class="product-info">
                             <h5>Wireless Earbuds</h5>
@@ -335,7 +346,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-4.webp" alt="Featured Product" loading="lazy">
+
                           </div>
                           <div class="product-info">
                             <h5>Bluetooth Speaker</h5>
@@ -351,7 +364,9 @@
                       <div class="product-grid">
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-5.webp" alt="New Arrival" loading="lazy">
+
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -362,7 +377,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-6.webp" alt="New Arrival" loading="lazy">
+
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -373,7 +390,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-7.webp" alt="New Arrival" loading="lazy">
+
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -384,7 +403,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-8.webp" alt="New Arrival" loading="lazy">
+
                             <span class="badge-new">New</span>
                           </div>
                           <div class="product-info">
@@ -401,7 +422,9 @@
                       <div class="product-grid">
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-9.webp" alt="Sale Product" loading="lazy">
+
                             <span class="badge-sale">-30%</span>
                           </div>
                           <div class="product-info">
@@ -412,7 +435,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-10.webp" alt="Sale Product" loading="lazy">
+
                             <span class="badge-sale">-25%</span>
                           </div>
                           <div class="product-info">
@@ -423,7 +448,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-11.webp" alt="Sale Product" loading="lazy">
+
                             <span class="badge-sale">-40%</span>
                           </div>
                           <div class="product-info">
@@ -434,7 +461,9 @@
                         </div>
                         <div class="product-card">
                           <div class="product-image">
+
                             <img src="../../assets/img/product/product-12.webp" alt="Sale Product" loading="lazy">
+
                             <span class="badge-sale">-20%</span>
                           </div>
                           <div class="product-info">
@@ -629,7 +658,9 @@
                         </div>
                         <div class="featured-section">
                           <div class="featured-image">
+
                             <img src="../../assets/img/product/product-f-1.webp" alt="Women's Heels Collection">
+
                             <div class="featured-content">
                               <h3>Women's<br>Bags<br>Collection</h3>
                               <a href="#" class="btn-shop">Shop now</a>
@@ -697,7 +728,9 @@
                         </div>
                         <div class="featured-section">
                           <div class="featured-image">
+
                             <img src="../../assets/img/product/product-m-4.webp" alt="Men's Footwear Collection">
+
                             <div class="featured-content">
                               <h3>Men's<br>Footwear<br>Collection</h3>
                               <a href="#" class="btn-shop">Shop now</a>
@@ -765,7 +798,9 @@
                         </div>
                         <div class="featured-section">
                           <div class="featured-image">
+
                             <img src="../../assets/img/product/product-9.webp" alt="Kids' New Arrivals">
+
                             <div class="featured-content">
                               <h3>Kids<br>New<br>Arrivals</h3>
                               <a href="#" class="btn-shop">Shop now</a>
@@ -1124,7 +1159,7 @@
   <!-- Preloader -->
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
+
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/vendor/php-email-form/validate.js"></script>
   <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
@@ -1137,6 +1172,7 @@
 
   <!-- Main JS File -->
   <script src="../../assets/js/main.js"></script>
+
 
 </body>
 
