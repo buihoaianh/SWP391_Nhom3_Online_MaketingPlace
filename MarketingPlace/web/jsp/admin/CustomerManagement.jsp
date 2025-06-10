@@ -21,26 +21,26 @@
             int currentPage = (int) request.getAttribute("currentPage");
         %>
         <div class="d-flex">
-                <div style="width: 100%; height: calc(100vh - 118px); overflow-y: auto" class="container">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p style="color: #dd3726; font-size: 40px; font-weight: 700">Quản khách hàng</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 table-responsive-lg">
-                            <table class="table table-bordered text-center">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Ảnh</th>
-                                        <th>Tên</th>
-                                        <th>Email</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Ngày đăng ký</th>
-                                        <th>Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+            <div style="width: 100%; height: calc(100vh - 118px); overflow-y: auto" class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p style="color: #dd3726; font-size: 40px; font-weight: 700">Quản khách hàng</p>
+                </div>
+                <div class="row">
+                    <div class="col-12 table-responsive-lg">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Ảnh</th>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Ngày đăng ký</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <%if (rsCus.isBeforeFirst()) {
                                      int index = 0;
                                      while (rsCus.next()) {
@@ -56,8 +56,22 @@
                                     <td><%=rsCus.getString("PhoneNumber")%></td>
                                     <td><%=rsCus.getString("Address")%></td>
                                     <td><%=rsCus.getDate("CreateDate")%></td>
-                                     <td>
-                                        <a href="getDetailCustomer?customerId=<%=rsCus.getInt("AccountID")%>">Chi tiết</a>
+                                    <td>
+                                        <div class="d-flex justify-content-center align-items-center gap-4">
+                                            <a href="getDetailCustomer?customerId=<%=rsCus.getInt("AccountID")%>">
+                                                <i class="fa-regular fa-eye"></i>
+                                            </a>
+                                            <div class="form-check form-switch">
+                                                <input 
+                                                    onchange="changeActiveStatus(<%=rsCus.getInt("AccountID")%>, <%=rsCus.getInt("Status")%>)" 
+                                                    class="form-check-input" 
+                                                    type="checkbox" 
+                                                    role="switch" 
+                                                    id="switchCheckChecked" 
+                                                    <%=rsCus.getBoolean("Status") ? "checked" : ""%>
+                                                    >
+                                            </div>
+                                        </div>
                                     </td>
                                     <%}
                                     } else {%>
@@ -70,11 +84,11 @@
                             </tbody>
                         </table>
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination">
+                            <ul class="pagination justify-content-center">
                                 <li class="page-item <%=currentPage == 1 ? "disabled" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=currentPage-1%>">Previous</a></li>
-                                <%for(int i = 1; i <= totalPage; i++) { %>
+                                    <%for(int i = 1; i <= totalPage; i++) { %>
                                 <li class="page-item <%=currentPage == i ? "active" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=i%>"><%=i%></a></li>
-                                <%}%>
+                                    <%}%>
                                 <li class="page-item <%=currentPage == totalPage ? "disabled" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=currentPage+1%>">Next</a></li>
                             </ul>
                         </nav>
@@ -83,8 +97,9 @@
             </div>
         </div>
         <script>
-            function handleRedirect() {
-                window.location.href = "createLaptop";
+            function changeActiveStatus(customerId, status) {
+                const newStatus = !!status ? false : true;
+                window.location.href = "changeActiveStatus?customerId=" + customerId + "&status=" + newStatus;
             }
         </script>
     </body>
