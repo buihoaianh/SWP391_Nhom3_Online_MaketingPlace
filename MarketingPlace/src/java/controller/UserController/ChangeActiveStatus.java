@@ -12,15 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import model.User;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "GetDetailCustomer", urlPatterns = {"/getDetailCustomer"})
-public class GetDetailCustomer extends HttpServlet {
+@WebServlet(name = "ChangeActiveStatus", urlPatterns = {"/changeActiveStatus"})
+public class ChangeActiveStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +33,28 @@ public class GetDetailCustomer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        UserDAO userDao = new UserDAO();
+        int customerId = Integer.parseInt(request.getParameter("customerId"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+        User user = userDao.getUserById(customerId);
+        User newUser = new User(
+                customerId,
+                user.getRoleID(),
+                user.getImageURL(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getPhoneNumber(),
+                user.getAddress(),
+                user.getCreateDate(),
+                status,
+                user.getDescription()
+        );
+        boolean check = userDao.updateUser(newUser);
+        if (check) {
+            response.sendRedirect("getListCustomer");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,13 +69,7 @@ public class GetDetailCustomer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO userDao = new UserDAO();
-        int customerId = Integer.parseInt(request.getParameter("customerId"));
-        User user = userDao.getUserById(customerId);
-        ResultSet rsCus = userDao.getListProductOfCustomer(customerId);
-        request.setAttribute("rsCus", rsCus);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("/jsp/admin/CustomerDetail.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

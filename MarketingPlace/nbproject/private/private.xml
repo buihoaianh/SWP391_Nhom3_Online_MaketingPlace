@@ -3,28 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/Profile.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/Home.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/ListSellerController.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/SellerDao.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/ListSellerDetail.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/sendEmail.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/User.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/seller/UserProfile.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/index.html</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/verify.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/LoginAccount.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/ListSellerAdmin.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/RegisterAccount.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/Dashboard.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/CustomerDetail.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/UpdateProfile.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/DashboardController.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/loginRegister.jsp</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/DBConnect.java</file>
-            <file>file:/D:/New%20folder%20(4)/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/VerifyAccount.java</file>
+            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/CustomerManagement.jsp</file>
         </group>
     </open-files>
 </project-private>
