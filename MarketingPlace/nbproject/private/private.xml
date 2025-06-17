@@ -3,10 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/User.java</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/CustomerDetail.jsp</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/sidebarAdmin.jsp</file>
-            <file>file:/D:/Support/Dang/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/Header.jsp</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Product.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/ProductDAO.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/User.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/SellerDao.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/ProductDetail.jsp</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/sendEmail.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/Home.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/DashboardController.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/index.html</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Role.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/ListSellerController.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/Home.jsp</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/ListSellerDetailController.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/UpdateProfile.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Account.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/DBConnect.java</file>
+            <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
