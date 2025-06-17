@@ -5,7 +5,6 @@
 
 package controller.UserController;
 
-import model.User;
 import dao.UserDAO;
 import dao.sendEmail;
 import java.io.IOException;
@@ -16,7 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 
 
 /**
@@ -80,15 +78,46 @@ public class RegisterAccount extends HttpServlet {
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
         String phone = request.getParameter("phone");
-        String localAddress = request.getParameter("localAddress");
+        String localAddress = request.getParameter("fullAddress");
+        String userType = request.getParameter("userType");
 
         UserDAO dao = new UserDAO();
+        if (!isValidPhone(phone)) {
+            request.setAttribute("error", "Số điện thoại không hợp lệ! Phải bắt đầu bằng 0 và gồm đúng 10 chữ số.");
+            request.getRequestDispatcher("jsp/admin/loginRegister.jsp?tab=register").forward(request, response);
+            return;
+        }
+        
+        if (!isValidFullName(fullName)) {
+            request.setAttribute("errorf", "Họ và tên không được chứa ký tự đặc biệt và không được toàn số.");
+            request.getRequestDispatcher("jsp/admin/loginRegister.jsp?tab=register").forward(request, response);
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            request.setAttribute("errorp", "Mật khẩu chỉ được chứa chữ, số và ký tự '@'.");
+            request.getRequestDispatcher("jsp/admin/loginRegister.jsp?tab=register").forward(request, response);
+            return;
+        }
+        
+
+
+        // Kiểm tra email phải kết thúc bằng @gmail.com
+        if (email == null || !email.matches("^[A-Za-z0-9._%+-]+@gmail\\.com$")) {
+            request.setAttribute("msg", "Email phải hợp lệ và kết thúc bằng @gmail.com");
+            request.getRequestDispatcher("jsp/admin/loginRegister.jsp?tab=register").forward(request, response);
+            return; // Dừng xử lý nếu không hợp lệ
+        }
+
 
         if (dao.isEmailExist(email)) {
             request.setAttribute("msg", "Email đã tồn tại!");
-            request.getRequestDispatcher("jsp/sdmin/loginRegister.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/admin/loginRegister.jsp?tab=register").forward(request, response);
             return;
         }
+        
+        
+        
 
         // Tạo OTP và gửi email
         sendEmail mailer = new sendEmail();
@@ -103,10 +132,29 @@ public class RegisterAccount extends HttpServlet {
         session.setAttribute("fullName", fullName);
         session.setAttribute("phone", phone);
         session.setAttribute("localAddress", localAddress);
+        session.setAttribute("userType", userType);
 
         response.sendRedirect("jsp/admin/verify.jsp");
     }
     
+    
+    public boolean isValidPhone(String phone) {
+        return phone != null && phone.matches("^0\\d{9}$");
+    }
+    
+    public boolean isValidFullName(String fullName) {
+        // Cho phép chữ cái và số, ít nhất 1 chữ cái, không ký tự đặc biệt
+        return fullName != null &&
+               fullName.matches("^[a-zA-Z0-9\\s]+$") &&         // Chỉ chữ cái + số + khoảng trắng
+               fullName.matches(".*[a-zA-Z].*");                // Phải có ít nhất một chữ cái
+    }
+    
+    public boolean isValidPassword(String password) {
+        return password != null && password.matches("^[a-zA-Z0-9@]+$");
+    }
+
+
+
     
 
 

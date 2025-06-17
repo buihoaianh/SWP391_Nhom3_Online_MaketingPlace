@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import model.Account;
 import model.User;
 
 /**
@@ -48,14 +49,13 @@ public class UserDAO extends ConnectDB {
         return rs;
     }
 
-    //check email exist
-    public User checkEmailExists(String email) {
+    public Account checkEmailExists(String email) {
         String sql = "SELECT * FROM Account WHERE Email = ?";
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new User(
+                return new Account(
                         rs.getInt("AccountID"),
                         rs.getInt("RoleID"),
                         rs.getString("ImageURL"),
@@ -75,7 +75,7 @@ public class UserDAO extends ConnectDB {
         return null;
     }
 
-    public User registerUser(User user) {
+    public Account registerUser(Account user) {
         if (checkEmailExists(user.getEmail()) != null) {
             return null; // Email đã tồn tại
         }
@@ -127,13 +127,13 @@ public class UserDAO extends ConnectDB {
         return false;
     }
 
-    public User getUserByEmail(String email) {
+    public Account getUserByEmail(String email) {
         String sql = "SELECT * FROM Account WHERE Email = ?";
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new User(
+                return new Account(
                         rs.getInt("AccountID"),
                         rs.getInt("RoleID"),
                         rs.getString("ImageURL"),
@@ -214,6 +214,20 @@ public class UserDAO extends ConnectDB {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    
+    public boolean updatePassword(String email, String newPassword) {
+        String sql = "UPDATE Account SET Password = ? WHERE Email = ?";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+            int row = ps.executeUpdate();
+            return row > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
