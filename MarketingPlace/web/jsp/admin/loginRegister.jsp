@@ -881,7 +881,7 @@
 
                     <div class="mb-4">
                       <label for="login-register-login-password" class="form-label">Password</label>
-                      <input type="password" name="pass" class="form-control" id="login-register-login-password" required="">
+                      <input type="password" name="password" class="form-control" id="login-register-login-password" required="">
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -1112,23 +1112,89 @@
 </script>
 
 <!-- Đoạn scrip lưu full thông tin địa chỉ -->
-    <script>
-  function updateFullAddress() {
-    const street = document.getElementById("street").value;
-    const province = document.getElementById("province").options[document.getElementById("province").selectedIndex].text;
-    const district = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    const ward = document.getElementById("ward").options[document.getElementById("ward").selectedIndex].text;
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const provinceEl = document.getElementById('province');
+              const districtEl = document.getElementById('district');
+              const wardEl = document.getElementById('ward');
+              const streetEl = document.getElementById('street');
+              const fullAddressEl = document.getElementById('fullAddress');
 
-    const fullAddress = `${street}, ${ward}, ${district}, ${province}`;
-    document.getElementById("fullAddress").value = fullAddress;
-  }
+              let locationData = [];
 
-  document.getElementById("street").addEventListener("input", updateFullAddress);
-  document.getElementById("province").addEventListener("change", updateFullAddress);
-  document.getElementById("district").addEventListener("change", updateFullAddress);
-  document.getElementById("ward").addEventListener("change", updateFullAddress);
-</script>
+              fetch('${pageContext.request.contextPath}/assets/locations.json')
+                .then(resp => resp.json())
+                .then(obj => {
+                  locationData = obj.data || [];
+                  locationData.forEach(prov => {
+                    const opt = document.createElement('option');
+                    opt.value = prov.level1_id;
+                    opt.textContent = prov.name;
+                    provinceEl.appendChild(opt);
+                  });
+                })
+                .catch(err => console.error('Lỗi load locations.json:', err));
 
+              provinceEl.addEventListener('change', function() {
+                const provId = this.value;
+                districtEl.innerHTML = '<option value="">-- Chọn quận/huyện --</option>';
+                districtEl.disabled = true;
+                wardEl.innerHTML = '<option value="">-- Chọn phường/xã --</option>';
+                wardEl.disabled = true;
+                if (!provId) {
+                  updateFullAddress();
+                  return;
+                }
+                const provObj = locationData.find(p => p.level1_id === provId);
+                if (provObj?.level2s) {
+                  provObj.level2s.forEach(dist => {
+                    const opt = document.createElement('option');
+                    opt.value = dist.level2_id;
+                    opt.textContent = dist.name;
+                    districtEl.appendChild(opt);
+                  });
+                  districtEl.disabled = false;
+                }
+                updateFullAddress();
+              });
+
+              districtEl.addEventListener('change', function() {
+                const provId = provinceEl.value;
+                const distId = this.value;
+                wardEl.innerHTML = '<option value="">-- Chọn phường/xã --</option>';
+                wardEl.disabled = true;
+                if (!distId) {
+                  updateFullAddress();
+                  return;
+                }
+                const provObj = locationData.find(p => p.level1_id === provId);
+                const distObj = provObj?.level2s?.find(d => d.level2_id === distId);
+                if (distObj?.level3s) {
+                  distObj.level3s.forEach(w => {
+                    const opt = document.createElement('option');
+                    opt.value = w.level3_id;
+                    opt.textContent = w.name;
+                    wardEl.appendChild(opt);
+                  });
+                  wardEl.disabled = false;
+                }
+                updateFullAddress();
+              });
+
+              [wardEl, streetEl].forEach(el => el.addEventListener('input', updateFullAddress));
+              wardEl.addEventListener('change', updateFullAddress);
+
+              function updateFullAddress() {
+                const parts = [];
+                const street = streetEl.value.trim();
+                if (street) parts.push(street);
+                if (wardEl.value) parts.push(wardEl.options[wardEl.selectedIndex].text);
+                if (districtEl.value) parts.push(districtEl.options[districtEl.selectedIndex].text);
+                if (provinceEl.value) parts.push(provinceEl.options[provinceEl.selectedIndex].text);
+                fullAddressEl.value = parts.join(', ');
+              }
+            });
+            </script>
 
             </div>
           </div>

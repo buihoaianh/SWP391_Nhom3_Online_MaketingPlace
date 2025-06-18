@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
-import model.User;
+import model.Account;
 
 /**
  *
@@ -50,7 +50,7 @@ public class GetDetailCustomer extends HttpServlet {
             throws ServletException, IOException {
         UserDAO userDao = new UserDAO();
         int customerId = Integer.parseInt(request.getParameter("customerId"));
-        User user = userDao.getUserById(customerId);
+        Account user = userDao.getUserById(customerId);
         ResultSet rsCus = userDao.getListProductOfCustomer(customerId);
         request.setAttribute("rsCus", rsCus);
         request.setAttribute("user", user);

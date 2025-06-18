@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.User;
+import model.Account;
 
 /**
  *
@@ -80,7 +80,7 @@ public class UpdateProfile extends HttpServlet {
       
        
         HttpSession session = request.getSession();
-        User currentUser = (User) session.getAttribute("user");
+        Account currentUser = (Account) session.getAttribute("user");
         
         if (currentUser == null) {
            

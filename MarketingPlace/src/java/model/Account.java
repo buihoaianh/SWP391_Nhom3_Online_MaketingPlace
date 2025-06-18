@@ -19,11 +19,12 @@ public class Account {
     private LocalDateTime CreateDate;
     private boolean Status;
     private String Description;
+    private String remember_token;
 
     public Account() {
     }
 
-    public Account(int AccountID, int RoleID, String ImageURL, String FullName, String Email, String Password, String PhoneNumber, String Address, LocalDateTime CreateDate, boolean Status, String Description) {
+    public Account(int AccountID, int RoleID, String ImageURL, String FullName, String Email, String Password, String PhoneNumber, String Address, LocalDateTime CreateDate, boolean Status, String Description, String remember_token) {
         this.AccountID = AccountID;
         this.RoleID = RoleID;
         this.ImageURL = ImageURL;
@@ -35,6 +36,7 @@ public class Account {
         this.CreateDate = CreateDate;
         this.Status = Status;
         this.Description = Description;
+        this.remember_token = remember_token;
     }
     
 
@@ -126,9 +128,19 @@ public class Account {
         this.Description = Description;
     }
 
+    public String getRemember_token() {
+        return remember_token;
+    }
+
+    public void setRemember_token(String remember_token) {
+        this.remember_token = remember_token;
+    }
+
     @Override
     public String toString() {
-        return "Account{" + "AccountID=" + AccountID + ", RoleID=" + RoleID + ", ImageURL=" + ImageURL + ", FullName=" + FullName + ", Email=" + Email + ", Password=" + Password + ", PhoneNumber=" + PhoneNumber + ", Address=" + Address + ", CreateDate=" + CreateDate + ", Status=" + Status + ", Description=" + Description + '}';
+        return "Account{" + "AccountID=" + AccountID + ", RoleID=" + RoleID + ", ImageURL=" + ImageURL + ", FullName=" + FullName + ", Email=" + Email + ", Password=" + Password + ", PhoneNumber=" + PhoneNumber + ", Address=" + Address + ", CreateDate=" + CreateDate + ", Status=" + Status + ", Description=" + Description + ", remember_token=" + remember_token + '}';
     }
+
+    
     
 }

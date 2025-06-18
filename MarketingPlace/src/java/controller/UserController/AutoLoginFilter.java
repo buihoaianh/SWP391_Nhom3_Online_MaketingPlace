@@ -36,41 +36,38 @@ public class AutoLoginFilter implements Filter {
         //Nếu chưa có session → trả về null.
         // Nếu chưa có session hoặc chưa có user trong session → bắt đầu kiểm tra cookie.
         if (session == null || session.getAttribute("user") == null) {
-            // Chưa đăng nhập -> kiểm tra cookie
             Cookie[] cookies = request.getCookies();
-            String email = null;
-            String pass = null;
-            String remember = null;
+            String token = null;
 
             if (cookies != null) {
                 for (Cookie c : cookies) {
-                    switch (c.getName()) {
-                        case "email":
-                            email = c.getValue();
-                            break;
-                        case "pass":
-                            pass = c.getValue();
-                            break;
-                        case "remember":
-                            remember = c.getValue();
-                            break;
+                    if ("remember_token".equals(c.getName())) {
+                        token = c.getValue();
+                        break;
                     }
                 }
             }
 
-            // Nếu đủ thông tin và remember = true
-            if (email != null && pass != null && "true".equals(remember)) {
+            if (token != null) {
                 UserDAO dao = new UserDAO();
-                if (dao.login(email, pass)) {
-                    Account acc = dao.getUserByEmail(email);
+                Account acc = dao.getUserByToken(token);
+
+                if (acc != null) {
+                    // Đăng nhập lại tự động
                     request.getSession(true).setAttribute("user", acc);
-                    System.out.println("AutoLogin - User restored from cookie: " + acc);
+                    System.out.println("AutoLoginFilter - User restored from token: " + acc.getEmail());
                 }
             }
         }
 
         chain.doFilter(servletRequest, servletResponse);
     }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {}
+
+    @Override
+    public void destroy() {}
 
     public String getServletInfo() {
         return "Short description";

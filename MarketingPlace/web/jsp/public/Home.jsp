@@ -169,13 +169,21 @@
                                             <span>Settings</span>
                                         </a>
                                     </div>
-                                    <c:if test="${sessionScope.user == null}">
-                                        <div class="dropdown-footer">
-                                            <a href="login-register.html" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                            <a href="login-register.html" class="btn btn-outline-primary w-100">Register</a>
-                                        </div>
-                                    </c:if>
-
+                                    <div class="dropdown-footer">
+                                        <% 
+                                          // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
+                                          if (session.getAttribute("user") != null) { 
+                                            // Đã login -> hiển thị nút Logout
+                                        %>
+                                            <a href="<%= request.getContextPath() %>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
+                                        <% 
+                                          } else { 
+                                            // Chưa login -> hiển thị Sign In/Register
+                                        %>
+                                            <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
+                                            <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
+                                        <% } %>
+                                      </div>
                                 </div>
                             </div>
 
@@ -1488,6 +1496,45 @@
 
         <!-- Main JS File -->
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+        
+        
+        <!-- Hộp hiển thị thông báo -->
+        <%
+            String message = (String) session.getAttribute("message");
+            if (message != null) {
+        %>
+            <div id="login-message" style="
+                position: fixed;
+                top: 50px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                font-size: 16px;
+                font-family: sans-serif;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 9999;
+                opacity: 1;
+                transition: opacity 0.5s ease;
+            ">
+                <%= message %>
+            </div>
+
+            <script>
+                setTimeout(function () {
+                    const msg = document.getElementById('login-message');
+                    if (msg) {
+                        msg.style.opacity = '0';
+                        setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
+                    }
+                }, 3000);
+            </script>
+        <%
+                session.removeAttribute("message");
+            }
+        %>
 
     </body>
 

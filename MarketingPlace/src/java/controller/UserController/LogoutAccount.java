@@ -56,29 +56,22 @@ public class LogoutAccount extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Xóa session của người dùng
+        // Xóa session
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
 
-        // Xóa cookie "remember me"
-        Cookie emailCookie = new Cookie("email", "");
-        emailCookie.setMaxAge(0); // Xóa cookie
-        response.addCookie(emailCookie);
-
-        Cookie passCookie = new Cookie("pass", "");
-        passCookie.setMaxAge(0);
-        response.addCookie(passCookie);
-
-        Cookie rememberCookie = new Cookie("remember", "");
+        // Xóa cookie remember_token
+        Cookie rememberCookie = new Cookie("remember_token", "");
         rememberCookie.setMaxAge(0);
+        rememberCookie.setPath("/");
         response.addCookie(rememberCookie);
 
-        // Chuyển hướng về trang home
-        // LogoutServlet (GET)
+        // Đặt thông báo
+        request.getSession(true).setAttribute("message", "Đăng xuất thành công!");
 
-        request.getSession().setAttribute("message", "Đăng xuất thành công!");
+        // Quay về home.jsp
         request.getRequestDispatcher("jsp/public/home.jsp").forward(request, response);
     }
 
