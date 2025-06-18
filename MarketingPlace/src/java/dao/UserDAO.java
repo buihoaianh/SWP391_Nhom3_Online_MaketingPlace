@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import model.Account;
-import model.User;
+
 
 /**
  *
@@ -66,7 +66,8 @@ public class UserDAO extends ConnectDB {
                         rs.getString("Address"),
                         rs.getTimestamp("CreateDate").toLocalDateTime(),
                         rs.getBoolean("Status"),
-                        rs.getString("Description")
+                        rs.getString("Description"),
+                        rs.getString("remember_token")
                 );
             }
         } catch (SQLException e) {
@@ -144,7 +145,8 @@ public class UserDAO extends ConnectDB {
                         rs.getString("Address"),
                         rs.getTimestamp("CreateDate").toLocalDateTime(),
                         rs.getBoolean("Status"),
-                        rs.getString("Description")
+                        rs.getString("Description"),
+                        rs.getString("remember_token")
                 );
             }
         } catch (SQLException e) {
@@ -165,7 +167,7 @@ public class UserDAO extends ConnectDB {
         return false;
     }
 
-    public boolean updateUser(User user) {
+    public boolean updateUser(Account user) {
         String sql = "UPDATE Account SET FullName = ?, Email = ?, PhoneNumber = ?, RoleID = ?, Password = ?, Address = ?, ImageURL = ?, CreateDate = ?, Status = ?, Description = ? WHERE AccountID = ?";
         try (PreparedStatement stmt = connect.prepareStatement(sql)) {
             stmt.setString(1, user.getFullName());
@@ -187,13 +189,13 @@ public class UserDAO extends ConnectDB {
 
     }
 
-    public User getUserById(int id) {
+    public Account getUserById(int id) {
         String sql = "SELECT * FROM Account WHERE AccountID = ?";
         try (PreparedStatement stmt = connect.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                User user = new User();
+                Account user = new Account();
                 user.setAccountID(rs.getInt("AccountID"));
                 user.setFullName(rs.getString("FullName"));
                 user.setEmail(rs.getString("Email"));
@@ -229,5 +231,46 @@ public class UserDAO extends ConnectDB {
         }
         return false;
     }
+    
+    public void storeLoginToken(int accountId, String token) {
+    String sql = "UPDATE Account SET remember_token = ? WHERE AccountID = ?";
+    try (PreparedStatement ps = connect.prepareStatement(sql)) {
+        ps.setString(1, token);
+        ps.setInt(2, accountId);
+        ps.executeUpdate();
+        System.out.println("Remember token saved: " + token); // Thêm dòng này để debug
+    } catch (Exception e) {
+        e.printStackTrace(); // hoặc log nếu bị lỗi DB
+    }
+}
+
+
+public Account getUserByToken(String token) {
+    String sql = "SELECT * FROM Account WHERE remember_token = ?";
+    try ( PreparedStatement ps = connect.prepareStatement(sql)) {
+        ps.setString(1, token);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return new Account(
+                        rs.getInt("AccountID"),
+                        rs.getInt("RoleID"),
+                        rs.getString("ImageURL"),
+                        rs.getString("FullName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Address"),
+                        rs.getTimestamp("CreateDate").toLocalDateTime(),
+                        rs.getBoolean("Status"),
+                        rs.getString("Description"),
+                        rs.getString("remember_token")
+                );
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
 
 }

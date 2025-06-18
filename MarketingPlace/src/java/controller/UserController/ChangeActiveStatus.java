@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
-import model.User;
+import model.Account;
 
 /**
  *
@@ -36,8 +36,8 @@ public class ChangeActiveStatus extends HttpServlet {
         UserDAO userDao = new UserDAO();
         int customerId = Integer.parseInt(request.getParameter("customerId"));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
-        User user = userDao.getUserById(customerId);
-        User newUser = new User(
+        Account user = userDao.getUserById(customerId);
+        Account newUser = new Account(
                 customerId,
                 user.getRoleID(),
                 user.getImageURL(),
@@ -48,7 +48,8 @@ public class ChangeActiveStatus extends HttpServlet {
                 user.getAddress(),
                 user.getCreateDate(),
                 status,
-                user.getDescription()
+                user.getDescription(),
+                user.getRemember_token()
         );
         boolean check = userDao.updateUser(newUser);
         if (check) {
