@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="model.User"%>
+<%@page import="model.Account"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -51,7 +51,7 @@
     <body>
         <%
             ResultSet rsCus = (ResultSet) request.getAttribute("rsCus");
-            User user = (User) request.getAttribute("user");
+            Account user = (Account) request.getAttribute("user");
         %>
         <div class="container-xxl position-relative bg-white d-flex p-0">
             <!-- Spinner Start -->

@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.UserController;
+package controller.CartController;
 
-import jakarta.servlet.http.HttpServlet;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +13,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Product;
-import dao.ProductDAO;
 import java.util.ArrayList;
+import model.Cart;
+import model.Product;
+import org.json.JSONObject;
 
 /**
  *
- * @author tulok
+ * @author Admin
  */
-@WebServlet(name = "Home", urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
+public class AddToCart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,12 +36,39 @@ public class Home extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ProductDAO dbProduct = new ProductDAO();
-        ArrayList<Product> products = dbProduct.getAllProduct();
-        System.out.println("Số sản phẩm lấy được: " + products.size());
-        request.setAttribute("products", products);
-        request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
+        ProductDAO productDao = new ProductDAO();
+        HttpSession session = request.getSession();
+
+        ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        Product product = productDao.getProductByID(productId);
+        Cart cartExist = null;
+        for (Cart c : cart) {
+            if (c.getProduct().getProductId() == productId) {
+                cartExist = c;
+                if (cartExist.getQuantity() + quantity == 0) {
+                    cart.remove(c);
+                } else {
+                    cartExist.setQuantity(cartExist.getQuantity() + quantity);
+                }
+                break;
+            }
+        }
+        if (cartExist == null) {
+            cartExist = new Cart(product, quantity);
+            cart.add(cartExist);
+        }
+        session.setAttribute("cart", cart);
+        JSONObject json = new JSONObject();
+        json.put("success", true);
+        json.put("quantityCart", cart.size());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json.toString());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

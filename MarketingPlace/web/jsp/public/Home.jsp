@@ -6,6 +6,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Cart" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,10 +45,13 @@
         * Author: BootstrapMade.com
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
 
     <body class="index-page">
-
+        <%
+                    ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
+        %>
         <header id="header" class="header position-relative">
             <!-- Top Bar -->
             <div class="top-bar py-2">
@@ -175,15 +180,15 @@
                                           if (session.getAttribute("user") != null) { 
                                             // Đã login -> hiển thị nút Logout
                                         %>
-                                            <a href="<%= request.getContextPath() %>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
+                                        <a href="<%= request.getContextPath() %>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
                                         <% 
                                           } else { 
                                             // Chưa login -> hiển thị Sign In/Register
                                         %>
-                                            <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                            <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
+                                        <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
+                                        <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
                                         <% } %>
-                                      </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -194,9 +199,9 @@
                             </a>
 
                             <!-- Cart -->
-                            <a href="cart.html" class="header-action-btn">
+                            <a href="cartList" class="header-action-btn">
                                 <i class="bi bi-cart3"></i>
-                                <span class="badge">3</span>
+                                <span id="quantityCart" class="badge"><%=cart != null ? cart.size() : 0%></span>
                             </a>
 
                             <!-- Mobile Navigation Toggle -->
@@ -1271,14 +1276,19 @@
                     <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
 
                         <c:forEach items="${products}" var="o">
-                             <div class="col-md-6 col-lg-3 product-item  ">
+                            <div class="col-md-6 col-lg-3 product-item  ">
                                 <div class="product-card">
                                     <div class="product-image">
                                         <span class="badge">Sale</span>
                                         <img src="${o.imageURL}" alt="Product" class="img-fluid main-img">
                                         <img src="${o.imageURL}" alt="Product Hover" class="img-fluid hover-img">
                                         <div class="product-overlay">
-                                            <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
+                                            <a href="#"
+                                               class="btn-cart"
+                                               onclick="addToCart('${o.productId}'); event.preventDefault();"
+                                               >
+                                                <i class="bi bi-cart-plus"></i> Add to Cart
+                                            </a>
                                             <div class="product-actions">
                                                 <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
                                                 <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
@@ -1304,8 +1314,8 @@
                                 </div>
                             </div>
                         </c:forEach>
-                           
-                        
+
+
 
                     </div>
 
@@ -1483,6 +1493,19 @@
         <!-- Preloader -->
         <div id="preloader"></div>
 
+        <!-- Bootstrap Toast -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Add to Cart Success!
+                </div>
+            </div>
+        </div>
+
         <!-- Vendor JS Files -->
         <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
@@ -1496,46 +1519,65 @@
 
         <!-- Main JS File -->
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-        
-        
+
+
         <!-- Hộp hiển thị thông báo -->
         <%
             String message = (String) session.getAttribute("message");
             if (message != null) {
         %>
-            <div id="login-message" style="
-                position: fixed;
-                top: 50px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #4CAF50;
-                color: white;
-                padding: 16px 24px;
-                border-radius: 8px;
-                font-size: 16px;
-                font-family: sans-serif;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-                z-index: 9999;
-                opacity: 1;
-                transition: opacity 0.5s ease;
-            ">
-                <%= message %>
-            </div>
+        <div id="login-message" style="
+             position: fixed;
+             top: 50px;
+             left: 50%;
+             transform: translateX(-50%);
+             background-color: #4CAF50;
+             color: white;
+             padding: 16px 24px;
+             border-radius: 8px;
+             font-size: 16px;
+             font-family: sans-serif;
+             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+             z-index: 9999;
+             opacity: 1;
+             transition: opacity 0.5s ease;
+             ">
+            <%= message %>
+        </div>
 
-            <script>
-                setTimeout(function () {
-                    const msg = document.getElementById('login-message');
-                    if (msg) {
-                        msg.style.opacity = '0';
-                        setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
-                    }
-                }, 3000);
-            </script>
+        <script>
+                                                   setTimeout(function () {
+                                                       const msg = document.getElementById('login-message');
+                                                       if (msg) {
+                                                           msg.style.opacity = '0';
+                                                           setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
+                                                       }
+                                                   }, 3000);
+        </script>
         <%
                 session.removeAttribute("message");
             }
         %>
-
+        <script>
+            function addToCart(productId) {
+                fetch('/MarketingPlace/addToCart?productId=' + productId + '&quantity=1')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const toastElement = document.getElementById('cartToast');
+                                const toast = new bootstrap.Toast(toastElement);
+                                toast.show();
+                                document.getElementById('quantityCart').innerText = data.quantityCart;
+                            } else {
+                                alert('Failed to add to cart: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred!');
+                        });
+            }
+        </script>
     </body>
 
 </html>
