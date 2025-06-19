@@ -36,9 +36,6 @@ public class SellerProfile extends HttpServlet {
         
     }
     
-    private String test() {
-        return null;
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
