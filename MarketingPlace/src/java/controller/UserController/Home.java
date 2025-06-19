@@ -37,9 +37,9 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ProductDAO dbProduct = new ProductDAO();
-        ArrayList<Product> products = dbProduct.getAllProduct();
-        System.out.println("Số sản phẩm lấy được: " + products.size());
-        request.setAttribute("products", products);
+//        ArrayList<Product> products = dbProduct.getAllProduct();
+//        System.out.println("Số sản phẩm lấy được: " + products.size());
+//        request.setAttribute("products", products);
         request.getRequestDispatcher("jsp/Home.jsp").forward(request, response);
     }
 

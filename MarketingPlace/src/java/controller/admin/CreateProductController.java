@@ -29,7 +29,6 @@ import model.Color;
 import model.Product;
 import model.ProductVariant;
 import model.Size;
-import model.User;
 import utils.Helpers;
 
 /**
@@ -108,7 +107,7 @@ public class CreateProductController extends HttpServlet {
             Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
             HttpSession session = request.getSession();
-            User acc = (User) session.getAttribute("user");
+            Account acc = (Account) session.getAttribute("user");
             int createdBy = acc.getAccountID();
 
             // Lấy danh sách biến thể sản phẩm
