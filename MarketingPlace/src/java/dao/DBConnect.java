@@ -9,7 +9,7 @@ public class DBConnect {
     // Sửa thông tin kết nối ở đây
     private final String url = "jdbc:sqlserver://localhost:1433;databaseName=Online_Maketingplace;encrypt=true;trustServerCertificate=true";
     private final String user = "sa";          // hoặc tên user khác
-    private final String password = "12345";  // nhập đúng mật khẩu
+    private final String password = "123456";  // nhập đúng mật khẩu
 
     private Connection conn;
 

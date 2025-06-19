@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import model.Account;
 import model.User;
 
@@ -215,8 +219,7 @@ public class UserDAO extends ConnectDB {
         }
         return null;
     }
-    
-    
+
     public boolean updatePassword(String email, String newPassword) {
         String sql = "UPDATE Account SET Password = ? WHERE Email = ?";
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
@@ -228,6 +231,101 @@ public class UserDAO extends ConnectDB {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Account getAccountById(int id) {
+        String sql = "SELECT * FROM Account WHERE AccountID = ?";
+        try (PreparedStatement stmt = connect.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Account(
+                        rs.getInt("AccountID"),
+                        rs.getInt("RoleID"),
+                        rs.getString("ImageURL"),
+                        rs.getString("FullName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Address"),
+                        rs.getTimestamp("CreateDate").toLocalDateTime(),
+                        rs.getBoolean("Status"),
+                        rs.getString("Description")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateAccount(Account account) {
+        String sql = "UPDATE Account SET FullName=?, Email=?, PhoneNumber=?, Address=?, ImageURL=?, Description=?, CreateDate=? WHERE AccountID=?";
+        try (PreparedStatement stmt = connect.prepareStatement(sql)) {
+            stmt.setString(1, account.getFullName());
+            stmt.setString(2, account.getEmail());
+            stmt.setString(3, account.getPhoneNumber());
+            stmt.setString(4, account.getAddress());
+            stmt.setString(5, account.getImageURL());
+            stmt.setString(6, account.getDescription());
+            stmt.setTimestamp(7, Timestamp.valueOf(account.getCreateDate()));
+            stmt.setInt(8, account.getAccountID());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // UserDAO.java
+    public Map<String, Integer> getCustomerAccountStatsByMonth() {
+        Map<String, Integer> stats = new LinkedHashMap<>();
+        String sql = "SELECT FORMAT(CreateDate, 'yyyy-MM') AS Month, COUNT(*) AS Total "
+                + "FROM Account WHERE RoleID = 3 "
+                + "GROUP BY FORMAT(CreateDate, 'yyyy-MM') ORDER BY Month";
+
+        try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                stats.put(rs.getString("Month"), rs.getInt("Total"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stats;
+    }
+
+    public List<Account> getRandomTopCustomers(int limit) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT TOP (?) * FROM Account WHERE RoleID = 3 ORDER BY NEWID()";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountID(rs.getInt("AccountID"));
+                acc.setFullName(rs.getString("FullName"));
+                acc.setEmail(rs.getString("Email"));
+                acc.setImageURL(rs.getString("ImageURL"));
+                list.add(acc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();  // hoặc DAOUser tùy bạn dùng tên gì
+        Map<String, Integer> stats = dao.getCustomerAccountStatsByMonth();
+
+        if (stats.isEmpty()) {
+            System.out.println("Không có dữ liệu thống kê!");
+        } else {
+            System.out.println("Thống kê số tài khoản khách hàng theo tháng:");
+            for (Map.Entry<String, Integer> entry : stats.entrySet()) {
+                System.out.println("Tháng " + entry.getKey() + ": " + entry.getValue() + " tài khoản");
+            }
+        }
     }
 
 }

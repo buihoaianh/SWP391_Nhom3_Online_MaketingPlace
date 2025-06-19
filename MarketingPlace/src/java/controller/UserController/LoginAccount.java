@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.UserController;
 
 import model.Account;
@@ -21,28 +20,27 @@ import jakarta.servlet.http.Cookie;
  *
  * @author Hi Windows 11 Home
  */
-@WebServlet(name = "LoginAccount", urlPatterns = { "/loginAccount" })
+@WebServlet(name = "LoginAccount", urlPatterns = {"/loginAccount"})
 public class LoginAccount extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     * 
-     * @param request  servlet request
+     *
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
     // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
-     * 
-     * @param request  servlet request
+     *
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,13 +51,12 @@ public class LoginAccount extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     * 
-     * @param request  servlet request
+     *
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -111,6 +108,12 @@ public class LoginAccount extends HttpServlet {
                 response.addCookie(cRemember);
             }
 
+            int roleId = user.getRoleID(); // Giả sử Account có getRoleId()
+            if (roleId == 2) {
+                response.sendRedirect("saller-dashboard");
+                return;
+            } 
+
             // Chuyển trang và lưu thông báo vào localStorage
             // Xử lý đăng nhập thành công
             session.setAttribute("message", "Login successful!");
@@ -159,10 +162,9 @@ public class LoginAccount extends HttpServlet {
      * }
      * }
      */
-
     /**
      * Returns a short description of the servlet.
-     * 
+     *
      * @return a String containing servlet description
      */
     @Override

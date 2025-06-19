@@ -3,7 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hi%20Windows%2011%20Home/OneDrive/Desktop/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Account.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/web/jsp/seller/SellerDashboard.jsp</file>
+            <file>file:/D:/SWP/git/MarketingPlace/web/jsp/seller/slider.jsp</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/model/Account.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/SellerController/SellerDashboard.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/web/jsp/seller/SellerProfile.jsp</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/model/User.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/SellerController/UpdateSellerProfile.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/SellerController/SellerProfile.java</file>
+            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/UserController/LoginAccount.java</file>
         </group>
     </open-files>
 </project-private>
