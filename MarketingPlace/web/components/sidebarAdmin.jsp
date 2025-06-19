@@ -41,6 +41,10 @@
                 <a href="${pageContext.request.contextPath}/admin/products" class="nav-link text-dark">
                     <i class="fas fa-user-circle text-dark"></i>List Product</a>
             </div>
+                      <div class="nav-item text-dark">
+                <a href="${pageContext.request.contextPath}/admin/requests" class="nav-link text-dark">
+                    <i class="fas fa-user-circle text-dark"></i>List Request</a>
+            </div>
 
             <a href="widget.html" class="nav-item nav-link text-dark"><i class="fa fa-th me-2 text-dark"></i>Widgets</a>
             <a href="table.html" class="nav-item nav-link text-dark"><i class="fa fa-table me-2 text-dark"></i>Tables</a>
