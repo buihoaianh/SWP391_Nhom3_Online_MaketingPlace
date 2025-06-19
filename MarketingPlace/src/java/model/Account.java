@@ -24,6 +24,22 @@ public class Account {
     public Account() {
     }
 
+    public Account(int AccountID, int RoleID, String ImageURL, String FullName, String Email, String Password, String PhoneNumber, String Address, LocalDateTime CreateDate, boolean Status, String Description) {
+        this.AccountID = AccountID;
+        this.RoleID = RoleID;
+        this.ImageURL = ImageURL;
+        this.FullName = FullName;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNumber = PhoneNumber;
+        this.Address = Address;
+        this.CreateDate = CreateDate;
+        this.Status = Status;
+        this.Description = Description;
+    }
+    
+    
+
     public Account(int AccountID, int RoleID, String ImageURL, String FullName, String Email, String Password, String PhoneNumber, String Address, LocalDateTime CreateDate, boolean Status, String Description, String remember_token) {
         this.AccountID = AccountID;
         this.RoleID = RoleID;
