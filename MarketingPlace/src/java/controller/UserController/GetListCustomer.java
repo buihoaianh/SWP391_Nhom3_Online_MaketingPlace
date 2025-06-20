@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 @WebServlet(name = "GetListCustomer", urlPatterns = {"/getListCustomer"})
 public class GetListCustomer extends HttpServlet {
 
-    public static final int PAGE_SIZE = 3;
+    public static final int PAGE_SIZE = 5;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
