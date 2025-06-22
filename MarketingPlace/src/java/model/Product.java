@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,78 +13,34 @@ import java.util.List;
  * @author Admin
  */
 public class Product {
-
     private int productId;
     private int accountId;
-    private String imageUrl;
+    private String imageURL;
     private String productName;
-    private int categoryId;
-    private Integer discountId;
-    private Timestamp createdDate;
+    private String price;
+    private int quantity;
+    private int categoryID;
+    private int discountId;
+    private Date createProductDate;
     private String description;
-    private String status;
 
-    private Category category;
-    private List<ProductVariant> productVariants;
+    public Product(int productId, int accountId, String imageURL, String productName, String price, int quantity, int categoryID, int discountId, Date createProductDate, String description) {
+        this.productId = productId;
+        this.accountId = accountId;
+        this.imageURL = imageURL;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+        this.categoryID = categoryID;
+        this.discountId = discountId;
+        this.createProductDate = createProductDate;
+        this.description = description;
+    }
+
+    
+    
 
     public Product() {
-    }
-
-    public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, Category category, List<ProductVariant> productVariants) {
-        this.productId = productId;
-        this.accountId = accountId;
-        this.imageUrl = imageUrl;
-        this.productName = productName;
-        this.categoryId = categoryId;
-        this.discountId = discountId;
-        this.createdDate = createdDate;
-        this.description = description;
-        this.status = status;
-        this.category = category;
-        this.productVariants = productVariants;
-    }
-    
-    public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, List<ProductVariant> productVariants) {
-        this.productId = productId;
-        this.accountId = accountId;
-        this.imageUrl = imageUrl;
-        this.productName = productName;
-        this.categoryId = categoryId;
-        this.discountId = discountId;
-        this.createdDate = createdDate;
-        this.description = description;
-        this.status = status;
-        this.productVariants = productVariants;
-    }
-
-    public Product(int productId, String imageUrl, String productName, Timestamp createdDate, String description, Category category) {
-        this.productId = productId;
-        this.imageUrl = imageUrl;
-        this.productName = productName;
-        this.createdDate = createdDate;
-        this.description = description;
-        this.category = category;
-    }
-
-    public Product(int accountId, String imageUrl, String productName, int categoryId, Timestamp createdDate, String description, String status, List<ProductVariant> productVariants) {
-        this.accountId = accountId;
-        this.imageUrl = imageUrl;
-        this.productName = productName;
-        this.categoryId = categoryId;
-        this.createdDate = createdDate;
-        this.description = description;
-        this.status = status;
-        this.productVariants = productVariants;
-    }
-
-    public Product(int productId, String imageUrl, String productName, int categoryId, String description, String status, List<ProductVariant> productVariants) {
-        this.productId = productId;
-        this.imageUrl = imageUrl;
-        this.productName = productName;
-        this.categoryId = categoryId;
-        this.description = description;
-        this.status = status;
-        this.productVariants = productVariants;
     }
 
     public int getProductId() {
@@ -102,12 +59,12 @@ public class Product {
         this.accountId = accountId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getProductName() {
@@ -118,28 +75,36 @@ public class Product {
         this.productName = productName;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getPrice() {
+        return price;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public Integer getDiscountId() {
-        return discountId;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setDiscountId(Integer discountId) {
-        this.discountId = discountId;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
+    public int getCategoryID() {
+        return categoryID;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public Date getCreateProductDate() {
+        return createProductDate;
+    }
+
+    public void setCreateProductDate(Date createProductDate) {
+        this.createProductDate = createProductDate;
     }
 
     public String getDescription() {
@@ -150,28 +115,12 @@ public class Product {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
+    public int getDiscountId() {
+        return discountId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDiscountId(int discountId) {
+        this.discountId = discountId;
     }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public List<ProductVariant> getProductVariants() {
-        return productVariants;
-    }
-
-    public void setProductVariants(List<ProductVariant> productVariants) {
-        this.productVariants = productVariants;
-    }
-
+    
 }
