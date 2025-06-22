@@ -10,8 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import model.Account;
-
 
 /**
  *
@@ -219,8 +222,7 @@ public class UserDAO extends ConnectDB {
         }
         return null;
     }
-    
-    
+
     public boolean updatePassword(String email, String newPassword) {
         String sql = "UPDATE Account SET Password = ? WHERE Email = ?";
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
@@ -233,27 +235,26 @@ public class UserDAO extends ConnectDB {
         }
         return false;
     }
-    
+
     public void storeLoginToken(int accountId, String token) {
-    String sql = "UPDATE Account SET remember_token = ? WHERE AccountID = ?";
-    try (PreparedStatement ps = connect.prepareStatement(sql)) {
-        ps.setString(1, token);
-        ps.setInt(2, accountId);
-        ps.executeUpdate();
-        System.out.println("Remember token saved: " + token); // Thêm dòng này để debug
-    } catch (Exception e) {
-        e.printStackTrace(); // hoặc log nếu bị lỗi DB
+        String sql = "UPDATE Account SET remember_token = ? WHERE AccountID = ?";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setString(1, token);
+            ps.setInt(2, accountId);
+            ps.executeUpdate();
+            System.out.println("Remember token saved: " + token); // Thêm dòng này để debug
+        } catch (Exception e) {
+            e.printStackTrace(); // hoặc log nếu bị lỗi DB
+        }
     }
-}
 
-
-public Account getUserByToken(String token) {
-    String sql = "SELECT * FROM Account WHERE remember_token = ?";
-    try ( PreparedStatement ps = connect.prepareStatement(sql)) {
-        ps.setString(1, token);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return new Account(
+    public Account getUserByToken(String token) {
+        String sql = "SELECT * FROM Account WHERE remember_token = ?";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setString(1, token);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Account(
                         rs.getInt("AccountID"),
                         rs.getInt("RoleID"),
                         rs.getString("ImageURL"),
@@ -267,12 +268,91 @@ public Account getUserByToken(String token) {
                         rs.getString("Description"),
                         rs.getString("remember_token")
                 );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
 
+    public Map<String, Integer> getCustomerAccountStatsByMonth() {
+        Map<String, Integer> stats = new LinkedHashMap<>();
+        String sql = "SELECT FORMAT(CreateDate, 'yyyy-MM') AS Month, COUNT(*) AS Total "
+                + "FROM Account WHERE RoleID = 3 "
+                + "GROUP BY FORMAT(CreateDate, 'yyyy-MM') ORDER BY Month";
+
+        try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                stats.put(rs.getString("Month"), rs.getInt("Total"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stats;
+    }
+
+    public List<Account> getRandomTopCustomers(int limit) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT TOP (?) * FROM Account WHERE RoleID = 3 ORDER BY NEWID()";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountID(rs.getInt("AccountID"));
+                acc.setFullName(rs.getString("FullName"));
+                acc.setEmail(rs.getString("Email"));
+                acc.setImageURL(rs.getString("ImageURL"));
+                list.add(acc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public Account getAccountById(int id) {
+        String sql = "SELECT * FROM Account WHERE AccountID = ?";
+        try (PreparedStatement stmt = connect.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Account(
+                        rs.getInt("AccountID"),
+                        rs.getInt("RoleID"),
+                        rs.getString("ImageURL"),
+                        rs.getString("FullName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Address"),
+                        rs.getTimestamp("CreateDate").toLocalDateTime(),
+                        rs.getBoolean("Status"),
+                        rs.getString("Description")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public boolean updateAccount(Account account) {
+        String sql = "UPDATE Account SET FullName=?, Email=?, PhoneNumber=?, Address=?, ImageURL=?, Description=?, CreateDate=? WHERE AccountID=?";
+        try (PreparedStatement stmt = connect.prepareStatement(sql)) {
+            stmt.setString(1, account.getFullName());
+            stmt.setString(2, account.getEmail());
+            stmt.setString(3, account.getPhoneNumber());
+            stmt.setString(4, account.getAddress());
+            stmt.setString(5, account.getImageURL());
+            stmt.setString(6, account.getDescription());
+            stmt.setTimestamp(7, Timestamp.valueOf(account.getCreateDate()));
+            stmt.setInt(8, account.getAccountID());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

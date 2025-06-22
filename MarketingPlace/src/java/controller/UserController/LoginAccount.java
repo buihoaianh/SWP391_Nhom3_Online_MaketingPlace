@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.UserController;
 
 import model.Account;
@@ -22,9 +21,8 @@ import java.util.UUID;
  *
  * @author Hi Windows 11 Home
  */
-@WebServlet(name = "LoginAccount", urlPatterns = { "/loginAccount" })
+@WebServlet(name = "LoginAccount", urlPatterns = {"/loginAccount"})
 public class LoginAccount extends HttpServlet {
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,33 +32,32 @@ public class LoginAccount extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String email = request.getParameter("email");
-        
+
         String password = request.getParameter("password");
-        
+
         String remember = request.getParameter("remember"); // lấy giá trị checkbox
 
         UserDAO dao = new UserDAO();
         Boolean emailExist = dao.isEmailExist(email);
         Account user = dao.getUserByEmail(email);
 
-        
         if (!emailExist || null == user) {
             request.setAttribute("mess", "Sai email!");
             request.getRequestDispatcher("jsp/admin/loginRegister.jsp").forward(request, response);
             return;
         }
-        
+
         // Lấy hashedPassword từ database
         String hashedPassword = user.getPassword(); // Giả sử Account có getPassword() trả về hashedPassword
 
         // So sánh mật khẩu người dùng nhập với hashedPassword
         boolean isPasswordMatch = BCrypt.checkpw(password, hashedPassword);
-        
+
         if (!isPasswordMatch) {
             request.setAttribute("mess", "Sai mật khẩu!");
             request.getRequestDispatcher("jsp/admin/loginRegister.jsp").forward(request, response);
             return;
-        } 
+        }
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
@@ -95,11 +92,18 @@ public class LoginAccount extends HttpServlet {
         String fullName = user.getFullName(); // hoặc thông tin gì mày muốn truyền sang home.jsp
         session.setAttribute("message", "Login successful! Welcome " + fullName);
 
-        // Forward sang home.jsp
-        request.getRequestDispatcher("/jsp/public/home.jsp").forward(request, response);
-            
+        // Sau khi đăng nhập thành công
+        int role = user.getRoleID(); // Giả sử bạn có trường roleID trong Account
+
+        if (role == 2) {
+            // Chuyển đến trang admin
+            response.sendRedirect(request.getContextPath() + "/saller-dashboard");
+        } else {
+            // Chuyển đến trang người dùng bình thường
+            request.getRequestDispatcher("/jsp/public/home.jsp").forward(request, response);
+        }
+
     }
-    
 
     @Override
     public String getServletInfo() {
@@ -107,5 +111,3 @@ public class LoginAccount extends HttpServlet {
     }// </editor-fold>
 
 }
-
-
