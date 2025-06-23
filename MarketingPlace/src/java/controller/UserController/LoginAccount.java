@@ -72,7 +72,7 @@ public class LoginAccount extends HttpServlet {
             request.setAttribute("mess", "Sai email hoặc mật khẩu !");
             request.getRequestDispatcher("jsp/admin/loginRegister.jsp").forward(request, response);
         } else {
-            // Đăng nhập thành công
+            // dang nhap thanh cong
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 

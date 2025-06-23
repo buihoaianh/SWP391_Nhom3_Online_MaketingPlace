@@ -20,7 +20,7 @@ public class SellerDao extends ConnectDB {
         try {
             this.connect = ConnectDB.getConnection();
             if (this.connect == null) {
-                throw new SQLException("Không thể tạo Connection. ConnectDB trả về null.");
+                throw new SQLException(" Không thể tạo Connection. ConnectDB trả về null. ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class SellerDao extends ConnectDB {
 
     public List<Integer> getSellerAccountIDs() {
         List<Integer> sellerIds = new ArrayList<>();
-        String sql = "SELECT AccountID FROM Account WHERE RoleID = 2";
+        String sql = " SELECT AccountID FROM Account WHERE RoleID = 2 ";
 
         try (PreparedStatement ps = connect.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
