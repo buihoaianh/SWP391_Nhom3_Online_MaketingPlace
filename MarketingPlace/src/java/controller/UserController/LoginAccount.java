@@ -69,7 +69,7 @@ public class LoginAccount extends HttpServlet {
 
         if (!userExist) {
             // Sai email hoặc password
-            request.setAttribute("mess", "Sai email hoặc mật khẩu!");
+            request.setAttribute("mess", "Sai email hoặc mật khẩu !");
             request.getRequestDispatcher("jsp/admin/loginRegister.jsp").forward(request, response);
         } else {
             // Đăng nhập thành công
