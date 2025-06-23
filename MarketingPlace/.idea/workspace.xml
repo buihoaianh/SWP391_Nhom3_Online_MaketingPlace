@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1233aef7-75f5-4faa-aa19-36fce6ece8e1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/config/ConnectDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/config/ConnectDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/UserController/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/UserController/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/UserController/ListSellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/UserController/ListSellerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/dao/DBConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/dao/DBConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/dao/SellerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/dao/SellerDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/components/sidebarAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/components/sidebarAdmin.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/css/list-seller.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/css/list-seller.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/jsp/admin/Dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/jsp/admin/Dashboard.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/jsp/admin/ListSellerAdmin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/jsp/admin/ListSellerAdmin.jsp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2yjjjGRoZpy4EdSeFeBByCe3rBu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Admin/Desktop/SWP1/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1233aef7-75f5-4faa-aa19-36fce6ece8e1" name="Changes" comment="" />
+      <created>1750355009517</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750355009517</updated>
+    </task>
+    <servers />
+  </component>
+</project>
