@@ -157,7 +157,7 @@
                                         <p class="mb-0">Access account &amp; manage orders</p>
                                     </div>
                                     <div class="dropdown-body">
-                                        <a class="dropdown-item d-flex align-items-center" href="Profile.jsp">
+                                        <a class="dropdown-item d-flex align-items-center" href="jsp/Profile.jsp">
                                             <i class="bi bi-person-circle me-2"></i>
                                             <span>My Profile</span>
                                         </a>
