@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(name = "ForgotPassword", urlPatterns = {"/forgotpassword"})
 public class ForgotPassword extends HttpServlet {
@@ -17,13 +18,15 @@ public class ForgotPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Hiển thị form nhập email
         request.getRequestDispatcher("/jsp/guest/forgotPassword.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         String email = request.getParameter("email");
 
@@ -36,20 +39,23 @@ public class ForgotPassword extends HttpServlet {
             return;
         }
 
-        // Tạo mật khẩu mới ngẫu nhiên
-        String newPassword = generateRandomPassword(8);
+        // Tạo mật khẩu mới dạng text
+        String newPasswordPlain = generateRandomPassword(8);
 
-        // Cập nhật mật khẩu mới vào database
-        boolean updated = dao.updatePassword(email, newPassword);
+        // Băm mật khẩu trước khi lưu vào DB
+        String hashedPassword = BCrypt.hashpw(newPasswordPlain, BCrypt.gensalt());
+
+        // Cập nhật vào DB
+        boolean updated = dao.updatePassword(email, hashedPassword);
         if (!updated) {
-            request.setAttribute("error", "Cập nhật mật khẩu thất bại.");
+            request.setAttribute("error", "Cập nhật mật khẩu thất bại. Vui lòng thử lại.");
             request.getRequestDispatcher("/jsp/guest/forgotPassword.jsp").forward(request, response);
             return;
         }
 
-        // Gửi email chứa mật khẩu mới
+        // Gửi email
         sendEmail mailer = new sendEmail();
-        boolean sent = mailer.sendNewPassword(email, newPassword, user.getFullName());
+        boolean sent = mailer.sendNewPassword(email, newPasswordPlain, user.getFullName());
 
         if (sent) {
             request.setAttribute("message", "Mật khẩu mới đã được gửi đến email của bạn.");
@@ -60,20 +66,18 @@ public class ForgotPassword extends HttpServlet {
         request.getRequestDispatcher("/jsp/guest/forgotPassword.jsp").forward(request, response);
     }
 
-    // Hàm tạo mật khẩu ngẫu nhiên
     private String generateRandomPassword(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
-            int idx = random.nextInt(chars.length());
-            sb.append(chars.charAt(idx));
+            sb.append(chars.charAt(random.nextInt(chars.length())));
         }
         return sb.toString();
     }
 
     @Override
     public String getServletInfo() {
-        return "ForgotPassword servlet - gửi mật khẩu mới qua email";
+        return "ForgotPassword servlet - gửi mật khẩu mới qua email (có mã hóa)";
     }
 }

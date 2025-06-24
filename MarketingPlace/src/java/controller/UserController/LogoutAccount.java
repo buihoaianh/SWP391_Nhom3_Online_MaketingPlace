@@ -72,7 +72,7 @@ public class LogoutAccount extends HttpServlet {
         request.getSession(true).setAttribute("message", "Đăng xuất thành công!");
 
         // Quay về home.jsp
-        request.getRequestDispatcher("jsp/public/home.jsp").forward(request, response);
+        request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
     }
 
     /** 
