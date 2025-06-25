@@ -16,7 +16,7 @@ public class Category {
 
     public Category() {
     }
-
+    // constructor full parameters
     public Category(int CategoryID, String CategoryName, String ImageURL, String Description) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
