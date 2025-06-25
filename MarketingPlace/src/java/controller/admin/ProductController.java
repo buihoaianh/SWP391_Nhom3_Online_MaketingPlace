@@ -36,8 +36,8 @@ public class ProductController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             ProductDAO dao = new ProductDAO();
-            List<Product> products = dao.getProducts();
-            request.setAttribute("products", products);
+//            List<Product> products = dao.getProducts();
+//            request.setAttribute("products", products);
             request.getRequestDispatcher("/jsp/admin/ProductList.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

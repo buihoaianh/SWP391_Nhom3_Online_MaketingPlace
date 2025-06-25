@@ -131,8 +131,8 @@ public class CreateProductController extends HttpServlet {
             }
 
             // Lưu vào DB
-            Product product = new Product(createdBy,imageName, productName, Integer.parseInt(categoryID), createDate, description, "Active", variants);
-            pdao.createProduct(product);
+//            Product product = new Product(createdBy,imageName, productName, Integer.parseInt(categoryID), createDate, description, "Active", variants);
+//            pdao.createProduct(product);
 
             // Chuyển hướng sau khi tạo sản phẩm thành công
             request.setAttribute("message", "Create Product Success!");
