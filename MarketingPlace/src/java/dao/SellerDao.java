@@ -9,13 +9,18 @@ import java.util.List;
 import model.Account;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.Role;
 
 public class SellerDao extends ConnectDB {
-
+    private final Logger logger;
     private Connection connect;
 
+
     public SellerDao() {
+        this.logger = Logger.getLogger(this.getClass().getName());
         try {
             this.connect = ConnectDB.getConnection();
             if (this.connect == null) {
@@ -39,7 +44,7 @@ public class SellerDao extends ConnectDB {
                 sellerIds.add(rs.getInt("AccountID"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return sellerIds;
     }
@@ -97,7 +102,7 @@ public class SellerDao extends ConnectDB {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return acc;
     }
