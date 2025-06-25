@@ -100,9 +100,8 @@ public class LoginAccount extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/saller-dashboard");
         } else {
             // Chuyển đến trang người dùng bình thường
-            request.getRequestDispatcher("/jsp/public/home.jsp").forward(request, response);
-        }
-
+            request.getRequestDispatcher("/jsp/public/Home.jsp").forward(request, response);
+        }//chinh
     }
 
     @Override
