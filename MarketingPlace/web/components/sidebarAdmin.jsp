@@ -38,7 +38,7 @@
                     <i class="fas fa-user-circle text-dark"></i>List Customer</a>
             </div>
             <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/products" class="nav-link text-dark">
+                <a href="${pageContext.request.contextPath}/getListCustomer" class="nav-link text-dark">
                     <i class="fas fa-user-circle text-dark"></i>List Product</a>
             </div>
 

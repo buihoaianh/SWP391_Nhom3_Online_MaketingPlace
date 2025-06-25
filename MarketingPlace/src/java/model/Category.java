@@ -1,46 +1,64 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package model;
 
+/**
+ *
+ * @author Admin
+ */
 public class Category {
-
-    private String categoryId;
-    private String categoryName;
-    private String description;
+    private int CategoryID;
+    private String CategoryName;
+    private String ImageURL;
+    private String Description;
 
     public Category() {
     }
 
-    public Category(String categoryId, String categoryName, String description) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.description = description;
+    public Category(int CategoryID, String CategoryName, String ImageURL, String Description) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+        this.ImageURL = ImageURL;
+        this.Description = Description;
     }
 
-    public Category(String categoryName) {
-        this.categoryName = categoryName;
+    public int getCategoryID() {
+        return CategoryID;
     }
 
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryID(int CategoryID) {
+        this.CategoryID = CategoryID;
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return CategoryName;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
+    }
+
+    public String getImageURL() {
+        return ImageURL;
+    }
+
+    public void setImageURL(String ImageURL) {
+        this.ImageURL = ImageURL;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
 
+    @Override
+    public String toString() {
+        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", ImageURL=" + ImageURL + ", Description=" + Description + '}';
+    }
+    
 }

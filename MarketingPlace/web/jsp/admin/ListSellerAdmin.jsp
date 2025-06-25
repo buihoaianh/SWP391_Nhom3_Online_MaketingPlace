@@ -55,6 +55,22 @@
 
             <div class="content">
                 <h1>List Seller</h1>
+                <form class="d-flex mb-3" action="${pageContext.request.contextPath}/admin/list-seller" method="get">
+                    <input type="text" name="keyword" placeholder="Search by ID or Name..." class="form-control me-2" style="max-width: 300px;">
+                    <button type="submit" class="btn btn-primary me-2">Search</button>
+                    <a href="${pageContext.request.contextPath}/admin/list-seller" class="btn btn-secondary">View All</a>
+                </form>
+
+                <c:if test="${not empty sessionScope.statusMessage}">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        ${sessionScope.statusMessage}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <c:remove var="statusMessage" scope="session" />
+                </c:if>
+
+
+
                 <table border="1">
                     <thead>
                         <tr>
@@ -64,6 +80,8 @@
                             <th>FullName</th>
                             <th>Status</th>
                             <th>Description</th>
+                            <th>Change Status</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -83,13 +101,35 @@
                                         ${seller.fullName}
                                     </a>
                                 </td>
-                                <td>${seller.status}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${seller.status}">Active</c:when>
+                                        <c:otherwise> Inactive </c:otherwise>
+                                    </c:choose>
+                                </td>
+
                                 <td>${seller.description}</td>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/admin/list-seller/change-seller-status" method="post" style="display:inline;">
+                                        <input type="hidden" name="accountId" value="${seller.accountID}" />
+                                        <button type="submit" class="btn btn-sm
+                                                <c:choose>
+                                                    <c:when test="${seller.status}">btn-danger</c:when>
+                                                    <c:otherwise>btn-success</c:otherwise>
+                                                </c:choose>">
+                                            <c:choose>
+                                                <c:when test="${seller.status}">Inactive</c:when>
+                                                <c:otherwise>Active</c:otherwise>
+                                            </c:choose>
+                                        </button>
+                                    </form>
+                                </td>
+
                             </tr>
                         </c:forEach>
                         <c:if test="${empty sellerList}">
                             <tr>
-                                <td colspan="6" class="text-center">No have Seller </td>
+                                <td colspan="6" class="text-center">No found Seller </td>
                             </tr>
                         </c:if>
                     </tbody>
@@ -112,6 +152,8 @@
         <script src="${pageContext.request.contextPath}/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
         <!-- Template Javascript -->
         <script src="${pageContext.request.contextPath}/js/main.js"></script>

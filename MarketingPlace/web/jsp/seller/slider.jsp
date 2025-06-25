@@ -42,6 +42,13 @@
                             <a href="layout-horizontal.html">Horizontal Menu</a>
                         </li>
                     </ul>
+                </li>    
+
+                <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/CategoriesURL" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>List Categories</span>
+                    </a>
                 </li>
 
                 <li class="sidebar-title">Forms &amp; Tables</li>

@@ -19,13 +19,11 @@
             <file>file:/D:/Work/Java/JSPServlet/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/sidebarAdmin.jsp</file>
         </group>
         <group>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/model/Account.java</file>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/SellerController/UpdateSellerProfile.java</file>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/config/ConnectDB.java</file>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/dao/DBConnect.java</file>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/UserController/LoginAccount.java</file>
-            <file>file:/D:/SWP/git/MarketingPlace/src/java/controller/SellerController/SellerProfile.java</file>
+            <file>file:/C:/Users/Admin/Desktop/SWP2/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/admin/ProductController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/SWP2/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/seller/ListCategories.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/SWP2/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Category.java</file>
+            <file>file:/C:/Users/Admin/Desktop/SWP2/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/seller/slider.jsp</file>
+            <file>file:/C:/Users/Admin/Desktop/SWP2/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/admin/CreateProductController.java</file>
         </group>
     </open-files>
 </project-private>

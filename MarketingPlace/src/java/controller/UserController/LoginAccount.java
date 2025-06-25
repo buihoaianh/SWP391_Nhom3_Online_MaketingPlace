@@ -98,7 +98,11 @@ public class LoginAccount extends HttpServlet {
         if (role == 2) {
             // Chuyển đến trang admin
             response.sendRedirect(request.getContextPath() + "/saller-dashboard");
-        } else {
+        } else if(role == 1){
+            response.sendRedirect(request.getContextPath() + "/admin");
+        }
+        else 
+        {
             // Chuyển đến trang người dùng bình thường
             request.getRequestDispatcher("/jsp/public/Home.jsp").forward(request, response);
         }//chinh

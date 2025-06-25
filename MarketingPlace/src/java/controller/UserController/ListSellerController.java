@@ -2,10 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.UserController;
-
-
 
 import dao.SellerDao;
 import jakarta.servlet.ServletException;
@@ -24,29 +21,34 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 
-
-
 @WebServlet(name = "ListSellerController", urlPatterns = {"/admin/list-seller"})
 public class ListSellerController extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         response.setContentType("text/html;charset=UTF-8");
 
-            SellerDao dao = new SellerDao();
+        String keyword = request.getParameter("keyword");
+        SellerDao dao = new SellerDao();
+        List<Account> sellerList;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sellerList = dao.searchSeller(keyword.trim());
+        } else {
             List<Integer> sellerIds = dao.getSellerAccountIDs();
-            List<Account> sellerList = new ArrayList<>();
+            sellerList = new ArrayList<>();
             for (Integer id : sellerIds) {
                 Account acc = dao.getSellerById(id);
                 if (acc != null) {
                     sellerList.add(acc);
                 }
             }
-            request.setAttribute("sellerList", sellerList);
-            request.getRequestDispatcher("/jsp/admin/ListSellerAdmin.jsp")
-                   .forward(request, response);
+        }
 
-        // test commit
+        request.setAttribute("sellerList", sellerList);
+        request.getRequestDispatcher("/jsp/admin/ListSellerAdmin.jsp")
+                .forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign to edit the code.">
@@ -74,4 +76,3 @@ public class ListSellerController extends HttpServlet {
         return "Servlet for displaying Seller list (RoleID = 2)";
     }
 }
-
