@@ -1,3 +1,5 @@
+<%@page import="model.ProductVariant"%>
+<%@page import="model.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Cart" %>
@@ -42,17 +44,21 @@
         <!-- Bootstrap Icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
         <style>
+            .input-group .form-control.quantity-input {
+                max-width: 60px;
+            }
             .cart-item img {
-                max-width: 100px;
-                height: auto;
+                border-radius: 8px;
             }
         </style>
+
     </head>
     <body>
         <%
-    ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
-    int cartSize = (cart != null) ? cart.size() : 0;
+            ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
+            int cartSize = (cart != null) ? cart.size() : 0;
         %>
         <header id="header" class="header position-relative">
             <!-- Top Bar -->
@@ -177,19 +183,19 @@
                                         </a>
                                     </div>
                                     <div class="dropdown-footer">
-                                        <% 
-                                          // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
-                                          if (session.getAttribute("user") != null) { 
-                                            // Đã login -> hiển thị nút Logout
+                                        <%
+                                            // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
+                                            if (session.getAttribute("user") != null) {
+                                                // Đã login -> hiển thị nút Logout
                                         %>
-                                        <a href="<%= request.getContextPath() %>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
-                                        <% 
-                                          } else { 
+                                        <a href="<%= request.getContextPath()%>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
+                                        <%
+                                        } else {
                                             // Chưa login -> hiển thị Sign In/Register
                                         %>
                                         <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
                                         <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
-                                        <% } %>
+                                        <% }%>
                                     </div>
                                 </div>
                             </div>
@@ -825,7 +831,7 @@
         </header>
 
         <div class="container mt-5">
-            <h1>Your Shopping Cart</h1>
+            <h1 class="mb-4">🛒 Your Shopping Cart</h1>
             <%
                 if (cart == null || cart.isEmpty()) {
             %>
@@ -833,76 +839,79 @@
                 Your cart is empty!
             </div>
             <%
-                } else {
+            } else {
             %>
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead class="table-primary">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Product Image</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Action</th>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Variant</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        int index = 0;
+                        int index = 1;
                         double grandTotal = 0;
                         for (Cart item : cart) {
-                            double total = Double.parseDouble(item.getProduct().getPrice()) * item.getQuantity();
+                            Product p = item.getProduct();
+                            ProductVariant variant = item.getProductVariant();
+                            long price = variant.getPrice();
+                            String imgUrl = p.getThumbnailURL() != null ? p.getThumbnailURL() : "img/default.jpg";
+                            double total = price * item.getQuantity();
                             grandTotal += total;
                     %>
                     <tr>
-                        <th scope="row"><%= (index + 1) %></th>
+                        <td><%= index++%></td>
                         <td>
-                            <div class="cart-item">
-                                <img src="<%= item.getProduct().getImageURL() %>" alt="Product Image">
+                            <img src="<%= imgUrl%>" alt="Product" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                        </td>
+                        <td><%= p.getProductName()%></td>
+                        <td>
+                            <% if (variant.getColor() != null) {%>
+                            <span><b>Color:</b> <%= variant.getColor().getName()%></span><br>
+                            <% } %>
+                            <% if (variant.getSize() != null) {%>
+                            <span><b>Size:</b> <%= variant.getSize().getName()%></span>
+                            <% }%>
+                        </td>
+                        <td>$<%= price%></td>
+                        <td>
+                            <div class="input-group input-group-sm justify-content-center">
+                                <button class="btn btn-outline-secondary" onclick="updateQuantity(<%= variant.getProductVariantId()%>, -1)">-</button>
+                                <input type="number" class="form-control text-center" value="<%= item.getQuantity()%>" min="1"
+                                       onchange="updateQuantity(<%= variant.getProductVariantId()%>, this.value - <%= item.getQuantity()%>)">
+                                <button class="btn btn-outline-secondary" onclick="updateQuantity(<%= variant.getProductVariantId()%>, 1)">+</button>
                             </div>
                         </td>
-                        <td><%= item.getProduct().getProductName() %></td>
-                        <td>$<%= String.format("%.0f", Double.parseDouble(item.getProduct().getPrice())) %></td>
+                        <td>$<%= String.format("%.0f", total)%></td>
                         <td>
-                            <div class="input-group input-group-sm" style="width: 120px;">
-                                <button 
-                                    class="btn btn-outline-secondary" 
-                                    type="button" 
-                                    onclick="updateQuantity(<%= item.getProduct().getProductId() %>, -1)"
-                                    >
-                                    -
-                                </button>
-                                <input type="number" class="form-control quantity-input" value="<%= item.getQuantity() %>" min="1" onchange="updateQuantity(<%= index %>, this.value)">
-                                <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(<%= item.getProduct().getProductId() %>, 1)">+</button>
-                            </div>
-                        </td>
-                        <td>$<%= String.format("%.0f", total) %></td>
-                        <td>
-                            <button onclick="updateQuantity(<%= item.getProduct().getProductId() %>, <%=-item.getQuantity()%>)" class="btn btn-danger btn-sm">
+                            <button onclick="updateQuantity(<%= variant.getProductVariantId()%>, -<%= item.getQuantity()%>)" class="btn btn-danger btn-sm">
                                 <i class="bi bi-trash"></i> Remove
                             </button>
                         </td>
                     </tr>
-                    <%
-                            index++;
-                        }
-                    %>
+                    <% }%>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="5" class="text-end"><strong>Grand Total:</strong></td>
-                        <td><strong>$<%= String.format("%.0f", grandTotal) %></strong></td>
+                        <td colspan="6" class="text-end fw-bold">Grand Total:</td>
+                        <td class="fw-bold">$<%= String.format("%.0f", grandTotal)%></td>
                         <td></td>
                     </tr>
                 </tfoot>
             </table>
-            <div class="text-end">
-                <a href="/your-project/checkout" class="btn btn-success">Checkout</a>
+            <div class="text-end mt-3">
+                <a href="<%= request.getContextPath()%>/confirm-checkout" class="btn btn-success btn-lg">
+                    <i class="bi bi-credit-card"></i> Checkout
+                </a>
             </div>
-            <%
-                }
-            %>
+            <% }%>
         </div>
 
         <footer id="footer" class="footer" style="margin-top: 40px">
@@ -1067,23 +1076,25 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
         <script>
-                                    function updateQuantity(productId, newQuantity) {
-                                        fetch('/MarketingPlace/addToCart?productId=' + productId + '&quantity=' + newQuantity, {
-                                            method: 'POST'
-                                        })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    if (data.success) {
-                                                        window.location.href = "cartList";
-                                                    } else {
-                                                        alert('Failed to update quantity: ' + data.message);
-                                                    }
-                                                })
-                                                .catch(error => {
-                                                    console.error('Error:', error);
-                                                    alert('An error occurred!');
-                                                });
-                                    }
+                                function updateQuantity(variantId, change) {
+                                    fetch('/MarketingPlace/addToCart?variantId=' + variantId + '&quantity=' + change, {
+                                        method: 'POST'
+                                    })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    window.location.href = "cartList";
+                                                } else {
+                                                    alert('Failed to update quantity: ' + data.message);
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                                alert('An error occurred!');
+                                            });
+                                }
         </script>
+
+
     </body>
 </html>

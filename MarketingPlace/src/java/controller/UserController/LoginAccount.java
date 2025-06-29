@@ -104,7 +104,7 @@ public class LoginAccount extends HttpServlet {
         else 
         {
             // Chuyển đến trang người dùng bình thường
-            request.getRequestDispatcher("/jsp/public/Home.jsp").forward(request, response);
+            request.getRequestDispatcher("Home").forward(request, response);
         }//chinh
     }
 
