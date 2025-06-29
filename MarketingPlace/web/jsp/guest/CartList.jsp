@@ -884,8 +884,7 @@
                         <td>
                             <div class="input-group input-group-sm justify-content-center">
                                 <button class="btn btn-outline-secondary" onclick="updateQuantity(<%= variant.getProductVariantId()%>, -1)">-</button>
-                                <input type="number" class="form-control text-center" value="<%= item.getQuantity()%>" min="1"
-                                       onchange="updateQuantity(<%= variant.getProductVariantId()%>, this.value - <%= item.getQuantity()%>)">
+                                <input type="number" class="form-control text-center" value="<%= item.getQuantity()%>" readonly>
                                 <button class="btn btn-outline-secondary" onclick="updateQuantity(<%= variant.getProductVariantId()%>, 1)">+</button>
                             </div>
                         </td>

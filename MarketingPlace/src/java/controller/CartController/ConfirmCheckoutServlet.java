@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import model.Account;
 import model.Cart;
 
 /**
@@ -25,8 +26,14 @@ public class ConfirmCheckoutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
+        Account user = (Account) session.getAttribute("user");
         if (cart == null || cart.isEmpty()) {
-            response.sendRedirect("cart.jsp");
+            response.sendRedirect("Home");
+            return;
+        }
+        
+        if(user == null) {
+            request.getRequestDispatcher("/jsp/admin/loginRegister.jsp?tab=login").forward(request, response);
             return;
         }
 

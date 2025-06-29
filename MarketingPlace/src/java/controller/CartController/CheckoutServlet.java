@@ -30,7 +30,7 @@ public class CheckoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
         Account user = (Account) session.getAttribute("user");
-        String paymentMethod = request.getParameter("payment-method");
+        String paymentMethod = request.getParameter("paymentMethod");
 
         if (cart == null || cart.isEmpty() || user == null || paymentMethod == null) {
             response.sendRedirect("loginAccount");
@@ -38,7 +38,12 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         int paymentMethodId = paymentMethod.equals("vnpay") ? 2 : 1;
-
+        int provinceCode = Integer.parseInt(request.getParameter("provinceCode"));
+        String provinceName = request.getParameter("provinceName");
+        int districtCode = Integer.parseInt(request.getParameter("districtCode"));
+        String districtName = request.getParameter("districtName");
+        int wardCode = Integer.parseInt(request.getParameter("wardCode"));
+        String wardName = request.getParameter("wardName");
         double total = 0;
         for (Cart item : cart) {
             ProductVariant variant = item.getProductVariant();
@@ -54,8 +59,14 @@ public class CheckoutServlet extends HttpServlet {
         order.setCustomerId(user.getAccountID());
         order.setSellerId(cart.get(0).getProduct().getAccountId());
         order.setPaymentId(paymentId);
-        order.setOrderStatusId(paymentMethod.equals("vnpay") ? 5 : 1);
+        order.setOrderStatusId(1);
         order.setTotalAmount(String.valueOf(total));
+        order.setProvinceCode(provinceCode);
+        order.setProvinceName(provinceName);
+        order.setDistrictCode(districtCode);
+        order.setDistrictName(districtName);
+        order.setWardCode(wardCode);
+        order.setWardName(wardName);
 
         OrderDAO orderDAO = new OrderDAO();
         int orderId = orderDAO.insertOrder(order);

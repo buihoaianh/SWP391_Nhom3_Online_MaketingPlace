@@ -15,13 +15,22 @@ import model.Order;
 public class OrderDAO extends ConnectDB {
 
     public int insertOrder(Order order) {
-        String sql = "INSERT INTO [Order] (SellerID, CustomerID, OrderDate, TotalAmount, PaymentID, OrderStatusID) VALUES (?, ?, GETDATE(), ?, ?, ?)";
+        String sql = "INSERT INTO [Order] (SellerID, CustomerID, OrderDate, TotalAmount, "
+                + "PaymentID, OrderStatusID, ProvinceCode, ProvinceName, DistrictCode, "
+                + "DistrictName, WardCode, WardName) "
+                + "VALUES (?, ?, GETDATE(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stm = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stm.setInt(1, order.getSellerId());
             stm.setInt(2, order.getCustomerId());
             stm.setDouble(3, Double.parseDouble(order.getTotalAmount())); // TotalAmount
             stm.setInt(4, order.getPaymentId());
             stm.setInt(5, order.getOrderStatusId()); // OrderStatusID
+            stm.setInt(6, order.getProvinceCode());
+            stm.setString(7, order.getProvinceName());
+            stm.setInt(8, order.getDistrictCode());
+            stm.setString(9, order.getDistrictName());
+            stm.setInt(10, order.getWardCode());
+            stm.setString(11, order.getWardName());
 
             int rows = stm.executeUpdate();
             if (rows > 0) {
