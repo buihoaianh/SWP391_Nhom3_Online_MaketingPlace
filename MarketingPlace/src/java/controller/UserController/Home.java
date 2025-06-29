@@ -37,9 +37,17 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ProductDAO dbProduct = new ProductDAO();
-        ArrayList<Product> products = dbProduct.getAllProduct();
-        System.out.println("Số sản phẩm lấy được: " + products.size());
-        request.setAttribute("products", products);
+
+        // Chỉ lấy 4 sản phẩm đầu tiên (hoặc nổi bật nếu có flag)
+        ArrayList<Product> allProducts = dbProduct.getAllProduct(); // hoặc getFeaturedProducts(4);
+        ArrayList<Product> featuredProducts = new ArrayList<>();
+
+        for (int i = 0; i < Math.min(4, allProducts.size()); i++) {
+            featuredProducts.add(allProducts.get(i));
+        }
+
+        System.out.println("Số sản phẩm nổi bật: " + featuredProducts.size());
+        request.setAttribute("products", featuredProducts);
         request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
     }
 

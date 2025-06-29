@@ -5,23 +5,19 @@
 package dao;
 
 import config.ConnectDB;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Product;
-import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.List;
-import model.Category;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import model.Color;
 import model.ProductVariant;
 import model.Size;
+
 /**
  *
  * @author tulok
@@ -209,37 +205,76 @@ public class ProductDAO extends ConnectDB {
 //            e.printStackTrace();
 //        }
 //    }
-
     public ArrayList<Product> getAllProduct() {
         ArrayList<Product> products = new ArrayList<>();
-        String sql = "SELECT [ProductID]\n"
-                + "      ,[AccountID]\n"
-                + "      ,[ImageURL]\n"
-                + "      ,[ProductName]\n"
-                + "      ,[Price]\n"
-                + "      ,[Quantity]\n"
-                + "      ,[CategoryID]\n"
-                + "      ,[DiscountID]\n"
-                + "      ,[CreateProductDate]\n"
-                + "      ,[Description]\n"
-                + "  FROM [dbo].[Products]";
+        String sql = "SELECT p.ProductID, p.AccountID, p.ProductName, p.ThumbnailURL, p.CategoryID, "
+                + "p.DiscountID, p.CreateProductDate, p.Description, p.Status, "
+                + "pi.ImageURL, "
+                + "pv.ProductVariantId, pv.ColorId, pv.SizeId, pv.Quantity AS VariantQuantity, "
+                + "pv.Price AS VariantPrice, pv.Status AS VariantStatus "
+                + "FROM Products p "
+                + "LEFT JOIN ProductImages pi ON p.ProductID = pi.ProductID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductId "
+                + "ORDER BY p.ProductID";
+
         try {
             PreparedStatement stm = connect.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
+
+            Map<Integer, Product> productMap = new LinkedHashMap<>();
+
             while (rs.next()) {
-                Product p = new Product();
-                p.setProductId(rs.getInt("ProductID"));
-                p.setAccountId(rs.getInt("AccountID"));
-                p.setImageURL(rs.getString("ImageURL"));
-                p.setProductName(rs.getString("ProductName"));
-                p.setPrice(rs.getString("Price"));
-                p.setQuantity(rs.getInt("Quantity"));
-                p.setCategoryID(rs.getInt("CategoryID"));
-                p.setDiscountId(rs.getInt("DiscountID"));
-                p.setCreateProductDate(rs.getDate("CreateProductDate"));
-                p.setDescription(rs.getString("Description"));
-                products.add(p);
+                int productId = rs.getInt("ProductID");
+                Product product = productMap.get(productId);
+
+                if (product == null) {
+                    product = new Product();
+                    product.setProductId(productId);
+                    product.setAccountId(rs.getInt("AccountID"));
+                    product.setProductName(rs.getString("ProductName"));
+                    product.setThumbnailURL(rs.getString("ThumbnailURL"));
+                    product.setCategoryID(rs.getInt("CategoryID"));
+                    product.setDiscountId(rs.getInt("DiscountID"));
+                    product.setCreateProductDate(rs.getDate("CreateProductDate"));
+                    product.setDescription(rs.getString("Description"));
+                    product.setStatus(rs.getString("Status"));
+                    product.setImageUrls(new ArrayList<>());
+                    product.setVariants(new ArrayList<>());
+                    productMap.put(productId, product);
+                }
+
+                // Add image if exists
+                String imageUrl = rs.getString("ImageURL");
+                if (imageUrl != null && !product.getImageUrls().contains(imageUrl)) {
+                    product.getImageUrls().add(imageUrl);
+                }
+
+                // Add variant if exists
+                int variantId = rs.getInt("ProductVariantId");
+                if (!rs.wasNull()) {
+                    ProductVariant variant = new ProductVariant();
+                    variant.setProductVariantId(variantId);
+                    variant.setProductId(productId);
+                    variant.setQuantity(rs.getInt("VariantQuantity"));
+                    variant.setPrice(rs.getLong("VariantPrice"));
+                    variant.setStatus(rs.getString("VariantStatus"));
+                    variant.setProduct(product); // Liên kết ngược lại với Product
+
+                    // Tạo đối tượng Color và Size chỉ với ID (chưa JOIN tên)
+                    Color color = new Color();
+                    color.setId(rs.getInt("ColorId"));
+                    variant.setColor(color);
+
+                    Size size = new Size();
+                    size.setId(rs.getInt("SizeId"));
+                    variant.setSize(size);
+
+                    product.getVariants().add(variant);
+                }
             }
+
+            products.addAll(productMap.values());
+
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -248,39 +283,116 @@ public class ProductDAO extends ConnectDB {
     }
 
     public Product getProductByID(int id) {
-        String sql = "SELECT [ProductID]\n"
-                + "      ,[AccountID]\n"
-                + "      ,[ImageURL]\n"
-                + "      ,[ProductName]\n"
-                + "      ,[Price]\n"
-                + "      ,[Quantity]\n"
-                + "      ,[CategoryID]\n"
-                + "      ,[DiscountID]\n"
-                + "      ,[CreateProductDate]\n"
-                + "      ,[Description]\n"
-                + "  FROM [Online_Maketingplace].[dbo].[Products]\n"
-                + "  Where [ProductID] = ?";
+        String sql = "SELECT p.ProductID, p.AccountID, p.ProductName, p.ThumbnailURL, p.CategoryID, "
+                + "p.DiscountID, p.CreateProductDate, p.Description, p.Status, "
+                + "pi.ImageURL, "
+                + "pv.ProductVariantId, pv.ColorId, pv.SizeId, pv.Quantity AS VariantQuantity, "
+                + "pv.Price AS VariantPrice, pv.Status AS VariantStatus "
+                + "FROM Products p "
+                + "LEFT JOIN ProductImages pi ON p.ProductID = pi.ProductID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductId "
+                + "WHERE p.ProductID = ?";
+
         try {
             PreparedStatement stm = connect.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
+
+            Product product = null;
+
             while (rs.next()) {
-                Product p = new Product();
-                p.setProductId(rs.getInt("ProductID"));
-                p.setAccountId(rs.getInt("AccountID"));
-                p.setImageURL(rs.getString("ImageURL"));
-                p.setProductName(rs.getString("ProductName"));
-                p.setPrice(rs.getString("Price"));
-                p.setQuantity(rs.getInt("Quantity"));
-                p.setCategoryID(rs.getInt("CategoryID"));
-                p.setDiscountId(rs.getInt("DiscountID"));
-                p.setCreateProductDate(rs.getDate("CreateProductDate"));
-                p.setDescription(rs.getString("Description"));
-                return p;
+                if (product == null) {
+                    product = new Product();
+                    product.setProductId(rs.getInt("ProductID"));
+                    product.setAccountId(rs.getInt("AccountID"));
+                    product.setProductName(rs.getString("ProductName"));
+                    product.setThumbnailURL(rs.getString("ThumbnailURL"));
+                    product.setCategoryID(rs.getInt("CategoryID"));
+                    product.setDiscountId(rs.getInt("DiscountID"));
+                    product.setCreateProductDate(rs.getDate("CreateProductDate"));
+                    product.setDescription(rs.getString("Description"));
+                    product.setStatus(rs.getString("Status"));
+                    product.setImageUrls(new ArrayList<>());
+                    product.setVariants(new ArrayList<>());
+                }
+
+                // Add image if exists
+                String imageUrl = rs.getString("ImageURL");
+                if (imageUrl != null && !product.getImageUrls().contains(imageUrl)) {
+                    product.getImageUrls().add(imageUrl);
+                }
+
+                // Add variant if exists
+                int variantId = rs.getInt("ProductVariantId");
+                if (!rs.wasNull()) {
+                    ProductVariant variant = new ProductVariant();
+                    variant.setProductVariantId(variantId);
+                    variant.setProductId(id);
+                    variant.setQuantity(rs.getInt("VariantQuantity"));
+                    variant.setPrice(rs.getLong("VariantPrice"));
+                    variant.setStatus(rs.getString("VariantStatus"));
+                    variant.setProduct(product);
+
+                    // Gán Color và Size (chỉ ID, nếu cần thêm name thì JOIN thêm bảng Color và Size)
+                    Color color = new Color();
+                    color.setId(rs.getInt("ColorId"));
+                    variant.setColor(color);
+
+                    Size size = new Size();
+                    size.setId(rs.getInt("SizeId"));
+                    variant.setSize(size);
+
+                    product.getVariants().add(variant);
+                }
             }
+
+            return product;
+
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return null;
     }
+
+    public static void main(String[] args) {
+        ProductDAO dao = new ProductDAO();
+        int testProductId = 12; // ← ID sản phẩm có thật trong database của bạn
+
+        Product p = dao.getProductByID(testProductId);
+
+        if (p != null) {
+            System.out.println("✅ Product found:");
+            System.out.println("ProductID: " + p.getProductId());
+            System.out.println("AccountID: " + p.getAccountId());
+            System.out.println("ProductName: " + p.getProductName());
+            System.out.println("ThumbnailURL: " + p.getThumbnailURL());
+            System.out.println("CategoryID: " + p.getCategoryID());
+            System.out.println("DiscountID: " + p.getDiscountId());
+            System.out.println("CreateDate: " + p.getCreateProductDate());
+            System.out.println("Description: " + p.getDescription());
+            System.out.println("Status: " + p.getStatus());
+
+            // In danh sách ảnh
+            System.out.println("\n🖼 Image URLs:");
+            for (String img : p.getImageUrls()) {
+                System.out.println(" - " + img);
+            }
+
+            // In danh sách biến thể
+            System.out.println("\n🧾 Product Variants:");
+            for (ProductVariant variant : p.getVariants()) {
+                System.out.println("VariantID: " + variant.getProductVariantId());
+                System.out.println("  ColorID: " + (variant.getColor() != null ? variant.getColor().getId() : "null"));
+                System.out.println("  SizeID: " + (variant.getSize() != null ? variant.getSize().getId() : "null"));
+                System.out.println("  Quantity: " + variant.getQuantity());
+                System.out.println("  Price: " + variant.getPrice());
+                System.out.println("  Status: " + variant.getStatus());
+                System.out.println("-------------------------------");
+            }
+        } else {
+            System.out.println("❌ Không tìm thấy sản phẩm với ID = " + testProductId);
+        }
+    }
+
 }

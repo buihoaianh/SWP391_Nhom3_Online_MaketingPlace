@@ -12,6 +12,16 @@ public class Cart {
 
     private Product product;
     private int quantity;
+    private ProductVariant productVariant;
+
+    public Cart() {
+    }
+
+    public Cart(Product product, int quantity, ProductVariant productVariant) {
+        this.product = product;
+        this.quantity = quantity;
+        this.productVariant = productVariant;
+    }
 
     public Cart(Product product, int quantity) {
         this.product = product;
@@ -33,5 +43,15 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public ProductVariant getProductVariant() {
+        return productVariant;
+    }
+
+    public void setProductVariant(ProductVariant productVariant) {
+        this.productVariant = productVariant;
+    }
+
+    
 
 }

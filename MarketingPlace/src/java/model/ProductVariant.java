@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author Admin
- */
 public class ProductVariant {
 
     private int productVariantId;
@@ -20,10 +12,13 @@ public class ProductVariant {
     private Product product;
     private Category category;
 
+    // ✅ Thêm mới
+    private String status;
+
     public ProductVariant() {
     }
 
-    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Category category) {
+    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Category category, String status) {
         this.productVariantId = productVariantId;
         this.productId = productId;
         this.color = color;
@@ -32,8 +27,9 @@ public class ProductVariant {
         this.quantity = quantity;
         this.product = product;
         this.category = category;
+        this.status = status;
     }
-    
+
     public ProductVariant(Color color, Size size, Long price, int quantity) {
         this.color = color;
         this.size = size;
@@ -113,4 +109,12 @@ public class ProductVariant {
         this.category = category;
     }
 
+    // ✅ Getter/setter cho status
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
