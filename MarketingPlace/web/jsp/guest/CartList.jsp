@@ -12,7 +12,7 @@
         <meta name="description" content="">
         <meta name="keywords" content="">
 
-        <!-- Favicons -->
+        <!-- Favicon -->
         <link href="${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
         <link href="${pageContext.request.contextPath}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
