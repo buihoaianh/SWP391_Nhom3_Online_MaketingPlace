@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Cart" %>
+<%@page import="model.ProductVariant"%>
+<%@page import="model.Product"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -148,6 +150,55 @@
                     width: 100%;
                 }
             }
+
+            .css_address_section {
+                margin-top: 20px;
+                padding: 15px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .css_address_label {
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .css_select_div {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .css_select,
+            .css_input {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .css_select:focus,
+            .css_input:focus {
+                border-color: #00796b;
+                outline: none;
+                box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+            }
+
+            .css_input {
+                margin-bottom: 10px;
+            }
+
+            .css_note {
+                width: 100%;
+                height: 80px;
+                resize: vertical;
+            }
         </style>
     </head>
     <body>
@@ -282,7 +333,7 @@
                                             // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
                                             if (session.getAttribute("user") != null) {
                                                 // Đã login -> hiển thị nút Logout
-%>
+                                        %>
                                         <a href="<%= request.getContextPath()%>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
                                         <%
                                         } else {
@@ -963,38 +1014,111 @@
 
         <!-- Giao diện cảm ơn và chọn thanh toán -->
         <div class="container rounded bg-white mt-5 mb-5">
-            <div class="row" style="margin-top: 9%;">
-                <!-- Cảm ơn và nút hướng dẫn -->
-                <div class="col-md-6 border-right">
-                    <div class="p-3 py-5 text-center">
-                        <img style="width: 40%;" src="${pageContext.request.contextPath}/img/confirm.png">
-                        <h3 class="mt-3">Cảm ơn vì đã đặt hàng</h3>
-                        <p>Chúng tôi sẽ gửi cho bạn một email xác nhận đơn hàng với thông tin chi tiết và hướng dẫn thanh toán.</p>
-                        <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalLong">
-                            Hướng dẫn thanh toán
-                        </button>
-                        <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalCenter">
-                            Hướng dẫn bằng video
-                        </button>
+            <form id="formCheckout">
+                <div class="row" style="margin-top: 9%;">
+                    <h1 class="mb-4">🛒Cart Checkout</h1>
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover align-middle text-center">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Variant</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    int index = 1;
+                                    double grandTotal = 0;
+                                    for (Cart item : cart) {
+                                        Product p = item.getProduct();
+                                        ProductVariant variant = item.getProductVariant();
+                                        long price = variant.getPrice();
+                                        String imgUrl = p.getThumbnailURL() != null ? p.getThumbnailURL() : "img/default.jpg";
+                                        double total = price * item.getQuantity();
+                                        grandTotal += total;
+                                %>
+                                <tr>
+                                    <td><%= index++%></td>
+                                    <td>
+                                        <img src="<%= imgUrl%>" alt="Product" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                                    </td>
+                                    <td><%= p.getProductName()%></td>
+                                    <td>
+                                        <% if (variant.getColor() != null) {%>
+                                        <span><b>Color:</b> <%= variant.getColor().getName()%></span><br>
+                                        <% } %>
+                                        <% if (variant.getSize() != null) {%>
+                                        <span><b>Size:</b> <%= variant.getSize().getName()%></span>
+                                        <% }%>
+                                    </td>
+                                    <td>$<%= price%></td>
+                                    <td>
+                                        <input type="number" class="form-control text-center" value="<%= item.getQuantity()%>" readonly>
+                                    </td>
+                                    <td>$<%= String.format("%.0f", total)%></td>
+                                </tr>
+                                <% }%>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" class="text-end fw-bold">Grand Total:</td>
+                                    <td class="fw-bold">$<%= String.format("%.0f", grandTotal)%></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                </div>
+                    <!-- Cảm ơn và nút hướng dẫn -->
+                    <!--                    <div class="col-md-6 border-right">
+                                            <div class="p-3 py-5 text-center">
+                                                <img style="width: 40%;" src="${pageContext.request.contextPath}/img/confirm.png">
+                                                <h3 class="mt-3">Cảm ơn vì đã đặt hàng</h3>
+                                                <p>Chúng tôi sẽ gửi cho bạn một email xác nhận đơn hàng với thông tin chi tiết và hướng dẫn thanh toán.</p>
+                                                <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalLong">
+                                                    Hướng dẫn thanh toán
+                                                </button>
+                                                <button type="button" class="btn btn-outline-dark mt-3" data-toggle="modal" data-target="#exampleModalCenter">
+                                                    Hướng dẫn bằng video
+                                                </button>
+                                            </div>
+                                        </div>-->
 
-                <!-- Form chọn hình thức thanh toán -->
-                <div class="col-md-6">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h3>Hình thức thanh toán</h3>
+                    <div class="col-md-6">
+                        <div class="css_address_section">
+                            <label class="css_address_label">Địa chỉ giao hàng</label>
+                            <div class="css_select_div">
+                                <select class="css_select" id="tinh" name="provinceCode" title="Chọn Tỉnh Thành" required>
+                                    <option value="0">Tỉnh Thành</option>
+                                </select>
+                                <select class="css_select" id="quan" name="districtCode" title="Chọn Quận Huyện" required>
+                                    <option value="0">Quận Huyện</option>
+                                </select>
+                                <select class="css_select" id="phuong" name="wardCode" title="Chọn Phường Xã" required>
+                                    <option value="0">Phường Xã</option>
+                                </select>
+                            </div>
+                            <input type="text" class="css_input" id="soNha" name="soNha" placeholder="Số nhà" required>
+                            <div id="response" style="text-align: center; margin-top: 15px;"></div>
                         </div>
-                        <form action="${pageContext.request.contextPath}/checkout" method="POST">
+                    </div>
+                    <!-- Form chọn hình thức thanh toán -->
+                    <div class="col-md-6">
+                        <div class="p-3">
+                            <label class="css_address_label">Hình thức thanh toán</label>
                             <label class="payment-method__item">
-                                <input type="radio" name="payment-method" value="COD" checked hidden>
+                                <input type="radio" name="paymentMethod" value="COD" checked>
                                 <span class="checkmark"></span>
                                 <span class="payment-method__item-icon-wrapper"><img src="img/cart-completion/cod.png" alt=""></span>
                                 <span class="payment-method__item-name">COD<br>Thanh toán khi nhận hàng</span>
                             </label>
 
                             <label class="payment-method__item">
-                                <input type="radio" name="payment-method" value="vnpay" hidden>
+                                <input type="radio" name="paymentMethod" value="vnpay" hidden>
                                 <span class="checkmark"></span>
                                 <span class="payment-method__item-icon-wrapper"><img src="img/cart-completion/vnpay.png" alt=""></span>
                                 <span class="payment-method__item-name">
@@ -1005,10 +1129,10 @@
                             <div class="text-center mt-4">
                                 <button class="btn btn-primary" type="submit">Thanh toán</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
 
 
@@ -1173,5 +1297,75 @@
         <!-- Bootstrap JS and Popper -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Lấy danh sách tỉnh/thành
+                $.getJSON('https://provinces.open-api.vn/api/p/', function (data) {
+                    $.each(data, function (index, val) {
+                        $("#tinh").append('<option value="' + val.code + '">' + val.name + '</option>');
+                    });
+                });
+
+                // Khi chọn tỉnh, lấy danh sách quận/huyện
+                $("#tinh").change(function () {
+                    var provinceCode = $(this).val();
+                    $("#quan").html('<option value="0">Quận Huyện</option>');
+                    $("#phuong").html('<option value="0">Phường Xã</option>');
+                    if (provinceCode !== "0") {
+                        $.getJSON('https://provinces.open-api.vn/api/p/' + provinceCode + '?depth=2', function (data) {
+                            $.each(data.districts, function (index, val) {
+                                $("#quan").append('<option value="' + val.code + '">' + val.name + '</option>');
+                            });
+                        });
+                    }
+                });
+
+                // Khi chọn quận/huyện, lấy danh sách phường/xã
+                $("#quan").change(function () {
+                    var districtCode = $(this).val();
+                    $("#phuong").html('<option value="0">Phường Xã</option>');
+                    if (districtCode !== "0") {
+                        $.getJSON('https://provinces.open-api.vn/api/d/' + districtCode + '?depth=2', function (data) {
+                            $.each(data.wards, function (index, val) {
+                                $("#phuong").append('<option value="' + val.code + '">' + val.name + '</option>');
+                            });
+                        });
+                    }
+                });
+
+                $("#formCheckout").submit(function (event) {
+                    event.preventDefault();
+                    if ($("#tinh").val() === "0" || $("#quan").val() === "0" || $("#phuong").val() === "0") {
+                        $("#response").html("Vui lòng chọn đầy đủ Tỉnh, Quận/Huyện và Phường/Xã.");
+                        return;
+                    }
+
+                    // Lấy cả id và name từ các dropdown
+                    var formData = {
+                        provinceCode: $("#tinh").val(),
+                        provinceName: $("#tinh option:selected").text(),
+                        districtCode: $("#quan").val(),
+                        districtName: $("#quan option:selected").text(),
+                        wardCode: $("#phuong").val(),
+                        wardName: $("#phuong option:selected").text(),
+                        soNha: $("#soNha").val(),
+                        paymentMethod: $("input[name='paymentMethod']:checked").val()
+                    };
+
+                    $.ajax({
+                        url: 'checkout',
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            $("#response").html(response);
+                        },
+                        error: function () {
+                            $("#response").html("Đã có lỗi xảy ra khi gửi dữ liệu.");
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
