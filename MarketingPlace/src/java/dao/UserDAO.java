@@ -37,6 +37,7 @@ public class UserDAO extends ConnectDB {
         }
         return rs;
     }
+    
 
     public ResultSet getListProductOfCustomer(int customerId) {
         ResultSet rs = null;
@@ -53,6 +54,7 @@ public class UserDAO extends ConnectDB {
         }
         return rs;
     }
+
 
     public Account checkEmailExists(String email) {
         String sql = "SELECT * FROM Account WHERE Email = ?";
@@ -193,6 +195,8 @@ public class UserDAO extends ConnectDB {
         }
 
     }
+    
+    
 
     public Account getUserById(int id) {
         String sql = "SELECT * FROM Account WHERE AccountID = ?";
@@ -354,5 +358,6 @@ public class UserDAO extends ConnectDB {
         }
         return false;
     }
+    
 
 }

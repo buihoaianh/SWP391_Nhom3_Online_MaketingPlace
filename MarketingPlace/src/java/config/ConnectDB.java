@@ -35,7 +35,7 @@ public class ConnectDB {
 
     public ConnectDB() {
 
-        this("jdbc:sqlserver://localhost:1433;databaseName=Online_Maketingplace20", "sa", "123456");
+        this("jdbc:sqlserver://localhost:1433;databaseName=Online_Maketingplace15", "sa", "123456");
 
     }
 

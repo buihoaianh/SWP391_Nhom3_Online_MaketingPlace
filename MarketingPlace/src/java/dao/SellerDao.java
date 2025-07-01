@@ -33,6 +33,7 @@ public class SellerDao extends ConnectDB {
             e.printStackTrace();
         }
     }
+    
 
     public List<Integer> getSellerAccountIDs() {
         List<Integer> sellerIds = new ArrayList<>();
@@ -177,6 +178,7 @@ public class SellerDao extends ConnectDB {
         }
         return false;
     }
+ 
 
     public static void main(String[] args) {
         SellerDao dao = new SellerDao();

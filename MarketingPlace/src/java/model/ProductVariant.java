@@ -15,8 +15,22 @@ public class ProductVariant {
     // ✅ Thêm mới
     private String status;
 
+    
+    
     public ProductVariant() {
     }
+    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Category category) {
+        this.productVariantId = productVariantId;
+        this.productId = productId;
+        this.color = color;
+        this.size = size;
+        this.price = price;
+        this.quantity = quantity;
+        this.product = product;
+        this.category = category;
+    }
+    
+    
 
     public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Category category, String status) {
         this.productVariantId = productVariantId;
