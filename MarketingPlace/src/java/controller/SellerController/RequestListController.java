@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package controller.SellerController;
 
-import dao.ProductDAO;
+import dao.SellerDao;
+import dao.SellerRequestDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +13,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Product;
+import model.Account;
+import model.SellerRequest;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ProductController", urlPatterns = {"/admin/products"})
-public class ProductController extends HttpServlet {
+@WebServlet(name = "RequestListController", urlPatterns = {"/requests"})
+public class RequestListController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +38,13 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            ProductDAO dao = new ProductDAO();
-            List<Product> products = dao.getProducts();
-            request.setAttribute("products", products);
-            request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("user");
+            int accountId = acc.getAccountID();
+            SellerRequestDAO sellerRequestDAO = new SellerRequestDAO();
+            List<SellerRequest> list = sellerRequestDAO.getRequestsByAccountID(accountId);
+            request.setAttribute("requests", list);
+            request.getRequestDispatcher("/jsp/seller/Request.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

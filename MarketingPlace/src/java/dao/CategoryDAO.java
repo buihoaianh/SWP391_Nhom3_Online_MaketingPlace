@@ -10,27 +10,27 @@ import model.Category;
 
 public class CategoryDAO extends ConnectDB {
     
-//
-//    public List<Category> getAllCategories() {
-//        List<Category> categories = new ArrayList<>();
-//        String sql = "SELECT c.CategoryID, c.CategoryName, c.Description "
-//                + "FROM Categories c ";
-//        try {
-//            Connection connection = ConnectDB.getConnection();
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                Category category = new Category();
-//                category.setCategoryID(resultSet.getString("CategoryID"));
-//                category.setCategoryName(resultSet.getString("CategoryName"));
-//                category.setDescription(resultSet.getString("Description"));
-//                categories.add(category);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return categories;
-//    }
+    //thêm mới
+    public List<Category> getAllCategoriesL() {
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT c.CategoryID, c.CategoryName, c.Description "
+                + "FROM Categories c ";
+        try {
+            Connection connection = ConnectDB.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Category category = new Category();
+                category.setCategoryID(resultSet.getInt("CategoryID"));
+                category.setCategoryName(resultSet.getString("CategoryName"));
+                category.setDescription(resultSet.getString("Description"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
     
         // CREATE
     public boolean addCategory(Category category) {

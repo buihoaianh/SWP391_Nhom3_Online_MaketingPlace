@@ -4,7 +4,9 @@
  */
 package controller.admin;
 
-import dao.ProductDAO;
+import dao.SellerDao;
+import dao.SellerRequestDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +14,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Product;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import model.Account;
+import model.SellerRequest;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ProductController", urlPatterns = {"/admin/products"})
-public class ProductController extends HttpServlet {
+@WebServlet(name = "RequestDetailController", urlPatterns = {"/admin/request-detail"})
+public class RequestDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +40,18 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            ProductDAO dao = new ProductDAO();
-            List<Product> products = dao.getProducts();
-            request.setAttribute("products", products);
-            request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+            String idParam = request.getParameter("id");
+            int reqId = Integer.parseInt(idParam);
+            SellerRequestDAO requestDAO = new SellerRequestDAO();
+            SellerRequest r = requestDAO.getRequestByID(reqId);
+
+            UserDAO dao = new UserDAO();
+            Account user = dao.getUserById(r.getAccountId());
+
+            request.setAttribute("u", user);
+            request.setAttribute("r", r);
+            request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp")
+                    .forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

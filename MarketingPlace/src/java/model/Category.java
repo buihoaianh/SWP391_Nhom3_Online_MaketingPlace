@@ -17,11 +17,21 @@ public class Category {
     public Category() {
     }
     // constructor full parameters
+    public Category(String categoryName) {
+        this.CategoryName = categoryName;
+    }
+    
     public Category(int CategoryID, String CategoryName, String ImageURL, String Description) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
         this.ImageURL = ImageURL;
         this.Description = Description;
+    }
+    
+    public Category(int categoryId, String categoryName, String description) {
+        this.CategoryID = categoryId;
+        this.CategoryName = categoryName;
+        this.Description = description;
     }
 
     public int getCategoryID() {

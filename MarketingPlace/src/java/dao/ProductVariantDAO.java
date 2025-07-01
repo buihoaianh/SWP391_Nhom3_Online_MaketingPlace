@@ -32,7 +32,7 @@ public class ProductVariantDAO extends ConnectDB {
                 product.setThumbnailURL(rs.getString("ThumbnailURL"));
                 product.setCategoryID(rs.getInt("CategoryID"));
                 product.setDiscountId(rs.getInt("DiscountID"));
-                product.setCreateProductDate(rs.getDate("CreateProductDate"));
+                product.setCreateProductDate(rs.getTimestamp("CreateProductDate"));
                 product.setDescription(rs.getString("Description"));
                 product.setStatus(rs.getString("ProductStatus"));
 

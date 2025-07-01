@@ -4,7 +4,7 @@
  */
 package controller.admin;
 
-import dao.ProductDAO;
+import dao.SellerRequestDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Product;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ProductController", urlPatterns = {"/admin/products"})
-public class ProductController extends HttpServlet {
+@WebServlet(name = "UpdateRequestController", urlPatterns = {"/admin/request/update"})
+public class UpdateRequestController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +33,40 @@ public class ProductController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+         HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("user");
+        int reviewerID = acc.getAccountID();
+        //Lấy HttpSession hiện tại để biết ai đang đăng nhập.
+        //Lấy Account từ session → chính là admin hiện tại.
+        //Lấy accountID của admin để ghi vào cột ReviewedBy.
+        
+        int requestID = Integer.parseInt(request.getParameter("id"));
+        String action = request.getParameter("action");
+        //lấy về được Approve hay là reject 
+
+        String status = "";
+        String reason = request.getParameter("reason") != null ? request.getParameter("reason") : "";
+        //status: chuẩn bị gán giá trị "Approve" hoặc "Reject".
+        //reason: nếu form có lý do từ chối, lấy nó. Nếu không có (null) thì để rỗng.
+
+        SellerRequestDAO dao = new SellerRequestDAO();
+
         try {
-            ProductDAO dao = new ProductDAO();
-            List<Product> products = dao.getProducts();
-            request.setAttribute("products", products);
-            request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+            if ("approve".equalsIgnoreCase(action)) {
+                status = "Approve";
+                // Cập nhật SellerRequests
+                dao.updateRequestStatus(requestID, status, reviewerID, null);
+                // Cập nhật trạng thái account → ACTIVE
+                dao.updateAccountStatusToActive(requestID);
+            } else if ("reject".equalsIgnoreCase(action)) {
+                status = "Reject";
+                //Gán status = "Reject" và gọi DAO cập nhật SellerRequests:
+                dao.updateRequestStatus(requestID, status, reviewerID, reason);
+            }
+
+            response.sendRedirect(request.getContextPath() + "/admin/requests");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ServletException(e);
         }
     }
 
