@@ -21,14 +21,14 @@ public class Product {
     private List<ProductVariant> variants;
     
     //Thêm mới
-    private Category category;
+    private Categories category;
     private List<ProductVariant> productVariants;
     private List<ProductImage> images;
 
     
     
 
-    public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, Category category, List<ProductVariant> productVariants) {
+    public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, Categories category, List<ProductVariant> productVariants) {
         this.productId = productId;
         this.accountId = accountId;
         this.thumbnailURL = imageUrl;//private String imageUrl;
@@ -69,7 +69,7 @@ public class Product {
         this.images = images;
     }
 
-    public Product(int productId, String imageUrl, String productName, Timestamp createdDate, String description, Category category) {
+    public Product(int productId, String imageUrl, String productName, Timestamp createdDate, String description, Categories category) {
         this.productId = productId;
         this.thumbnailURL = imageUrl;
         this.productName = productName;
@@ -193,11 +193,11 @@ public class Product {
         this.status = status;
     }
 
-    public Category getCategory() {
+    public Categories getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Categories category) {
         this.category = category;
     }
 

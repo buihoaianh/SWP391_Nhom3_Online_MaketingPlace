@@ -11,8 +11,8 @@ import model.Categories;
 public class CategoriesDAO extends ConnectDB {
 
     //thêm mới
-    public List<Category> getAllCategoriesL() {
-        List<Category> categories = new ArrayList<>();
+    public List<Categories> getAllCategoriesL() {
+        List<Categories> categories = new ArrayList<>();
         String sql = "SELECT c.CategoryID, c.CategoryName, c.Description "
                 + "FROM Categories c ";
         try {
@@ -20,7 +20,7 @@ public class CategoriesDAO extends ConnectDB {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Category category = new Category();
+                Categories category = new Categories();
                 category.setCategoryID(resultSet.getInt("CategoryID"));
                 category.setCategoryName(resultSet.getString("CategoryName"));
                 category.setDescription(resultSet.getString("Description"));
