@@ -4,7 +4,7 @@
  */
 package controller.admin;
 
-import dao.CategoryDAO;
+import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
 import dao.SizeDAO;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.Account;
-import model.Category;
+import model.Categories;
 import model.Color;
 import model.Product;
 import model.ProductImage;
@@ -52,8 +52,8 @@ public class EditProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            CategoryDAO cdao = new CategoryDAO();
-            List<Category> categories = cdao.getAllCategories();
+            CategoriesDAO cdao = new CategoriesDAO();
+            List<Categories> categories = cdao.getAllCategories();
             request.setAttribute("categories", categories);
             
             SizeDAO sdao = new SizeDAO();

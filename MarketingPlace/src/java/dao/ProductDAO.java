@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import model.Category;
+import model.Categories;
 import model.Color;
 import model.ProductImage;
 import model.ProductVariant;
@@ -50,7 +50,7 @@ public class ProductDAO extends ConnectDB {
                         rs.getString(4),
                         rs.getTimestamp(7),
                         rs.getString(8),
-                        new Category(rs.getString("CategoryName")));
+                        new Categories(rs.getString("CategoryName")));
                 o.setStatus(rs.getString("Status"));
                 list.add(o);
             }

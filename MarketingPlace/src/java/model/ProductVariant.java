@@ -19,7 +19,7 @@ public class ProductVariant {
     
     public ProductVariant() {
     }
-    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Category category) {
+    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Categories category) {
         this.productVariantId = productVariantId;
         this.productId = productId;
         this.color = color;

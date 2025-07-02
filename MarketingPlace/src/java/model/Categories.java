@@ -14,6 +14,10 @@ public class Categories {
     private String ImageURL;
     private String Description;
 
+    public Categories(String CategoryName) {
+        this.CategoryName = CategoryName;
+    }
+
     public Categories() {
     }
 
