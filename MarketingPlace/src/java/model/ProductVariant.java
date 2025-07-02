@@ -10,7 +10,7 @@ public class ProductVariant {
     private int quantity;
 
     private Product product;
-    private Category category;
+    private Categories category;
 
     // ✅ Thêm mới
     private String status;
@@ -32,7 +32,7 @@ public class ProductVariant {
     
     
 
-    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Category category, String status) {
+    public ProductVariant(int productVariantId, int productId, Color color, Size size, Long price, int quantity, Product product, Categories category, String status) {
         this.productVariantId = productVariantId;
         this.productId = productId;
         this.color = color;
@@ -115,11 +115,11 @@ public class ProductVariant {
         this.product = product;
     }
 
-    public Category getCategory() {
+    public Categories getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Categories category) {
         this.category = category;
     }
 

@@ -6,10 +6,10 @@ import model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.Category;
+import model.Categories;
 
-public class CategoryDAO extends ConnectDB {
-    
+public class CategoriesDAO extends ConnectDB {
+
     //thêm mới
     public List<Category> getAllCategoriesL() {
         List<Category> categories = new ArrayList<>();
@@ -31,9 +31,8 @@ public class CategoryDAO extends ConnectDB {
         }
         return categories;
     }
-    
-        // CREATE
-    public boolean addCategory(Category category) {
+    // CREATE
+    public boolean addCategory(Categories category) {
         String sql = "INSERT INTO [dbo].[Categories]\n"
                 + "           ([CategoryName]\n"
                 + "           ,[ImageURL]\n"
@@ -53,7 +52,7 @@ public class CategoryDAO extends ConnectDB {
     }
 
     // UPDATE
-    public boolean updateCategory(Category category) {
+    public boolean updateCategory(Categories category) {
         String sql = """
                      UPDATE [dbo].[Categories]
                         SET [CategoryName] = ?
@@ -89,15 +88,15 @@ public class CategoryDAO extends ConnectDB {
     }
 
 // Search
-    public List<Category> searchCategoryByName(String keyword) {
-        List<Category> list = new ArrayList<>();
+    public List<Categories> searchCategoryByName(String keyword) {
+        List<Categories> list = new ArrayList<>();
         String sql = "SELECT * FROM Categories WHERE CategoryName COLLATE Latin1_General_CI_AI LIKE ?";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             pre.setString(1, "%" + keyword + "%");
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                Category c = new Category(
+                Categories c = new Categories(
                         rs.getInt("CategoryID"),
                         rs.getString("CategoryName"),
                         rs.getString("ImageURL"),
@@ -111,14 +110,14 @@ public class CategoryDAO extends ConnectDB {
         return list;
     }
 
-    public List<Category> getAllCategories() {
-        List<Category> list = new ArrayList<>();
+    public List<Categories> getAllCategories() {
+        List<Categories> list = new ArrayList<>();
         String sql = "SELECT * FROM Categories";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                Category c = new Category(
+                Categories c = new Categories(
                         rs.getInt("CategoryID"),
                         rs.getString("CategoryName"),
                         rs.getString("ImageURL"),
@@ -132,14 +131,14 @@ public class CategoryDAO extends ConnectDB {
         return list;
     }
 
-    public Category getCategoryById(int id) {
+    public Categories getCategoryById(int id) {
         String sql = "SELECT * FROM Categories WHERE CategoryID = ?";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             pre.setInt(1, id);
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
-                return new Category(
+                return new Categories(
                         rs.getInt("CategoryID"),
                         rs.getString("CategoryName"),
                         rs.getString("ImageURL"),
@@ -152,21 +151,55 @@ public class CategoryDAO extends ConnectDB {
         return null;
     }
 
-    public static void printCategoryList(List<Category> list) {
+    public static void printCategoryList(List<Categories> list) {
         if (list.isEmpty()) {
             System.out.println("No categories found.");
             return;
         }
 
         System.out.printf("%-5s | %-20s | %-40s | %-30s%n", "ID", "Name", "Image URL", "Description");
-        for (Category c : list) {
+        for (Categories c : list) {
             System.out.println(c);
         }
     }
 
-    // MAIN TEST
+    public List<Categories> getCategoriesByPage(int pageIndex, int pageSize) {
+        List<Categories> list = new ArrayList<>();
+        String sql = "SELECT * FROM Categories ORDER BY CategoryID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, (pageIndex - 1) * pageSize);
+            ps.setInt(2, pageSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Categories c = new Categories(
+                        rs.getInt("CategoryID"),
+                        rs.getString("CategoryName"),
+                        rs.getString("ImageURL"),
+                        rs.getString("Description")
+                );
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int countCategories() {
+        String sql = "SELECT COUNT(*) FROM Categories";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
-        CategoryDAO dao = new CategoryDAO();
+        CategoriesDAO dao = new CategoriesDAO();
         // ADD 
 //        Categories newCategory = new Categories(0, "Cong nghe", "https://example.com/tech.jpg", "Thiet bi cong nghe");
 //        if (dao.addCategory(newCategory)) {
@@ -190,9 +223,8 @@ public class CategoryDAO extends ConnectDB {
 //            System.out.println("Category with ID 4 deleted successfully!");
 //        }
 //        printCategoryList(dao.getAllCategories());
-        List<Category> list = dao.getAllCategories();
+        List<Categories> list = dao.getAllCategories();
         printCategoryList(list);
     }
-
 
 }

@@ -280,10 +280,8 @@
         </div>
         <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
         <script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
-
         <script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
         <script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
-
         <script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
     </body>
 
