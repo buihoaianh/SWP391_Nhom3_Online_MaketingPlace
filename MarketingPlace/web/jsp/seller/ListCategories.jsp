@@ -2,205 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Categories" %>
-<!--<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>List Categories</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 30px;
-                background-color: #f9f9f9;
-            }
-
-            h1 {
-                color: #007bff;
-                text-align: left;
-                margin-bottom: 10px;
-                margin-top: 40px;
-                font-size: 38px;
-                font-weight: bold;
-            }
-
-
-
-            .controls {
-                margin-bottom: 20px;
-            }
-
-            .controls form,
-            .controls a {
-                display: inline-block;
-                margin-right: 10px;
-            }
-
-            input[type="text"] {
-                padding: 6px 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                width: 250px;
-            }
-
-            button {
-                padding: 6px 12px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            button:hover {
-                background-color: #0056b3;
-            }
-
-            .add-new a {
-                background-color: #28a745;
-                color: white;
-                padding: 8px 16px;
-                border-radius: 4px;
-                text-decoration: none;
-                font-weight: bold;
-            }
-
-            .add-new a:hover {
-                background-color: #218838;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                background-color: white;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-
-            th, td {
-                border: 1px solid #ddd;
-                padding: 12px;
-                text-align: center;
-            }
-
-            th {
-                background-color: #007bff;
-                color: white;
-                text-transform: uppercase;
-            }
-
-            img {
-                border-radius: 8px;
-                max-height: 80px;
-            }
-
-            .action-btn {
-                background-color: #007bff;
-                color: white;
-                padding: 6px 12px;
-                border: none;
-                border-radius: 4px;
-                text-decoration: none;
-            }
-
-            .action-btn:hover {
-                background-color: #0056b3;
-            }
-
-            tbody tr:hover {
-                transform: scale(1.02);
-                background-color: #f1f9ff;
-                transition: all 0.2s ease-in-out;
-                box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
-                cursor: pointer;
-            }
-            .container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding-left: 60px;
-                padding-right: 60px;
-                padding-top: 5px;
-                background-color: white;
-                box-shadow: 0 0 10px rgba(0,0,0,0.05);
-                border-radius: 6px;
-            }
-
-            .main-layout {
-                display: flex;
-                min-height: 100vh;
-            }
-
-        </style>
-    </head>
-    <body>
-        <div id="app">
-            <div id="sidebar" class="active">
-                <div class="sidebar-wrapper active">
-                    <div class="logo d-flex align-items-center">
-                        <a href="saller-dashboard">
-                            <img src="${pageContext.request.contextPath}/asset/images/logo/logo.png"
-                                 alt="Logo"
-                                 style="max-width: 180px; height: auto;">
-                        </a>
-                    </div>
-<jsp:include page="slider.jsp" />
-<button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-</div>
-</div>
-<div class="main-layout">
-<jsp:include page="slider.jsp" />
-<div class="container">
-    <h1>List Categories</h1>
-    <div class="controls">
-        <form action="CategoriesURL" method="get">
-            <input type="hidden" name="service" value="searchCategory"/>
-            <input type="text" name="keyword" value="${searchKeyword}" placeholder="Search by name or ID..." required />
-            <button type="submit">Search</button>
-        </form>
-
-        <form action="CategoriesURL" method="get">
-            <input type="hidden" name="service" value="listCategories"/>
-            <button type="submit">View All</button>
-        </form>
-    </div>
-
-    <div class="add-new" style="margin: 10px 0;">
-        <a href="CategoriesURL?service=insertForm">Add New Category</a>
-    </div>
-
-
-    <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Category ID</th>
-                <th>Category Name</th>
-                <th>Description</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-<c:forEach var="category" items="${categoryData}">
-    <tr>
-        <td><img src="${category.imageURL}" width="100"/></td>
-        <td>${category.categoryID}</td>
-        <td>${category.categoryName}</td>
-        <td>${category.description}</td>
-        <td>
-            <a class="action-btn" href="CategoriesURL?service=updateForm&id=${category.categoryID}">Update</a>
-        </td>
-        <td>
-            <a class="action-btn" href="CategoriesURL?service=deleteCategory&id=${category.categoryID}" onclick="return confirm('Bạn có chắc chắn muốn xóa không ?')">Delete</a>
-        </td>
-    </tr>
-</c:forEach>
-</tbody>
-
-</table>
-</div>
-</div>
-</div>
-</body>
-</html>-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -221,7 +22,7 @@
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/asset/images/favicon.svg" type="image/x-icon">
         <style>
             h1 {
-                color: #0d6efd;
+                color: #435EBE;
                 font-size: 2.25rem;
                 font-weight: 700;
                 margin-bottom: 1.5rem;
@@ -243,7 +44,7 @@
 
             .controls button {
                 padding: 0.5rem 1rem;
-                background-color: #0d6efd;
+                background-color: #435EBE;
                 color: #fff;
                 border: none;
                 border-radius: 4px;
@@ -289,7 +90,7 @@
             }
 
             th {
-                background-color: #0d6efd;
+                background-color: #435EBE;
                 color: white;
                 text-transform: uppercase;
                 font-size: 0.9rem;
@@ -312,7 +113,7 @@
                 font-size: 0.875rem;
                 font-weight: 500;
                 color: #fff;
-                background-color: #0d6efd;
+                background-color: #435EBE;
                 border-radius: 4px;
                 text-decoration: none;
                 transition: background-color 0.2s ease;
@@ -355,8 +156,6 @@
                 box-shadow: 0 0 20px rgba(0,0,0,0.05);
                 animation: fadeIn 0.6s ease-in-out;
             }
-
-            /* Hiệu ứng fade-in khi vào trang */
             @keyframes fadeIn {
                 from {
                     opacity: 0;
@@ -414,12 +213,12 @@
             }
 
             .pagination .page:hover {
-                background-color: #007bff;
+                background-color: #435EBE;
                 color: white;
             }
 
             .pagination .current {
-                background-color: #007bff;
+                background-color: #435EBE;
                 color: white;
                 pointer-events: none;
             }
@@ -486,7 +285,7 @@
                                         <a class="action-btn" href="CategoriesURL?service=updateForm&id=${category.categoryID}">Update</a>
                                     </td>
                                     <td>
-                                        <a class="action-btn" href="CategoriesURL?service=deleteCategory&id=${category.categoryID}" onclick="return confirm('Bạn có chắc chắn muốn xóa không ?')">Delete</a>
+                                        <a class="action-btn" href="CategoriesURL?service=deleteCategory&id=${category.categoryID}" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                                     </td>
                                 </tr>
                             </c:forEach>
