@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Cart" %>
@@ -46,6 +47,185 @@
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+            .view-all-btn {
+                background-color: #007bff;             /* Màu nền xanh */
+                color: white;                          /* Màu chữ trắng */
+                padding: 12px 30px;                    /* Khoảng cách trong */
+                border-radius: 8px;                    /* Bo góc vừa phải */
+                font-size: 16px;                       /* Cỡ chữ */
+                font-weight: 600;                      /* Đậm */
+                text-decoration: none;                 /* Bỏ gạch dưới */
+                box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2); /* Đổ bóng nhẹ */
+                transition: all 0.3s ease;             /* Hiệu ứng mượt */
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .view-all-btn:hover {
+                background-color: #0056b3;             /* Màu khi hover */
+                box-shadow: 0 6px 16px rgba(0, 86, 179, 0.3); /* Đổ bóng mạnh hơn */
+                transform: translateY(-2px);           /* Nhấc lên khi hover */
+                color: white;
+                text-decoration: none;
+            }
+            /* === Product Card Layout === */
+            .product-card {
+                background: #ffffff;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            }
+
+            /* === Product Image Hover === */
+            .product-image {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .product-image img {
+                width: 100%;
+                transition: transform 0.3s ease;
+            }
+
+            .product-card:hover .product-image img.main-img {
+                transform: scale(1.05);
+            }
+
+            .badge {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: #e63946;
+                color: white;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 500;
+                z-index: 1;
+            }
+
+            /* === Product Info === */
+            .product-info {
+                padding: 15px;
+                background-color: #fff;
+            }
+
+            .product-title a {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .product-title a:hover {
+                color: #007bff;
+            }
+
+            /* === Product Price === */
+            .product-price {
+                margin: 10px 0;
+                font-size: 18px;
+                font-weight: 600;
+                display: flex;
+                align-items: baseline;
+                gap: 10px;
+            }
+
+            .product-price .current-price {
+                color: #e63946;
+                font-weight: bold;
+            }
+
+            .product-price .old-price {
+                color: #999;
+                font-size: 14px;
+                text-decoration: line-through;
+            }
+
+            /* === Product Variant Info: Color & Size === */
+            .color-dot {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                margin-right: 5px;
+                vertical-align: middle;
+                border: 1px solid #ccc; /* Viền mỏng để thấy cả màu sáng như trắng */
+            }
+            .product-variant-info {
+                background-color: #f0f0f0;
+                padding: 6px 12px;
+                border-radius: 8px;
+                display: inline-block;
+                margin-top: 5px;
+                font-size: 0.875rem;
+            }
+
+            /* === Product Rating === */
+            .product-rating {
+                font-size: 14px;
+                color: #f7c948;
+                margin-top: 5px;
+            }
+
+            /* === Overlay and Cart === */
+            .product-overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 10px;
+                background: rgba(0, 0, 0, 0.05);
+                opacity: 0;
+                transition: 0.3s ease-in-out;
+                text-align: center;
+            }
+
+            .product-card:hover .product-overlay {
+                opacity: 1;
+            }
+
+            .btn-cart {
+                background: #007bff;
+                color: white;
+                padding: 8px 14px;
+                font-size: 14px;
+                border-radius: 6px;
+                text-decoration: none;
+                display: inline-block;
+                transition: background 0.3s ease;
+            }
+
+            .btn-cart:hover {
+                background: #0056b3;
+                color: white;
+            }
+
+            /* === Product Actions === */
+            .product-actions {
+                margin-top: 10px;
+            }
+
+            .action-btn {
+                color: #333;
+                margin: 0 5px;
+                font-size: 16px;
+                transition: color 0.2s;
+            }
+
+            .action-btn:hover {
+                color: #007bff;
+            }
+        </style>
     </head>
 
     <body class="index-page">
@@ -1257,6 +1437,7 @@
 
             <!-- Product List Section -->
             <section id="product-list" class="product-list section">
+                <!-- isotope-layout bao quanh danh sách sản phẩm -->
                 <div class="container isotope-layout" data-aos="fade-up" data-aos-delay="100" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
                     <!-- Bộ lọc -->
@@ -1276,13 +1457,11 @@
                     <!-- Danh sách sản phẩm -->
                     <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
                         <c:forEach items="${products}" var="o">
-                            <!-- Bạn nên map CategoryID -> class cụ thể như filter-clothing, filter-electronics,... -->
                             <div class="col-md-6 col-lg-3 product-item filter-${o.categoryID}">
                                 <div class="product-card">
                                     <div class="product-image">
                                         <span class="badge">Sale</span>
 
-                                        <!-- Hiển thị ảnh nếu có, nếu không thì ảnh mặc định -->
                                         <c:choose>
                                             <c:when test="${not empty o.imageUrls}">
                                                 <img src="${o.imageUrls[0]}" alt="Product" class="img-fluid main-img" />
@@ -1314,7 +1493,6 @@
                                         </h5>
 
                                         <div class="product-price">
-                                            <!-- Hiển thị giá nếu có -->
                                             <c:choose>
                                                 <c:when test="${not empty o.variants}">
                                                     <span class="current-price">${o.variants[0].price}</span>
@@ -1323,8 +1501,18 @@
                                                     <span class="current-price">Contact</span>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <span class="old-price">$129.99</span>
+                                            <span class="old-price">${o.variants[0].price* 2}</span>
                                         </div>
+
+                                        <c:if test="${not empty o.variants}">
+                                            <div class="product-variant-info">
+                                                Color:
+                                                <span class="color-dot" style="background-color:${fn:toLowerCase(o.variants[0].color.name)};"></span>
+                                                |
+                                                Size: <span class="size">${o.variants[0].size.name}</span>
+                                            </div>
+
+                                        </c:if>
 
                                         <div class="product-rating">
                                             <i class="bi bi-star-fill"></i>
@@ -1339,14 +1527,18 @@
                             </div>
                         </c:forEach>
                     </div>
-
-                    <!-- Nút View All -->
-                    <div class="text-center mt-5" data-aos="fade-up">
-                        <a href="#" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
-                    </div>
-
                 </div>
+
+                <!-- ✅ Đưa nút ra ngoài isotope-layout -->
+
             </section>
+            <div class="text-center mt-5 mb-5" data-aos="fade-up">
+                <a href="#" class="view-all-btn">
+                    View All Products <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+
             <!-- /Product List Section -->
 
         </main>
