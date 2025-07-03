@@ -36,7 +36,7 @@ public class CheckoutServlet extends HttpServlet {
             response.sendRedirect("loginAccount");
             return;
         }
-
+        
         int paymentMethodId = paymentMethod.equals("vnpay") ? 2 : 1;
         int provinceCode = Integer.parseInt(request.getParameter("provinceCode"));
         String provinceName = request.getParameter("provinceName");
@@ -44,6 +44,9 @@ public class CheckoutServlet extends HttpServlet {
         String districtName = request.getParameter("districtName");
         int wardCode = Integer.parseInt(request.getParameter("wardCode"));
         String wardName = request.getParameter("wardName");
+        System.out.println(provinceName);
+        System.out.println(districtName);
+
         double total = 0;
         for (Cart item : cart) {
             ProductVariant variant = item.getProductVariant();
@@ -70,8 +73,9 @@ public class CheckoutServlet extends HttpServlet {
 
         OrderDAO orderDAO = new OrderDAO();
         int orderId = orderDAO.insertOrder(order);
-
+        
         if (orderId > 0) {
+            
             // Insert OrderDetails
             OrderDetailDAO detailDAO = new OrderDetailDAO();
             for (Cart item : cart) {
@@ -84,13 +88,13 @@ public class CheckoutServlet extends HttpServlet {
                 detail.setUnitPrice(String.valueOf(variant.getPrice()));
                 detailDAO.insertOrderDetail(detail);
             }
-
+            
             // Insert into OrderHistory
             OrderHistoryDAO historyDAO = new OrderHistoryDAO();
             historyDAO.insertOrderHistory(orderId, user.getAccountID(), total);
 
             session.removeAttribute("cart");
-
+            
             // Handle VNPay Payment
             if (paymentMethod.equals("vnpay")) {
                 try {
@@ -146,7 +150,9 @@ public class CheckoutServlet extends HttpServlet {
                     query.append("vnp_SecureHash=").append(vnp_SecureHash);
 
                     String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + query;
-                    response.sendRedirect(paymentUrl);
+                    
+                    //tra ve doan url cua vnpay
+                    response.getWriter().print(paymentUrl);
 
                 } catch (Exception e) {
                     e.printStackTrace();
