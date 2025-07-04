@@ -163,7 +163,7 @@ public class CheckoutServlet extends HttpServlet {
                 session.setAttribute("message", "Đặt hàng thành công! Vui lòng chờ xác nhận từ người bán.");
 
                 // ✅ Chuyển về Home
-                response.sendRedirect("Home");
+                response.getWriter().print("Home");
             }
 
         } else {
