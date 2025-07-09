@@ -1,7 +1,7 @@
 <%-- 
     Document   : ProductDetail
     Created on : Jun 16, 2025, 9:19:45 PM
-    Author     : tulok
+    Author     : chinhnv11
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
