@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author chinhnv11
  */
 public class Color {
     private int id;
