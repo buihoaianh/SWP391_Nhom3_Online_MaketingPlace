@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="sidebar-item active ">
-                    <a href="requests" class='sidebar-link'>
+                    <a href="${pageContext.request.contextPath}/requests" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Request Admin</span>
                     </a>
@@ -35,6 +35,13 @@
                     <a href="${pageContext.request.contextPath}/CategoriesURL" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>List Categories</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/seller/list-customer" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>List Customers</span>
                     </a>
                 </li>
 
