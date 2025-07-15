@@ -4,8 +4,6 @@
  */
 package controller.UserController;
 
-import dao.CategoriesDAO;
-import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,19 +11,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Product;
-import dao.ProductDAO;
-import java.util.ArrayList;
-import java.util.List;
-import model.Categories;
 
 /**
  *
  * @author tulok
  */
-@WebServlet(name = "Home", urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "Contact", urlPatterns = {"/Contact"})
+public class Contact extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,26 +28,7 @@ public class Home extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ProductDAO dbProduct = new ProductDAO();
-
-        // Chỉ lấy 4 sản phẩm đầu tiên (hoặc nổi bật nếu có flag)
-        ArrayList<Product> allProducts = dbProduct.getAllProduct(); // hoặc getFeaturedProducts(4);
-        ArrayList<Product> featuredProducts = new ArrayList<>();
-
-        for (int i = 0; i < Math.min(4, allProducts.size()); i++) {
-            featuredProducts.add(allProducts.get(i));
-        }
-
-        System.out.println("Số sản phẩm nổi bật: " + featuredProducts.size());
-        CategoriesDAO dbCategory = new CategoriesDAO();
-        List<Categories> categories = dbCategory.getAllCategories();
-        request.setAttribute("products", featuredProducts);
-        request.setAttribute("categories", categories);
-        request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -69,7 +42,7 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       request.getRequestDispatcher("/jsp/public/Contact.jsp").forward(request, response);
     }
 
     /**
@@ -83,7 +56,7 @@ public class Home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("/jsp/public/Contact.jsp").forward(request, response);
     }
 
     /**
