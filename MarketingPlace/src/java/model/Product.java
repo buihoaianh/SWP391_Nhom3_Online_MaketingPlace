@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Product {
+
     private int productId;
     private int accountId;
     private String productName;
@@ -15,18 +16,16 @@ public class Product {
     private Timestamp createProductDate;
     private String description;
     private String status;
+    private double price;
 
     // Mới thêm:
     private List<String> imageUrls;
     private List<ProductVariant> variants;
-    
+
     //Thêm mới
     private Categories category;
     private List<ProductVariant> productVariants;
     private List<ProductImage> images;
-
-    
-    
 
     public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, Categories category, List<ProductVariant> productVariants) {
         this.productId = productId;
@@ -41,7 +40,7 @@ public class Product {
         this.category = category;
         this.productVariants = productVariants;
     }
-    
+
     public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, List<ProductVariant> productVariants) {
         this.productId = productId;
         this.accountId = accountId;
@@ -54,7 +53,7 @@ public class Product {
         this.status = status;
         this.productVariants = productVariants;
     }
-    
+
     public Product(int productId, int accountId, String imageUrl, String productName, int categoryId, Integer discountId, Timestamp createdDate, String description, String status, List<ProductVariant> productVariants, List<ProductImage> images) {
         this.productId = productId;
         this.accountId = accountId;
@@ -98,12 +97,17 @@ public class Product {
         this.status = status;
         this.productVariants = productVariants;
     }
-    
-    
+
     public Product() {
         imageUrls = new ArrayList<>();
         variants = new ArrayList<>();
     }
+    public Product(int productID, String productName, String thumbnailURL, double price) {
+    this.productId = productID;
+    this.productName = productName;
+    this.thumbnailURL = thumbnailURL;
+    this.price = price;
+}
 
     public int getProductId() {
         return productId;
@@ -216,5 +220,12 @@ public class Product {
     public void setImages(List<ProductImage> images) {
         this.images = images;
     }
-    
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }

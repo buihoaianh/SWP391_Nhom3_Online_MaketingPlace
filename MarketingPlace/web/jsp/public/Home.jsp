@@ -227,9 +227,9 @@
             }
             .swiper-wrapper {
                 display: flex;
-                justify-content: center; 
-                flex-wrap: wrap;         
-                gap: 20px;               
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 20px;
             }
         </style>
     </head>
@@ -788,7 +788,11 @@
                         });
             }
         </script>
-
+        <script>
+            document.querySelector(".desktop-megamenu").addEventListener("mouseenter", function () {
+                document.getElementById("new-tab").click();
+            });
+        </script>
 
     </body>
 
