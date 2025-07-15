@@ -18,6 +18,7 @@
             <file>file:/D:/Work/Java/JSPServlet/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
             <file>file:/D:/Work/Java/JSPServlet/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/sidebarAdmin.jsp</file>
         </group>
+        <group/>
         <group>
             <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/Color.java</file>
             <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/EditProduct.jsp</file>
@@ -73,5 +74,6 @@
             <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/UserController/ListSellerDetailController.java</file>
             <file>file:/D:/SWP/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/SellerController/SellerProfile.java</file>
         </group>
+
     </open-files>
 </project-private>
