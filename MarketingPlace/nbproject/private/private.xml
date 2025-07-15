@@ -18,12 +18,6 @@
             <file>file:/D:/Work/Java/JSPServlet/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
             <file>file:/D:/Work/Java/JSPServlet/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/sidebarAdmin.jsp</file>
         </group>
-        <group>
-            <file>file:/C:/Users/Admin/Desktop/SWP4/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/controller/SellerController/CategoriesController.java</file>
-            <file>file:/C:/Users/Admin/Desktop/SWP4/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/seller/ListCategories.jsp</file>
-            <file>file:/C:/Users/Admin/Desktop/SWP4/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/seller/InsertCategories.jsp</file>
-            <file>file:/C:/Users/Admin/Desktop/SWP4/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/seller/UpdateCategories.jsp</file>
-            <file>file:/C:/Users/Admin/Desktop/SWP4/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
