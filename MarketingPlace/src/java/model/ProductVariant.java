@@ -131,4 +131,11 @@ public class ProductVariant {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "ProductVariant{" + "productVariantId=" + productVariantId + ", productId=" + productId + ", color=" + color + ", size=" + size + ", price=" + price + ", quantity=" + quantity + ", product=" + product + ", category=" + category + ", status=" + status + '}';
+    }
+    
+    
 }

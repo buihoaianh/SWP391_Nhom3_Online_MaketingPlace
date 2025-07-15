@@ -1358,7 +1358,8 @@
                         type: 'POST',
                         data: formData,
                         success: function (response) {
-                            $("#response").html(response);
+                            console.log(response);
+                            window.location.href = response;//redirect
                         },
                         error: function () {
                             $("#response").html("Đã có lỗi xảy ra khi gửi dữ liệu.");
