@@ -530,6 +530,54 @@ public class ProductDAO extends ConnectDB {
         return list;
     }
 
+    public ArrayList<Product> getProductsByCategoryWithPriceFilter(int categoryId, String priceFilter) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p "
+                    + "JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' ";
+            if (priceFilter != null) {
+                switch (priceFilter) {
+                    case "under500":
+                        sql += "AND pv.Price < 500 ";
+                        break;
+                    case "500to750":
+                        sql += "AND pv.Price >= 500 AND pv.Price <= 750 ";
+                        break;
+                    case "750to850":
+                        sql += "AND pv.Price >= 750 AND pv.Price <= 850 ";
+                        break;
+                    case "850to950":
+                        sql += "AND pv.Price >= 850 AND pv.Price <= 950 ";
+                        break;
+                    case "above950":
+                        sql += "AND pv.Price > 950 ";
+                        break;
+                }
+            }
+
+            sql += "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL";
+
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
         int testProductId = 12; // ← ID sản phẩm có thật trong database của bạn

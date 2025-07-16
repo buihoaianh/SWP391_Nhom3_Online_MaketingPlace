@@ -45,14 +45,24 @@ public class ProductByCategory extends HttpServlet {
             throws ServletException, IOException {
         int categoryId = Integer.parseInt(request.getParameter("cid"));
         String keyword = request.getParameter("query");
+        String priceFilter = request.getParameter("price");
         ProductDAO dao = new ProductDAO();
         ArrayList<Product> products;
         if (keyword != null && !keyword.trim().isEmpty()) {
+         
             products = dao.searchProductsInCategoryByName(categoryId, keyword);
+        } else if (priceFilter != null && !priceFilter.trim().isEmpty()) {
+          
+            products = dao.getProductsByCategoryWithPriceFilter(categoryId, priceFilter);
         } else {
+           
             products = dao.getProductsByCategoryWithPrice(categoryId);
         }
+
         request.setAttribute("products", products);
+        request.setAttribute("cid", categoryId);
+        request.setAttribute("query", keyword);
+        request.setAttribute("price", priceFilter);
         request.getRequestDispatcher("jsp/public/Category.jsp").forward(request, response);
     }
 

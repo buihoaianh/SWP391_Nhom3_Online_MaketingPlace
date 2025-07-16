@@ -438,7 +438,7 @@
                                             <div class="col-12 col-md-6 col-lg-4">
 
                                                 <form action="ProductByCategory" method="get" class="filter-item search-form">
-                                                   
+
                                                     <input type="hidden" name="cid" value="${param.cid}" />
 
                                                 <label for="productSearch" class="form-label">Search Products</label>
@@ -453,17 +453,20 @@
                                         </div>
 
                                         <div class="col-12 col-md-6 col-lg-2">
-                                            <div class="filter-item">
+                                            <form action="ProductByCategory" method="get" class="filter-item">
+                                                <input type="hidden" name="cid" value="${param.cid}" />
+                                                <input type="hidden" name="query" value="${param.query}" />
+
                                                 <label for="priceRange" class="form-label">Price Range</label>
-                                                <select class="form-select" id="priceRange">
-                                                    <option selected="">All Prices</option>
-                                                    <option>Under $25</option>
-                                                    <option>$25 to $50</option>
-                                                    <option>$50 to $100</option>
-                                                    <option>$100 to $200</option>
-                                                    <option>$200 &amp; Above</option>
+                                                <select class="form-select" id="priceRange" name="price" onchange="this.form.submit()">
+                                                    <option value="" ${empty param.price ? "selected" : ""}>All Prices</option>
+                                                    <option value="under500" ${param.price == "under500" ? "selected" : ""}>Under $500</option>
+                                                    <option value="500to750" ${param.price == "500to750" ? "selected" : ""}>$500 to $750</option>
+                                                    <option value="750to850" ${param.price == "750to850" ? "selected" : ""}>$750 to $850</option>
+                                                    <option value="850to950" ${param.price == "850to950" ? "selected" : ""}>$850 to $950</option>
+                                                    <option value="above950" ${param.price == "above950" ? "selected" : ""}>$950 & Above</option>
                                                 </select>
-                                            </div>
+                                            </form>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-2">
                                             <div class="filter-item">
