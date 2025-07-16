@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 
@@ -8,27 +9,35 @@ public class Order {
     private int sellerId;
     private int customerId;
     private Date orderDate;
-    private String status;
+    private String orderStatusName; // thay thế status
     private String totalAmount;
     private int paymentId;
     private int orderStatusId;
     private int provinceCode, districtCode, wardCode;
     private String provinceName, districtName, wardName;
+    private String customerName;
+    private int paymentMethodId;
 
-    public int getOrderStatusId() {
-        return orderStatusId;
+    public int getPaymentMethodId() {
+        return paymentMethodId;
     }
 
-    public void setOrderStatusId(int orderStatusId) {
-        this.orderStatusId = orderStatusId;
+    public void setPaymentMethodId(int paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
     }
 
-    public Order(int orderId, int sellerId, int customerId, Date orderDate, String status, String totalAmount, int paymentId, int orderStatusId, int provinceCode, int districtCode, int wardCode, String provinceName, String districtName, String wardName) {
+    private List<OrderItem> items; // Danh sách sản phẩm trong đơn
+
+    public Order() {
+    }
+
+    // Constructor đầy đủ
+    public Order(int orderId, int sellerId, int customerId, Date orderDate, String orderStatusName, String totalAmount, int paymentId, int orderStatusId, int provinceCode, int districtCode, int wardCode, String provinceName, String districtName, String wardName) {
         this.orderId = orderId;
         this.sellerId = sellerId;
         this.customerId = customerId;
         this.orderDate = orderDate;
-        this.status = status;
+        this.orderStatusName = orderStatusName;
         this.totalAmount = totalAmount;
         this.paymentId = paymentId;
         this.orderStatusId = orderStatusId;
@@ -38,22 +47,37 @@ public class Order {
         this.provinceName = provinceName;
         this.districtName = districtName;
         this.wardName = wardName;
+
     }
 
-    public Order() {
-    }
-
-    public Order(int orderId, int sellerId, int customerId, Date orderDate, String status, String totalAmount, int paymentId) {
+    // Constructor rút gọn
+    public Order(int orderId, int sellerId, int customerId, Date orderDate, String orderStatusName, String totalAmount, int paymentId) {
         this.orderId = orderId;
         this.sellerId = sellerId;
         this.customerId = customerId;
         this.orderDate = orderDate;
-        this.status = status;
+        this.orderStatusName = orderStatusName;
         this.totalAmount = totalAmount;
         this.paymentId = paymentId;
     }
 
-    // Getters and Setters
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    // Getters & Setters
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public int getOrderId() {
         return orderId;
     }
@@ -86,12 +110,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public String getStatus() {
-        return status;
+    public String getOrderStatusName() {
+        return orderStatusName;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOrderStatusName(String orderStatusName) {
+        this.orderStatusName = orderStatusName;
     }
 
     public String getTotalAmount() {
@@ -108,6 +132,14 @@ public class Order {
 
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public int getOrderStatusId() {
+        return orderStatusId;
+    }
+
+    public void setOrderStatusId(int orderStatusId) {
+        this.orderStatusId = orderStatusId;
     }
 
     public int getProvinceCode() {
@@ -157,5 +189,4 @@ public class Order {
     public void setWardName(String wardName) {
         this.wardName = wardName;
     }
-
 }

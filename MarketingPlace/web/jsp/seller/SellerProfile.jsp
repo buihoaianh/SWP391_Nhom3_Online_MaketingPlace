@@ -103,7 +103,7 @@
                                                     <button type="submit" class="btn btn-primary w-100">Update Profile</button>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <a href="${pageContext.request.contextPath}/saller-dashboard" class="btn btn-secondary w-100">Back to Dashboard</a>
+                                                    <a href="${pageContext.request.contextPath}/seller-dashboard" class="btn btn-secondary w-100">Back to Dashboard</a>
                                                 </div>
                                             </div>
                                         </form>

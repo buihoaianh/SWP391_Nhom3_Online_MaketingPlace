@@ -142,7 +142,7 @@
             <div id="sidebar" class="active">
                 <div class="sidebar-wrapper active">
                     <div class="logo d-flex align-items-center">
-                        <a href="saller-dashboard">
+                        <a href="seller-dashboard">
                             <img src="${pageContext.request.contextPath}/asset/images/logo/logo.png"
                                  alt="Logo"
                                  style="max-width: 180px; height: auto;">

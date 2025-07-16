@@ -4,23 +4,25 @@
  */
 package controller.SellerController;
 
-import dao.UserDAO;
+import dao.OrderDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 import model.Account;
+import model.Order;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "SellerDashboard", urlPatterns = {"/seller/seller-dashboard"})
-public class SellerDashboard extends HttpServlet {
+@WebServlet(name = "ListOrderController", urlPatterns = {"/seller/list-order"})
+public class ListOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +36,18 @@ public class SellerDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("/jsp/seller/SellerDashboard.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ListOrderController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ListOrderController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,27 +62,22 @@ public class SellerDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO dao = new UserDAO();
 
-        // B1: Khởi tạo danh sách 12 tháng với giá trị mặc định là 0
-        Map<String, Integer> stats = new java.util.LinkedHashMap<>();
-        for (int i = 1; i <= 12; i++) {
-            String month = String.format("2025-%02d", i); // format: yyyy-MM
-            stats.put(month, 0);
+        HttpSession session = request.getSession();
+        Account user = (Account) session.getAttribute("user");
+
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/loginAccount"); // Chưa đăng nhập
+            return;
         }
 
-        // B2: Gộp dữ liệu từ DB vào map đã khởi tạo
-        Map<String, Integer> dbStats = dao.getCustomerAccountStatsByMonth(); // đã lấy dữ liệu thật
-        for (Map.Entry<String, Integer> entry : dbStats.entrySet()) {
-            stats.put(entry.getKey(), entry.getValue()); // cập nhật lại giá trị nếu có
-        }
+        int sellerId = user.getAccountID(); // Lấy ID người bán từ tài khoản đã đăng nhập
 
-        List<Account> topCustomers = dao.getRandomTopCustomers(3);
-        request.setAttribute("topCustomers", topCustomers);
+        OrderDAO dao = new OrderDAO();
+        List<Order> orderList = dao.getAllOrdersBySellerId(sellerId);
 
-        // B3: Gửi đến JSP
-        request.setAttribute("stats", stats);
-        request.getRequestDispatcher("/jsp/seller/SellerDashboard.jsp").forward(request, response);
+        request.setAttribute("orders", orderList);
+        request.getRequestDispatcher("/jsp/seller/ListOrder.jsp").forward(request, response);
     }
 
     /**
