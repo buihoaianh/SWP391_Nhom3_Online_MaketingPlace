@@ -578,6 +578,58 @@ public class ProductDAO extends ConnectDB {
         return list;
     }
 
+    public ArrayList<Product> getProductsSortedByPrice(int categoryId, boolean asc) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL "
+                    + "ORDER BY MinPrice " + (asc ? "ASC" : "DESC");
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> getNewestProductsInCategory(int categoryId) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT TOP 2 p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, p.CreateProductDate "
+                    + "ORDER BY p.CreateProductDate DESC";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
         int testProductId = 12; // ← ID sản phẩm có thật trong database của bạn

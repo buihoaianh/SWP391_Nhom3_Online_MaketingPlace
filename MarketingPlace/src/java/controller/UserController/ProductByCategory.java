@@ -46,48 +46,66 @@ public class ProductByCategory extends HttpServlet {
         int categoryId = Integer.parseInt(request.getParameter("cid"));
         String keyword = request.getParameter("query");
         String priceFilter = request.getParameter("price");
+        String sort = request.getParameter("sort");
         ProductDAO dao = new ProductDAO();
         ArrayList<Product> products;
         if (keyword != null && !keyword.trim().isEmpty()) {
-         
             products = dao.searchProductsInCategoryByName(categoryId, keyword);
         } else if (priceFilter != null && !priceFilter.trim().isEmpty()) {
-          
+
             products = dao.getProductsByCategoryWithPriceFilter(categoryId, priceFilter);
+        } else if (sort != null && !sort.trim().isEmpty()) {
+            switch (sort) {
+                case "lowtohigh":
+                    products = dao.getProductsSortedByPrice(categoryId, true);
+                    break;
+                case "hightolow":
+                    products = dao.getProductsSortedByPrice(categoryId, false);
+                    break;
+                case "newest":
+                    products = dao.getNewestProductsInCategory(categoryId);
+                    break;
+                default:
+                    products = dao.getProductsByCategoryWithPrice(categoryId);
+            }
+
         } else {
-           
+          
             products = dao.getProductsByCategoryWithPrice(categoryId);
         }
+            request.setAttribute("products", products);
+            request.setAttribute("cid", categoryId);
+            request.setAttribute("query", keyword);
+            request.setAttribute("price", priceFilter);
+            request.setAttribute("sort", sort);
+            request.getRequestDispatcher("jsp/public/Category.jsp").forward(request, response);
+        }
 
-        request.setAttribute("products", products);
-        request.setAttribute("cid", categoryId);
-        request.setAttribute("query", keyword);
-        request.setAttribute("price", priceFilter);
-        request.getRequestDispatcher("jsp/public/Category.jsp").forward(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        /**
+         * Handles the HTTP <code>POST</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
+        @Override
+        protected void doPost
+        (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/public/Category.jsp").forward(request, response);
-    }
+            request.getRequestDispatcher("/jsp/public/Category.jsp").forward(request, response);
+        }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+        @Override
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }// </editor-fold>
+        }// </editor-fold>
 
-}
+    }
