@@ -28,6 +28,7 @@ import model.Size;
  * @author tulok
  */
 public class ProductDAO extends ConnectDB {
+
     //thêm mới
     Connection conn = null;
     PreparedStatement ps = null;
@@ -271,10 +272,13 @@ public class ProductDAO extends ConnectDB {
                 + "p.DiscountID, p.CreateProductDate, p.Description, p.Status, "
                 + "pi.ImageURL, "
                 + "pv.ProductVariantId, pv.ColorId, pv.SizeId, pv.Quantity AS VariantQuantity, "
-                + "pv.Price AS VariantPrice, pv.Status AS VariantStatus "
+                + "pv.Price AS VariantPrice, pv.Status AS VariantStatus, "
+                + "c.ColorName, s.SizeName "
                 + "FROM Products p "
                 + "LEFT JOIN ProductImages pi ON p.ProductID = pi.ProductID "
                 + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductId "
+                + "LEFT JOIN Color c ON pv.ColorId = c.ColorId "
+                + "LEFT JOIN Size s ON pv.SizeId = s.SizeId "
                 + "ORDER BY p.ProductID";
 
         try {
@@ -312,24 +316,30 @@ public class ProductDAO extends ConnectDB {
                 // Add variant if exists
                 int variantId = rs.getInt("ProductVariantId");
                 if (!rs.wasNull()) {
-                    ProductVariant variant = new ProductVariant();
-                    variant.setProductVariantId(variantId);
-                    variant.setProductId(productId);
-                    variant.setQuantity(rs.getInt("VariantQuantity"));
-                    variant.setPrice(rs.getLong("VariantPrice"));
-                    variant.setStatus(rs.getString("VariantStatus"));
-                    variant.setProduct(product); // Liên kết ngược lại với Product
+                    boolean exists = product.getVariants().stream()
+                            .anyMatch(v -> v.getProductVariantId() == variantId);
 
-                    // Tạo đối tượng Color và Size chỉ với ID (chưa JOIN tên)
-                    Color color = new Color();
-                    color.setId(rs.getInt("ColorId"));
-                    variant.setColor(color);
+                    if (!exists) {
+                        ProductVariant variant = new ProductVariant();
+                        variant.setProductVariantId(variantId);
+                        variant.setProductId(productId);
+                        variant.setQuantity(rs.getInt("VariantQuantity"));
+                        variant.setPrice(rs.getLong("VariantPrice"));
+                        variant.setStatus(rs.getString("VariantStatus"));
+                        variant.setProduct(product); // liên kết ngược
 
-                    Size size = new Size();
-                    size.setId(rs.getInt("SizeId"));
-                    variant.setSize(size);
+                        Color color = new Color();
+                        color.setId(rs.getInt("ColorId"));
+                        color.setName(rs.getString("ColorName"));
+                        variant.setColor(color);
 
-                    product.getVariants().add(variant);
+                        Size size = new Size();
+                        size.setId(rs.getInt("SizeId"));
+                        size.setName(rs.getString("SizeName"));
+                        variant.setSize(size);
+
+                        product.getVariants().add(variant);
+                    }
                 }
             }
 
@@ -347,10 +357,13 @@ public class ProductDAO extends ConnectDB {
                 + "p.DiscountID, p.CreateProductDate, p.Description, p.Status, "
                 + "pi.ImageURL, "
                 + "pv.ProductVariantId, pv.ColorId, pv.SizeId, pv.Quantity AS VariantQuantity, "
-                + "pv.Price AS VariantPrice, pv.Status AS VariantStatus "
+                + "pv.Price AS VariantPrice, pv.Status AS VariantStatus, "
+                + "c.ColorName, s.SizeName "
                 + "FROM Products p "
                 + "LEFT JOIN ProductImages pi ON p.ProductID = pi.ProductID "
                 + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductId "
+                + "LEFT JOIN Color c ON pv.ColorId = c.ColorId "
+                + "LEFT JOIN Size s ON pv.SizeId = s.SizeId "
                 + "WHERE p.ProductID = ?";
 
         try {
@@ -385,24 +398,31 @@ public class ProductDAO extends ConnectDB {
                 // Add variant if exists
                 int variantId = rs.getInt("ProductVariantId");
                 if (!rs.wasNull()) {
-                    ProductVariant variant = new ProductVariant();
-                    variant.setProductVariantId(variantId);
-                    variant.setProductId(id);
-                    variant.setQuantity(rs.getInt("VariantQuantity"));
-                    variant.setPrice(rs.getLong("VariantPrice"));
-                    variant.setStatus(rs.getString("VariantStatus"));
-                    variant.setProduct(product);
+                    boolean exists = product.getVariants().stream()
+                            .anyMatch(v -> v.getProductVariantId() == variantId);
+                    if (!exists) {
+                        ProductVariant variant = new ProductVariant();
+                        variant.setProductVariantId(variantId);
+                        variant.setProductId(id);
+                        variant.setQuantity(rs.getInt("VariantQuantity"));
+                        variant.setPrice(rs.getLong("VariantPrice"));
+                        variant.setStatus(rs.getString("VariantStatus"));
+                        variant.setProduct(product);
 
-                    // Gán Color và Size (chỉ ID, nếu cần thêm name thì JOIN thêm bảng Color và Size)
-                    Color color = new Color();
-                    color.setId(rs.getInt("ColorId"));
-                    variant.setColor(color);
+                        // Color object with name
+                        Color color = new Color();
+                        color.setId(rs.getInt("ColorId"));
+                        color.setName(rs.getString("ColorName"));
+                        variant.setColor(color);
 
-                    Size size = new Size();
-                    size.setId(rs.getInt("SizeId"));
-                    variant.setSize(size);
+                        // Size object with name
+                        Size size = new Size();
+                        size.setId(rs.getInt("SizeId"));
+                        size.setName(rs.getString("SizeName"));
+                        variant.setSize(size);
 
-                    product.getVariants().add(variant);
+                        product.getVariants().add(variant);
+                    }
                 }
             }
 
@@ -413,6 +433,201 @@ public class ProductDAO extends ConnectDB {
         }
 
         return null;
+    }
+
+    public List<String> getImagesByVariantId(int variantId) {
+        List<String> imageUrls = new ArrayList<>();
+        String sql = "SELECT ImageURL FROM ProductImages WHERE ProductVariantId = ?";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, variantId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    imageUrls.add(rs.getString("ImageURL"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imageUrls;
+    }
+
+    public ArrayList<Product> getLatestProducts(int limit) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT TOP (?) p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p "
+                    + "JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, p.CreateProductDate "
+                    + "ORDER BY p.CreateProductDate DESC";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> getProductsByCategoryWithPrice(int categoryId) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> searchProductsInCategoryByName(int categoryId, String keyword) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "AND p.CategoryID = ? AND p.ProductName LIKE ? "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ps.setString(2, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> getProductsByCategoryWithPriceFilter(int categoryId, String priceFilter) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p "
+                    + "JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' ";
+            if (priceFilter != null) {
+                switch (priceFilter) {
+                    case "under500":
+                        sql += "AND pv.Price < 500 ";
+                        break;
+                    case "500to750":
+                        sql += "AND pv.Price >= 500 AND pv.Price <= 750 ";
+                        break;
+                    case "750to850":
+                        sql += "AND pv.Price >= 750 AND pv.Price <= 850 ";
+                        break;
+                    case "850to950":
+                        sql += "AND pv.Price >= 850 AND pv.Price <= 950 ";
+                        break;
+                    case "above950":
+                        sql += "AND pv.Price > 950 ";
+                        break;
+                }
+            }
+
+            sql += "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL";
+
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> getProductsSortedByPrice(int categoryId, boolean asc) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL "
+                    + "ORDER BY MinPrice " + (asc ? "ASC" : "DESC");
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> getNewestProductsInCategory(int categoryId) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT TOP 2 p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.CategoryID = ? AND p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, p.CreateProductDate "
+                    + "ORDER BY p.CreateProductDate DESC";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static void main(String[] args) {

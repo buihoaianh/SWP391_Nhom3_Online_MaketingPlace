@@ -1,7 +1,7 @@
 <%-- 
     Document   : Footer
     Created on : May 27, 2025, 9:24:52 PM
-    Author     : Admin
+    Author     : chinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -4,6 +4,7 @@
  */
 package controller.UserController;
 
+import dao.CategoriesDAO;
 import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,8 @@ import jakarta.servlet.http.HttpSession;
 import model.Product;
 import dao.ProductDAO;
 import java.util.ArrayList;
+import java.util.List;
+import model.Categories;
 
 /**
  *
@@ -40,6 +43,7 @@ public class Home extends HttpServlet {
 
         // Chỉ lấy 4 sản phẩm đầu tiên (hoặc nổi bật nếu có flag)
         ArrayList<Product> allProducts = dbProduct.getAllProduct(); // hoặc getFeaturedProducts(4);
+        ArrayList<Product> newArrivalProducts = dbProduct.getLatestProducts(4);
         ArrayList<Product> featuredProducts = new ArrayList<>();
 
         for (int i = 0; i < Math.min(4, allProducts.size()); i++) {
@@ -47,7 +51,11 @@ public class Home extends HttpServlet {
         }
 
         System.out.println("Số sản phẩm nổi bật: " + featuredProducts.size());
+        CategoriesDAO dbCategory = new CategoriesDAO();
+        List<Categories> categories = dbCategory.getAllCategories();
         request.setAttribute("products", featuredProducts);
+        request.setAttribute("categories", categories);
+        request.setAttribute("newarrivals", newArrivalProducts);
         request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
     }
 

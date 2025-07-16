@@ -19,7 +19,7 @@ import model.Account;
  *
  * @author Admin
  */
-@WebServlet(name = "SellerDashboard", urlPatterns = {"/saller-dashboard"})
+@WebServlet(name = "SellerDashboard", urlPatterns = {"/seller/seller-dashboard"})
 public class SellerDashboard extends HttpServlet {
 
     /**
@@ -34,7 +34,7 @@ public class SellerDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("jsp/seller/SellerDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/seller/SellerDashboard.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,7 +69,7 @@ public class SellerDashboard extends HttpServlet {
 
         // B3: Gửi đến JSP
         request.setAttribute("stats", stats);
-        request.getRequestDispatcher("jsp/seller/SellerDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/seller/SellerDashboard.jsp").forward(request, response);
     }
 
     /**
