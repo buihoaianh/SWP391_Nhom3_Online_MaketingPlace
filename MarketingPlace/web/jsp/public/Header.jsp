@@ -97,7 +97,7 @@
                                     <i class="bi bi-person-circle me-2"></i>
                                     <span>My Profile</span>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="account.html">
+                                <a class="dropdown-item d-flex align-items-center" href="my-orders">
                                     <i class="bi bi-bag-check me-2"></i>
                                     <span>My Orders</span>
                                 </a>

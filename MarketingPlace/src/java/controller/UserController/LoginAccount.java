@@ -25,6 +25,12 @@ import java.util.UUID;
 public class LoginAccount extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/jsp/user/login.jsp").forward(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -97,12 +103,10 @@ public class LoginAccount extends HttpServlet {
 
         if (role == 2) {
             // Chuyển đến trang admin
-            response.sendRedirect(request.getContextPath() + "/saller-dashboard");
-        } else if(role == 1){
+            response.sendRedirect(request.getContextPath() + "/seller/seller-dashboard");
+        } else if (role == 1) {
             response.sendRedirect(request.getContextPath() + "/admin");
-        }
-        else 
-        {
+        } else {
             // Chuyển đến trang người dùng bình thường
             request.getRequestDispatcher("Home").forward(request, response);
         }//chinh
