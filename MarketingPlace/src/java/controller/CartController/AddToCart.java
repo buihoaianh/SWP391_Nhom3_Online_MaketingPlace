@@ -25,11 +25,11 @@ public class AddToCart extends HttpServlet {
         ArrayList<Cart> cart = (ArrayList<Cart>) session.getAttribute("cart");
         if (cart == null) cart = new ArrayList<>();
 
-        // ✅ Lấy variantId và quantity
+        //  Lấy variantId và quantity từ request
         int variantId = Integer.parseInt(request.getParameter("variantId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        // ✅ Lấy biến thể từ DB, bao gồm cả thông tin Product bên trong
+        // Lấy biến thể từ DB, bao gồm cả thông tin Product bên trong
         ProductVariant variant = variantDao.getProductVariantById(variantId);
         if (variant == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -37,7 +37,7 @@ public class AddToCart extends HttpServlet {
         }
         Product product = variant.getProduct();
 
-        // ✅ Tìm biến thể trong giỏ
+        // Tìm biến thể trong giỏ đã tồn tai hay chưa
         Cart cartExist = null;
         for (Cart c : cart) {
             if (c.getProductVariant().getProductVariantId() == variantId) {
@@ -51,13 +51,13 @@ public class AddToCart extends HttpServlet {
             }
         }
 
-        // ✅ Nếu chưa có thì thêm mới
+        // Nếu chưa có thì thêm mới
         if (cartExist == null && quantity > 0) {
             cartExist = new Cart(product, quantity, variant);
             cart.add(cartExist);
         }
 
-        // ✅ Cập nhật session & trả JSON
+        // Cập nhật session & trả JSON
         session.setAttribute("cart", cart);
         JSONObject json = new JSONObject();
         json.put("success", true);

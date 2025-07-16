@@ -1,10 +1,7 @@
-<%-- 
-    Document   : Home
-    Created on : Jun 1, 2025, 7:16:34 PM
-    Author     : tulok
---%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Cart" %>
@@ -34,7 +31,8 @@
         <link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
-
+        <!--Them thư vien-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
         <!-- Main CSS File -->
         <link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
 
@@ -46,6 +44,318 @@
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+            body{
+                margin-top:20px;
+            }
+            .blog-listing {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            .gray-bg {
+                background-color: #f5f5f5;
+            }
+            /* Blog 
+            ---------------------*/
+            .blog-grid {
+                box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+                border-radius: 5px;
+                overflow: hidden;
+                background: #ffffff;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+            .blog-grid .blog-img {
+                position: relative;
+            }
+            .blog-grid .blog-img .date {
+                position: absolute;
+                background: #fc5356;
+                color: #ffffff;
+                padding: 8px 15px;
+                left: 10px;
+                top: 10px;
+                border-radius: 4px;
+            }
+            .blog-grid .blog-img .date span {
+                font-size: 22px;
+                display: block;
+                line-height: 22px;
+                font-weight: 700;
+            }
+            .blog-grid .blog-img .date label {
+                font-size: 14px;
+                margin: 0;
+            }
+            .blog-grid .blog-info {
+                padding: 20px;
+            }
+            .blog-grid .blog-info h5 {
+                font-size: 22px;
+                font-weight: 700;
+                margin: 0 0 10px;
+            }
+            .blog-grid .blog-info h5 a {
+                color: #20247b;
+            }
+            .blog-grid .blog-info p {
+                margin: 0;
+            }
+            .blog-grid .blog-info .btn-bar {
+                margin-top: 20px;
+            }
+
+
+            /* Blog Sidebar
+            -------------------*/
+            .blog-aside .widget {
+                box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+                border-radius: 5px;
+                overflow: hidden;
+                background: #ffffff;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                width: 100%;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .blog-aside .widget-body {
+                padding: 15px;
+            }
+            .blog-aside .widget-title {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+            .blog-aside .widget-title h3 {
+                font-size: 20px;
+                font-weight: 700;
+                color: #fc5356;
+                margin: 0;
+            }
+            .blog-aside .widget-author .media {
+                margin-bottom: 15px;
+            }
+            .blog-aside .widget-author p {
+                font-size: 16px;
+                margin: 0;
+            }
+            .blog-aside .widget-author .avatar {
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .blog-aside .widget-author h6 {
+                font-weight: 600;
+                color: #20247b;
+                font-size: 22px;
+                margin: 0;
+                padding-left: 20px;
+            }
+            .blog-aside .post-aside {
+                margin-bottom: 15px;
+            }
+            .blog-aside .post-aside .post-aside-title h5 {
+                margin: 0;
+            }
+            .blog-aside .post-aside .post-aside-title a {
+                font-size: 18px;
+                color: #20247b;
+                font-weight: 600;
+            }
+            .blog-aside .post-aside .post-aside-meta {
+                padding-bottom: 10px;
+            }
+            .blog-aside .post-aside .post-aside-meta a {
+                color: #6F8BA4;
+                font-size: 12px;
+                text-transform: uppercase;
+                display: inline-block;
+                margin-right: 10px;
+            }
+            .blog-aside .latest-post-aside + .latest-post-aside {
+                border-top: 1px solid #eee;
+                padding-top: 15px;
+                margin-top: 15px;
+            }
+            .blog-aside .latest-post-aside .lpa-right {
+                width: 90px;
+            }
+            .blog-aside .latest-post-aside .lpa-right img {
+                border-radius: 3px;
+            }
+            .blog-aside .latest-post-aside .lpa-left {
+                padding-right: 15px;
+            }
+            .blog-aside .latest-post-aside .lpa-title h5 {
+                margin: 0;
+                font-size: 15px;
+            }
+            .blog-aside .latest-post-aside .lpa-title a {
+                color: #20247b;
+                font-weight: 600;
+            }
+            .blog-aside .latest-post-aside .lpa-meta a {
+                color: #6F8BA4;
+                font-size: 12px;
+                text-transform: uppercase;
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .tag-cloud a {
+                padding: 4px 15px;
+                font-size: 13px;
+                color: #ffffff;
+                background: #20247b;
+                border-radius: 3px;
+                margin-right: 4px;
+                margin-bottom: 4px;
+            }
+            .tag-cloud a:hover {
+                background: #fc5356;
+            }
+
+            .blog-single {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+
+            .article {
+                box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+                border-radius: 5px;
+                overflow: hidden;
+                background: #ffffff;
+                padding: 15px;
+                margin: 15px 0 30px;
+            }
+            .article .article-title {
+                padding: 15px 0 20px;
+            }
+            .article .article-title h6 {
+                font-size: 14px;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+            .article .article-title h6 a {
+                text-transform: uppercase;
+                color: #fc5356;
+                border-bottom: 1px solid #fc5356;
+            }
+            .article .article-title h2 {
+                color: #20247b;
+                font-weight: 600;
+            }
+            .article .article-title .media {
+                padding-top: 15px;
+                border-bottom: 1px dashed #ddd;
+                padding-bottom: 20px;
+            }
+            .article .article-title .media .avatar {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .article .article-title .media .media-body {
+                padding-left: 8px;
+            }
+            .article .article-title .media .media-body label {
+                font-weight: 600;
+                color: #fc5356;
+                margin: 0;
+            }
+            .article .article-title .media .media-body span {
+                display: block;
+                font-size: 12px;
+            }
+            .article .article-content h1,
+            .article .article-content h2,
+            .article .article-content h3,
+            .article .article-content h4,
+            .article .article-content h5,
+            .article .article-content h6 {
+                color: #20247b;
+                font-weight: 600;
+                margin-bottom: 15px;
+            }
+            .article .article-content blockquote {
+                max-width: 600px;
+                padding: 15px 0 30px 0;
+                margin: 0;
+            }
+            .article .article-content blockquote p {
+                font-size: 20px;
+                font-weight: 500;
+                color: #fc5356;
+                margin: 0;
+            }
+            .article .article-content blockquote .blockquote-footer {
+                color: #20247b;
+                font-size: 16px;
+            }
+            .article .article-content blockquote .blockquote-footer cite {
+                font-weight: 600;
+            }
+            .article .tag-cloud {
+                padding-top: 10px;
+            }
+
+            .article-comment {
+                box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+                border-radius: 5px;
+                overflow: hidden;
+                background: #ffffff;
+                padding: 20px;
+            }
+            .article-comment h4 {
+                color: #20247b;
+                font-weight: 700;
+                margin-bottom: 25px;
+                font-size: 22px;
+            }
+            img {
+                max-width: 100%;
+            }
+            img {
+                vertical-align: middle;
+                border-style: none;
+            }
+            .active-category {
+                font-weight: bold;
+                color: #007bff;
+            }
+.blog-grid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.blog-img {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.blog-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blog-info {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+        </style>
     </head>
 
     <body class="index-page">
@@ -224,6 +534,7 @@
                                 <li><a href="product-details.html">Product Details</a></li>
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="/MarketingPlace/Blog">Blogs</a></li>
                                 <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                                     <ul>
                                         <li><a href="#">Dropdown 1</a></li>
@@ -824,529 +1135,287 @@
 
         <main class="main">
 
-            <!-- Hero Section -->
-            <section class="ecommerce-hero-1 hero section" id="hero">
+            <section class="blog-listing gray-bg">
                 <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 content-col" data-aos="fade-right" data-aos-delay="100">
-                            <div class="content">
-                                <span class="promo-badge">New Collection 2025</span>
-                                <h1>Discover Stylish <span>Fashion</span> For Every Season</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Vestibulum ante ipsum primis in faucibus.</p>
-                                <div class="hero-cta">
-                                    <a href="#" class="btn btn-shop">Shop Now <i class="bi bi-arrow-right"></i></a>
-                                    <a href="#" class="btn btn-collection">View Collection</a>
-                                </div>
-                                <div class="hero-features">
-                                    <div class="feature-item">
-                                        <i class="bi bi-truck"></i>
-                                        <span>Free Shipping</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="bi bi-shield-check"></i>
-                                        <span>Secure Payment</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="bi bi-arrow-repeat"></i>
-                                        <span>Easy Returns</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 image-col" data-aos="fade-left" data-aos-delay="200">
-                            <div class="hero-image">
-                                <img src="${pageContext.request.contextPath}/assets/img/product/product-f-9.webp" alt="Fashion Product" class="main-product" loading="lazy">
-                                <div class="floating-product product-1" data-aos="fade-up" data-aos-delay="300">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4.webp" alt="Product 2">
-                                    <div class="product-info">
-                                        <h4>Summer Collection</h4>
-                                        <span class="price">$89.99</span>
-                                    </div>
-                                </div>
-                                <div class="floating-product product-2" data-aos="fade-up" data-aos-delay="400">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-3.webp" alt="Product 3">
-                                    <div class="product-info">
-                                        <h4>Casual Wear</h4>
-                                        <span class="price">$59.99</span>
-                                    </div>
-                                </div>
-                                <div class="discount-badge" data-aos="zoom-in" data-aos-delay="500">
-                                    <span class="percent">30%</span>
-                                    <span class="text">OFF</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="row align-items-start">
+                        <div class="col-lg-8 m-15px-tb">
+                            <div class="row">
+                                <!--                                <div class="col-sm-6">
+                                                                    <div class="blog-grid">
+                                                                        <div class="blog-img">
+                                                                            <div class="date">
+                                                                                <span>04</span>
+                                                                                <label>FEB</label>
+                                                                            </div>
+                                                                            <a href="#">
+                                                                                <img src="https://www.bootdey.com/image/400x200/FFB6C1/000000" title="" alt="">
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="blog-info">
+                                                                            <h5><a href="#">Prevent 75% of visitors from google analytics</a></h5>
+                                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                                                            <div class="btn-bar">
+                                                                                <a href="#" class="px-btn-arrow">
+                                                                                    <span>Read More</span>
+                                                                                    <i class="arrow"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
+                                <c:forEach var="blog" items="${blogData}">
+    <div class="col-sm-6 mb-4">
+        <div class="blog-grid">
+            <div class="blog-img">
+                <div class="date">
+                    <span>${blog.createdAt.dayOfMonth}</span>
+                    <label>${blog.createdAt.month}</label>
                 </div>
-            </section><!-- /Hero Section -->
-
-            <!-- Info Cards Section -->
-            <section id="info-cards" class="info-cards section light-background">
-
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="row g-4 justify-content-center">
-                        <!-- Info Card 1 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-truck"></i>
-                                </div>
-                                <h3>Free Shipping</h3>
-                                <p>Nulla sit morbi vestibulum eros duis amet, consectetur vitae lacus. Ut quis tempor felis sed nunc viverra.</p>
-                            </div>
-                        </div><!-- End Info Card 1 -->
-
-                        <!-- Info Card 2 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-piggy-bank"></i>
-                                </div>
-                                <h3>Money Back Guarantee</h3>
-                                <p>Nullam gravida felis ac nunc tincidunt, sed malesuada justo pulvinar. Vestibulum nec diam vitae eros.</p>
-                            </div>
-                        </div><!-- End Info Card 2 -->
-
-                        <!-- Info Card 3 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-percent"></i>
-                                </div>
-                                <h3>Discount Offers</h3>
-                                <p>Nulla ipsum nisi vel adipiscing amet, dignissim consectetur ornare. Vestibulum quis posuere elit auctor.</p>
-                            </div>
-                        </div><!-- End Info Card 3 -->
-
-                        <!-- Info Card 4 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-headset"></i>
-                                </div>
-                                <h3>24/7 Support</h3>
-                                <p>Ipsum dolor amet sit consectetur adipiscing, nullam vitae euismod tempor nunc felis vestibulum ornare.</p>
-                            </div>
-                        </div><!-- End Info Card 4 -->
-                    </div>
-
+                <a href="BlogDetail?service=blogDetail&id=${blog.blogID}">
+                    <img src="${blog.thumbnailURL}" title="${blog.title}" alt="${blog.title}">
+                </a>
+            </div>
+            <div class="blog-info">
+                <h5>
+                    <a href="BlogDetail?service=blogDetail&id=${blog.blogID}">${blog.title}</a>
+                </h5>
+                <p>${fn:substring(blog.content, 0, 120)}...</p>
+                <div class="btn-bar mt-2">
+                    <a href="BlogDetail?service=blogDetail&id=${blog.blogID}" class="px-btn-arrow">
+                        <span>Read More</span>
+                        <i class="arrow"></i>
+                    </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</c:forEach>
 
-            </section><!-- /Info Cards Section -->
+                                <!--                                <div class="col-12">
+                                                                    <ul class="pagination justify-content-center">
+                                                                        <li class="page-item disabled">
+                                                                            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                                                        </li>
+                                                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                                        <li class="page-item active">
+                                                                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                                                                        </li>
+                                                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>-->
+                                <div class="col-12">
+                                    <ul class="pagination justify-content-center">
+                                        <c:if test="${currentPage > 1}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="Blog?service=listBlogs&page=${currentPage - 1}"><i class="fas fa-chevron-left"></i></a>
+                                            </li>
+                                        </c:if>
 
-            <!-- Category Cards Section -->
-            <section id="category-cards" class="category-cards section">
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                <a class="page-link" href="Blog?service=listBlogs&page=${i}">${i}</a>
+                                            </li>
+                                        </c:forEach>
 
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="category-slider swiper init-swiper">
-                        <script type="application/json" class="swiper-config">
-                            {
-                            "loop": true,
-                            "autoplay": {
-                            "delay": 5000,
-                            "disableOnInteraction": false
-                            },
-                            "grabCursor": true,
-                            "speed": 600,
-                            "slidesPerView": "auto",
-                            "spaceBetween": 20,
-                            "navigation": {
-                            "nextEl": ".swiper-button-next",
-                            "prevEl": ".swiper-button-prev"
-                            },
-                            "breakpoints": {
-                            "320": {
-                            "slidesPerView": 2,
-                            "spaceBetween": 15
-                            },
-                            "576": {
-                            "slidesPerView": 3,
-                            "spaceBetween": 15
-                            },
-                            "768": {
-                            "slidesPerView": 4,
-                            "spaceBetween": 20
-                            },
-                            "992": {
-                            "slidesPerView": 5,
-                            "spaceBetween": 20
-                            },
-                            "1200": {
-                            "slidesPerView": 6,
-                            "spaceBetween": 20
-                            }
-                            }
-                            }
-                        </script>
-
-                        <div class="swiper-wrapper">
-                            <!-- Category Card 1 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="100">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-1.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Vestibulum ante</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 2 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="200">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-6.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Maecenas nec</h3>
-                                    <p class="category-count">8 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 3 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="300">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-9.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Aenean tellus</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 4 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="400">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-f-1.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Donec quam</h3>
-                                    <p class="category-count">12 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 5 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="500">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-10.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Phasellus leo</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 6 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="600">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-m-1.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Quisque rutrum</h3>
-                                    <p class="category-count">2 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 7 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="700">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-10.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Etiam ultricies</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 8 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="800">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-2.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Fusce fermentum</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
+                                        <c:if test="${currentPage < totalPages}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="Blog?service=listBlogs&page=${currentPage + 1}"><i class="fas fa-chevron-right"></i></a>
+                                            </li>
+                                        </c:if>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-
-                </div>
-
-            </section><!-- /Category Cards Section -->
-
-            <!-- Best Sellers Section -->
-            <section id="best-sellers" class="best-sellers section">
-
-                <!-- Section Title -->
-                <div class="container section-title" data-aos="fade-up">
-                    <h2>Best Sellers</h2>
-                    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-                </div><!-- End Section Title -->
-
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="row gy-4">
-                        <!-- Product 1 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-1.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-1-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-accent">New</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-
+                        <div class="col-lg-4 m-15px-tb blog-aside">
+                            <!-- Author -->
+                            <!--                            <div class="widget widget-author">
+                                                            <div class="widget-title">
+                                                                <h3>Author</h3>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="media align-items-center">
+                                                                    <div class="avatar">
+                                                                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" title="" alt="">
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6>Hello, I'm<br> Rachel Roth</h6>
+                                                                    </div>
+                                                                </div>
+                                                                <p>I design and develop services for customers of all sizes, specializing in creating stylish, modern websites, web services and online stores</p>
+                                                            </div>
+                                                        </div>-->
+                            <!-- widget Tags -->
+                            <div class="widget widget-tags">
+                                <div class="widget-title">
+                                    <h3>Categories</h3>
                                 </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="">Lorem ipsum dolor sit amet</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$89.99</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-half"></i>
-                                        <span class="rating-count">(42)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 1 -->
-
-                        <!-- Product 2 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-sale">Sale</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="productDetail?pid=">Consectetur adipiscing elit</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$64.99</span>
-                                        <span class="original-price">$79.99</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <span class="rating-count">(28)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 2 -->
-
-                        <!-- Product 3 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-7.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-7-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="product-details.html">Sed do eiusmod tempor incididunt</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$119.00</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <span class="rating-count">(56)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 3 -->
-
-                        <!-- Product 4 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-12.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-12-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-sold-out">Sold Out</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="product-details.html">Ut labore et dolore magna aliqua</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$75.50</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i>
-                                        <span class="rating-count">(15)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart btn-disabled" disabled="">
-                                        <i class="bi bi-bag-plus me-2"></i>Sold Out
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 4 -->
-                    </div>
-
-                </div>
-
-            </section><!-- /Best Sellers Section -->
-
-            <!-- Product List Section -->
-            <section id="product-list" class="product-list section">
-                <div class="container isotope-layout" data-aos="fade-up" data-aos-delay="100" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-                    <!-- Bộ lọc -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="product-filters isotope-filters mb-5 d-flex justify-content-center" data-aos="fade-up">
-                                <ul class="d-flex flex-wrap gap-2 list-unstyled">
-                                    <li class="filter-active" data-filter="*">All</li>
-                                    <li data-filter=".filter-clothing">Clothing</li>
-                                    <li data-filter=".filter-accessories">Accessories</li>
-                                    <li data-filter=".filter-electronics">Electronics</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Danh sách sản phẩm -->
-                    <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
-                        <c:forEach items="${products}" var="o">
-                            <!-- Bạn nên map CategoryID -> class cụ thể như filter-clothing, filter-electronics,... -->
-                            <div class="col-md-6 col-lg-3 product-item filter-${o.categoryID}">
-                                <div class="product-card">
-                                    <div class="product-image">
-                                        <span class="badge">Sale</span>
-
-                                        <!-- Hiển thị ảnh nếu có, nếu không thì ảnh mặc định -->
-                                        <c:choose>
-                                            <c:when test="${not empty o.imageUrls}">
-                                                <img src="${o.imageUrls[0]}" alt="Product" class="img-fluid main-img" />
-                                                <img src="${o.imageUrls[0]}" alt="Product Hover" class="img-fluid hover-img" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src="img/default-product.jpg" alt="Default" class="img-fluid main-img" />
-                                                <img src="img/default-product.jpg" alt="Default Hover" class="img-fluid hover-img" />
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                        <div class="product-overlay">
-                                            <c:if test="${not empty o.variants}">
-                                                <a href="#" class="btn-cart" onclick="addToCart('${o.variants[0].productVariantId}'); event.preventDefault();">
-                                                    <i class="bi bi-cart-plus"></i> Add to Cart
-                                                </a>
-                                            </c:if>
-                                            <div class="product-actions">
-                                                <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                                                <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                                                <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="product-info">
-                                        <h5 class="product-title">
-                                            <a href="DetailProduct?pid=${o.productId}">${o.productName}</a>
-                                        </h5>
-
-                                        <div class="product-price">
-                                            <!-- Hiển thị giá nếu có -->
+                                <div class="widget-body">
+                                    <div class="nav tag-cloud">
+                                        <c:forEach var="cat" items="${categoryList}">
                                             <c:choose>
-                                                <c:when test="${not empty o.variants}">
-                                                    <span class="current-price">${o.variants[0].price}</span>
+                                                <c:when test="${cat.categoryId == selectedCategoryId}">
+                                                    <!-- Nếu đang chọn rồi => bỏ chọn (hiển thị tất cả blog) -->
+                                                    <a href="Blog?service=listBlogs" class="active-category">
+                                                        ${cat.categoryName}
+                                                    </a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <span class="current-price">Contact</span>
+                                                    <a href="Blog?service=listByCategory&id=${cat.categoryId}">
+                                                        ${cat.categoryName}
+                                                    </a>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <span class="old-price">$129.99</span>
-                                        </div>
 
-                                        <div class="product-rating">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-half"></i>
-                                            <span>(24)</span>
-                                        </div>
+                                        </c:forEach>
+
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
-                    </div>
+                            <!-- End widget Tags -->
 
-                    <!-- Nút View All -->
-                    <div class="text-center mt-5" data-aos="fade-up">
-                        <a href="#" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
-                    </div>
+                            <!-- Latest Post -->
+                            <!--                                               <div class="widget widget-latest-post">
+                                                                                        <div class="widget-title">
+                                                                                            <h3>Latest Post</h3>
+                                                                                        </div>
+                                                                                        <div class="widget-body">
+                                                                                            <div class="latest-post-aside media">
+                                                                                                <div class="lpa-left media-body">
+                                                                                                    <div class="lpa-title">
+                                                                                                        <h5><a href="#">Prevent 75% of visitors from google analytics</a></h5>
+                                                                                                    </div>
+                                                                                                    <div class="lpa-meta">
+                                                                                                        <a class="name" href="#">
+                                                                                                            Rachel Roth
+                                                                                                        </a>
+                                                                                                        <a class="date" href="#">
+                                                                                                            26 FEB 2020
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="lpa-right">
+                                                                                                    <a href="#">
+                                                                                                        <img src="https://www.bootdey.com/image/400x200/E6E6FA/000000" title="" alt="">
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                        
+                                                                                            <div class="latest-post-aside media">
+                                                                                                <div class="lpa-left media-body">
+                                                                                                    <div class="lpa-title">
+                                                                                                        <h5><a href="#">Prevent 75% of visitors from google analytics</a></h5>
+                                                                                                    </div>
+                                                                                                    <div class="lpa-meta">
+                                                                                                        <a class="name" href="#">
+                                                                                                            Rachel Roth
+                                                                                                        </a>
+                                                                                                        <a class="date" href="#">
+                                                                                                            26 FEB 2020
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="lpa-right">
+                                                                                                    <a href="#">
+                                                                                                        <img src="https://www.bootdey.com/image/400x200/FFA07A/000000" title="" alt="">
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                        
+                                                                                            <div class="latest-post-aside media">
+                                                                                                <div class="lpa-left media-body">
+                                                                                                    <div class="lpa-title">
+                                                                                                        <h5><a href="#">Prevent 75% of visitors from google analytics</a></h5>
+                                                                                                    </div>
+                                                                                                    <div class="lpa-meta">
+                                                                                                        <a class="name" href="#">
+                                                                                                            Rachel Roth
+                                                                                                        </a>
+                                                                                                        <a class="date" href="#">
+                                                                                                            26 FEB 2020
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="lpa-right">
+                                                                                                    <a href="#">
+                                                                                                        <img src="https://www.bootdey.com/image/400x200/FFF0F5/000000" title="" alt="">
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                        
+                                                                                        </div>
+                                                                                    </div>-->
+                            <div class="widget widget-latest-post">
+                                <div class="widget-title">
+                                    <h3>Latest Posts</h3>
+                                </div>
+                                <div class="widget-body">
+                                    <c:forEach var="latest" items="${latestBlogs}">
+                                        <div class="latest-post-aside media">
+                                            <div class="lpa-left media-body">
+                                                <div class="lpa-title">
+                                                    <h5>
+                                                        <a href="BlogDetailURL?service=blogDetail&id=${latest.blogID}">
+                                                            ${latest.title}
+                                                        </a>
+                                                    </h5>
+                                                    <a class="date" href="#">
+                                                        ${latest.createdAt}
+                                                    </a>
+                                                </div>
+                                                <div class="lpa-meta">
+                                                    <a class="name" href="#">Author #${latest.authorID}</a>
 
+                                                </div>
+                                            </div>
+                                            <div class="lpa-right">
+                                                <a href="BlogDetailURL?service=blogDetail&id=${latest.blogID}">
+                                                    <img src="${latest.thumbnailURL}" width="80" height="60" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                            <!-- End Latest Post -->
+                            <!-- widget Tags -->
+                            <div class="widget widget-tags">
+                                <div class="widget-title">
+                                    <h3>Tags</h3>   
+                                </div>
+                                <div class="widget-body">
+                                    <div class="nav tag-cloud">
+                                        <c:forEach var="tag" items="${tagList}">
+                                            <a href="#">${tag.tagName}</a>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End widget Tags -->
+                        </div>
+                    </div>
                 </div>
             </section>
+
+            <!--             Info Cards Section 
+                        <section id="info-cards" class="info-cards section light-background">
+            
+                            
+            
+                             ✅ Đưa nút ra ngoài isotope-layout 
+            
+                        </section>
+                        <div class="text-center mt-5 mb-5" data-aos="fade-up">
+                            <a href="#" class="view-all-btn">
+                                View All Products <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>-->
+
+
             <!-- /Product List Section -->
 
         </main>
@@ -1568,13 +1637,13 @@
         </div>
 
         <script>
-                                                    setTimeout(function () {
-                                                        const msg = document.getElementById('login-message');
-                                                        if (msg) {
-                                                            msg.style.opacity = '0';
-                                                            setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
-                                                        }
-                                                    }, 3000);
+            setTimeout(function () {
+                const msg = document.getElementById('login-message');
+                if (msg) {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
+                }
+            }, 3000);
         </script>
         <%
                 session.removeAttribute("message");

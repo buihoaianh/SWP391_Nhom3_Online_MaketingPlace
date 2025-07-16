@@ -1,10 +1,7 @@
-<%-- 
-    Document   : Home
-    Created on : Jun 1, 2025, 7:16:34 PM
-    Author     : tulok
---%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Cart" %>
@@ -25,8 +22,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com" rel="preconnect">
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <!-- Vendor CSS Files -->
         <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -34,7 +30,8 @@
         <link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
-
+        <!--Them thư vien-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
         <!-- Main CSS File -->
         <link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
 
@@ -46,6 +43,276 @@
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+            body{
+                background-color: #f4f7f6;
+                margin-top:20px;
+            }
+            .card {
+                background: #fff;
+                transition: .5s;
+                border: 0;
+                margin-bottom: 30px;
+                border-radius: .55rem;
+                position: relative;
+                width: 100%;
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+            }
+            .card .body {
+                color: #444;
+                padding: 20px;
+                font-weight: 400;
+            }
+            .card .header {
+                color: #444;
+                padding: 20px;
+                position: relative;
+                box-shadow: none;
+            }
+            .single_post {
+                -webkit-transition: all .4s ease;
+                transition: all .4s ease
+            }
+
+            .single_post .body {
+                padding: 30px
+            }
+
+            .single_post .img-post {
+                position: relative;
+                overflow: hidden;
+                max-height: 500px;
+                margin-bottom: 30px
+            }
+
+            .single_post .img-post>img {
+                -webkit-transform: scale(1);
+                -ms-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+                -webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+                transition: transform .4s ease, opacity .4s ease;
+                max-width: 100%;
+                filter: none;
+                -webkit-filter: grayscale(0);
+                -webkit-transform: scale(1.01)
+            }
+
+            .single_post .img-post:hover img {
+                -webkit-transform: scale(1.02);
+                -ms-transform: scale(1.02);
+                transform: scale(1.02);
+                opacity: .7;
+                filter: gray;
+                -webkit-filter: grayscale(1);
+                -webkit-transition: all .8s ease-in-out
+            }
+
+            .single_post .img-post:hover .social_share {
+                display: block
+            }
+
+            .single_post .footer {
+                padding: 0 30px 30px 30px
+            }
+
+            .single_post .footer .actions {
+                display: inline-block
+            }
+
+            .single_post .footer .stats {
+                cursor: default;
+                list-style: none;
+                padding: 0;
+                display: inline-block;
+                float: right;
+                margin: 0;
+                line-height: 35px
+            }
+
+            .single_post .footer .stats li {
+                border-left: solid 1px rgba(160, 160, 160, 0.3);
+                display: inline-block;
+                font-weight: 400;
+                letter-spacing: 0.25em;
+                line-height: 1;
+                margin: 0 0 0 2em;
+                padding: 0 0 0 2em;
+                text-transform: uppercase;
+                font-size: 13px
+            }
+
+            .single_post .footer .stats li a {
+                color: #777
+            }
+
+            .single_post .footer .stats li:first-child {
+                border-left: 0;
+                margin-left: 0;
+                padding-left: 0
+            }
+
+            .single_post h3 {
+                font-size: 20px;
+                text-transform: uppercase
+            }
+
+            .single_post h3 a {
+                color: #242424;
+                text-decoration: none
+            }
+
+            .single_post p {
+                font-size: 16px;
+                line-height: 26px;
+                font-weight: 300;
+                margin: 0
+            }
+
+            .single_post .blockquote p {
+                margin-top: 0 !important
+            }
+
+            .single_post .meta {
+                list-style: none;
+                padding: 0;
+                margin: 0
+            }
+
+            .single_post .meta li {
+                display: inline-block;
+                margin-right: 15px
+            }
+
+            .single_post .meta li a {
+                font-style: italic;
+                color: #959595;
+                text-decoration: none;
+                font-size: 12px
+            }
+
+            .single_post .meta li a i {
+                margin-right: 6px;
+                font-size: 12px
+            }
+
+            .single_post2 {
+                overflow: hidden
+            }
+
+            .single_post2 .content {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                padding-left: 80px;
+                position: relative
+            }
+
+            .single_post2 .content .actions_sidebar {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 60px
+            }
+
+            .single_post2 .content .actions_sidebar a {
+                display: inline-block;
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+                margin-right: 0;
+                text-align: center;
+                border-right: 1px solid #e4eaec
+            }
+
+            .single_post2 .content .title {
+                font-weight: 100
+            }
+
+            .single_post2 .content .text {
+                font-size: 15px
+            }
+
+            .right-box .categories-clouds li {
+                display: inline-block;
+                margin-bottom: 5px
+            }
+
+            .right-box .categories-clouds li a {
+                display: block;
+                border: 1px solid;
+                padding: 6px 10px;
+                border-radius: 3px
+            }
+
+            .right-box .instagram-plugin {
+                overflow: hidden
+            }
+
+            .right-box .instagram-plugin li {
+                float: left;
+                overflow: hidden;
+                border: 1px solid #fff
+            }
+
+            .comment-reply li {
+                margin-bottom: 15px
+            }
+
+            .comment-reply li:last-child {
+                margin-bottom: none
+            }
+
+            .comment-reply li h5 {
+                font-size: 18px
+            }
+
+            .comment-reply li p {
+                margin-bottom: 0px;
+                font-size: 15px;
+                color: #777
+            }
+
+            .comment-reply .list-inline li {
+                display: inline-block;
+                margin: 0;
+                padding-right: 20px
+            }
+
+            .comment-reply .list-inline li a {
+                font-size: 13px
+            }
+
+            @media (max-width: 640px) {
+                .blog-page .left-box .single-comment-box>ul>li {
+                    padding: 25px 0
+                }
+                .blog-page .left-box .single-comment-box ul li .icon-box {
+                    display: inline-block
+                }
+                .blog-page .left-box .single-comment-box ul li .text-box {
+                    display: block;
+                    padding-left: 0;
+                    margin-top: 10px
+                }
+                .blog-page .single_post .footer .stats {
+                    float: none;
+                    margin-top: 10px
+                }
+                .blog-page .single_post .body,
+                .blog-page .single_post .footer {
+                    padding: 30px
+                }
+            }
+
+            .tag-label {
+                display: inline-block;
+                background-color: #e0e0e0;
+                border-radius: 15px;
+                padding: 5px 10px;
+                margin: 2px;
+                font-size: 14px;
+            }
+        </style>
     </head>
 
     <body class="index-page">
@@ -224,6 +491,7 @@
                                 <li><a href="product-details.html">Product Details</a></li>
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="/MarketingPlace/Blog">Blogs</a></li>   
                                 <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                                     <ul>
                                         <li><a href="#">Dropdown 1</a></li>
@@ -824,529 +1092,266 @@
 
         <main class="main">
 
-            <!-- Hero Section -->
-            <section class="ecommerce-hero-1 hero section" id="hero">
+            <div id="main-content" class="blog-page">
                 <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 content-col" data-aos="fade-right" data-aos-delay="100">
-                            <div class="content">
-                                <span class="promo-badge">New Collection 2025</span>
-                                <h1>Discover Stylish <span>Fashion</span> For Every Season</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Vestibulum ante ipsum primis in faucibus.</p>
-                                <div class="hero-cta">
-                                    <a href="#" class="btn btn-shop">Shop Now <i class="bi bi-arrow-right"></i></a>
-                                    <a href="#" class="btn btn-collection">View Collection</a>
-                                </div>
-                                <div class="hero-features">
-                                    <div class="feature-item">
-                                        <i class="bi bi-truck"></i>
-                                        <span>Free Shipping</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="bi bi-shield-check"></i>
-                                        <span>Secure Payment</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="bi bi-arrow-repeat"></i>
-                                        <span>Easy Returns</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 image-col" data-aos="fade-left" data-aos-delay="200">
-                            <div class="hero-image">
-                                <img src="${pageContext.request.contextPath}/assets/img/product/product-f-9.webp" alt="Fashion Product" class="main-product" loading="lazy">
-                                <div class="floating-product product-1" data-aos="fade-up" data-aos-delay="300">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4.webp" alt="Product 2">
-                                    <div class="product-info">
-                                        <h4>Summer Collection</h4>
-                                        <span class="price">$89.99</span>
-                                    </div>
-                                </div>
-                                <div class="floating-product product-2" data-aos="fade-up" data-aos-delay="400">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-3.webp" alt="Product 3">
-                                    <div class="product-info">
-                                        <h4>Casual Wear</h4>
-                                        <span class="price">$59.99</span>
-                                    </div>
-                                </div>
-                                <div class="discount-badge" data-aos="zoom-in" data-aos-delay="500">
-                                    <span class="percent">30%</span>
-                                    <span class="text">OFF</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section><!-- /Hero Section -->
-
-            <!-- Info Cards Section -->
-            <section id="info-cards" class="info-cards section light-background">
-
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="row g-4 justify-content-center">
-                        <!-- Info Card 1 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-truck"></i>
-                                </div>
-                                <h3>Free Shipping</h3>
-                                <p>Nulla sit morbi vestibulum eros duis amet, consectetur vitae lacus. Ut quis tempor felis sed nunc viverra.</p>
-                            </div>
-                        </div><!-- End Info Card 1 -->
-
-                        <!-- Info Card 2 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-piggy-bank"></i>
-                                </div>
-                                <h3>Money Back Guarantee</h3>
-                                <p>Nullam gravida felis ac nunc tincidunt, sed malesuada justo pulvinar. Vestibulum nec diam vitae eros.</p>
-                            </div>
-                        </div><!-- End Info Card 2 -->
-
-                        <!-- Info Card 3 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-percent"></i>
-                                </div>
-                                <h3>Discount Offers</h3>
-                                <p>Nulla ipsum nisi vel adipiscing amet, dignissim consectetur ornare. Vestibulum quis posuere elit auctor.</p>
-                            </div>
-                        </div><!-- End Info Card 3 -->
-
-                        <!-- Info Card 4 -->
-                        <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-                            <div class="info-card text-center">
-                                <div class="icon-box">
-                                    <i class="bi bi-headset"></i>
-                                </div>
-                                <h3>24/7 Support</h3>
-                                <p>Ipsum dolor amet sit consectetur adipiscing, nullam vitae euismod tempor nunc felis vestibulum ornare.</p>
-                            </div>
-                        </div><!-- End Info Card 4 -->
-                    </div>
-
-                </div>
-
-            </section><!-- /Info Cards Section -->
-
-            <!-- Category Cards Section -->
-            <section id="category-cards" class="category-cards section">
-
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="category-slider swiper init-swiper">
-                        <script type="application/json" class="swiper-config">
-                            {
-                            "loop": true,
-                            "autoplay": {
-                            "delay": 5000,
-                            "disableOnInteraction": false
-                            },
-                            "grabCursor": true,
-                            "speed": 600,
-                            "slidesPerView": "auto",
-                            "spaceBetween": 20,
-                            "navigation": {
-                            "nextEl": ".swiper-button-next",
-                            "prevEl": ".swiper-button-prev"
-                            },
-                            "breakpoints": {
-                            "320": {
-                            "slidesPerView": 2,
-                            "spaceBetween": 15
-                            },
-                            "576": {
-                            "slidesPerView": 3,
-                            "spaceBetween": 15
-                            },
-                            "768": {
-                            "slidesPerView": 4,
-                            "spaceBetween": 20
-                            },
-                            "992": {
-                            "slidesPerView": 5,
-                            "spaceBetween": 20
-                            },
-                            "1200": {
-                            "slidesPerView": 6,
-                            "spaceBetween": 20
-                            }
-                            }
-                            }
-                        </script>
-
-                        <div class="swiper-wrapper">
-                            <!-- Category Card 1 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="100">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-1.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Vestibulum ante</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 2 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="200">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-6.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Maecenas nec</h3>
-                                    <p class="category-count">8 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 3 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="300">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-9.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Aenean tellus</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 4 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="400">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-f-1.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Donec quam</h3>
-                                    <p class="category-count">12 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 5 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="500">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-10.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Phasellus leo</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 6 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="600">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-m-1.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Quisque rutrum</h3>
-                                    <p class="category-count">2 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 7 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="700">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-10.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Etiam ultricies</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category Card 8 -->
-                            <div class="swiper-slide">
-                                <div class="category-card" data-aos="fade-up" data-aos-delay="800">
-                                    <div class="category-image">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product/product-2.webp" alt="Category" class="img-fluid">
-                                    </div>
-                                    <h3 class="category-title">Fusce fermentum</h3>
-                                    <p class="category-count">4 Products</p>
-                                    <a href="ctaegory.html" class="stretched-link"></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-
-                </div>
-
-            </section><!-- /Category Cards Section -->
-
-            <!-- Best Sellers Section -->
-            <section id="best-sellers" class="best-sellers section">
-
-                <!-- Section Title -->
-                <div class="container section-title" data-aos="fade-up">
-                    <h2>Best Sellers</h2>
-                    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-                </div><!-- End Section Title -->
-
-                <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="row gy-4">
-                        <!-- Product 1 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-1.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-1-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-accent">New</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="">Lorem ipsum dolor sit amet</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$89.99</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-half"></i>
-                                        <span class="rating-count">(42)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 1 -->
-
-                        <!-- Product 2 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-sale">Sale</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="productDetail?pid=">Consectetur adipiscing elit</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$64.99</span>
-                                        <span class="original-price">$79.99</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <span class="rating-count">(28)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 2 -->
-
-                        <!-- Product 3 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-7.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-7-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="product-details.html">Sed do eiusmod tempor incididunt</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$119.00</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <span class="rating-count">(56)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 3 -->
-
-                        <!-- Product 4 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-12.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-12-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-sold-out">Sold Out</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="product-details.html">Ut labore et dolore magna aliqua</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$75.50</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i>
-                                        <span class="rating-count">(15)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart btn-disabled" disabled="">
-                                        <i class="bi bi-bag-plus me-2"></i>Sold Out
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 4 -->
-                    </div>
-
-                </div>
-
-            </section><!-- /Best Sellers Section -->
-
-            <!-- Product List Section -->
-            <section id="product-list" class="product-list section">
-                <div class="container isotope-layout" data-aos="fade-up" data-aos-delay="100" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-                    <!-- Bộ lọc -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="product-filters isotope-filters mb-5 d-flex justify-content-center" data-aos="fade-up">
-                                <ul class="d-flex flex-wrap gap-2 list-unstyled">
-                                    <li class="filter-active" data-filter="*">All</li>
-                                    <li data-filter=".filter-clothing">Clothing</li>
-                                    <li data-filter=".filter-accessories">Accessories</li>
-                                    <li data-filter=".filter-electronics">Electronics</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Danh sách sản phẩm -->
-                    <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
-                        <c:forEach items="${products}" var="o">
-                            <!-- Bạn nên map CategoryID -> class cụ thể như filter-clothing, filter-electronics,... -->
-                            <div class="col-md-6 col-lg-3 product-item filter-${o.categoryID}">
-                                <div class="product-card">
-                                    <div class="product-image">
-                                        <span class="badge">Sale</span>
-
-                                        <!-- Hiển thị ảnh nếu có, nếu không thì ảnh mặc định -->
-                                        <c:choose>
-                                            <c:when test="${not empty o.imageUrls}">
-                                                <img src="${o.imageUrls[0]}" alt="Product" class="img-fluid main-img" />
-                                                <img src="${o.imageUrls[0]}" alt="Product Hover" class="img-fluid hover-img" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src="img/default-product.jpg" alt="Default" class="img-fluid main-img" />
-                                                <img src="img/default-product.jpg" alt="Default Hover" class="img-fluid hover-img" />
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                        <div class="product-overlay">
-                                            <c:if test="${not empty o.variants}">
-                                                <a href="#" class="btn-cart" onclick="addToCart('${o.variants[0].productVariantId}'); event.preventDefault();">
-                                                    <i class="bi bi-cart-plus"></i> Add to Cart
-                                                </a>
-                                            </c:if>
-                                            <div class="product-actions">
-                                                <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                                                <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                                                <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
+                    <div class="row clearfix">
+                        <!--                <div class="col-lg-8 col-md-12 left-box">
+                                            <div class="card single_post">
+                                                <div class="body">
+                                                    <div class="img-post">
+                                                        <img class="d-block img-fluid" src="https://www.bootdey.com/image/800x280/87CEFA/000000" alt="First slide">
+                                                    </div>
+                                                    <h3><a href="blog-details.html">All photographs are accurate</a></h3>
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                                </div>                        
                                             </div>
-                                        </div>
+                                            <div class="card">
+                                                    <div class="header">
+                                                        <h2>Comments 3</h2>
+                                                    </div>
+                                                    <div class="body">
+                                                        <ul class="comment-reply list-unstyled">
+                                                            <li class="row clearfix">
+                                                                <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Awesome Image"></div>
+                                                                <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                                    <h5 class="m-b-0">Gigi Hadid </h5>
+                                                                    <p>Why are there so many tutorials on how to decouple WordPress? how fast and easy it is to get it running (and keep it running!) and its massive ecosystem. </p>
+                                                                    <ul class="list-inline">
+                                                                        <li><a href="javascript:void(0);">Mar 09 2018</a></li>
+                                                                        <li><a href="javascript:void(0);">Reply</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            <li class="row clearfix">
+                                                                <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Awesome Image"></div>
+                                                                <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                                    <h5 class="m-b-0">Christian Louboutin</h5>
+                                                                    <p>Great tutorial but few issues with it? If i try open post i get following errors. Please can you help me?</p>
+                                                                    <ul class="list-inline">
+                                                                        <li><a href="javascript:void(0);">Mar 12 2018</a></li>
+                                                                        <li><a href="javascript:void(0);">Reply</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            <li class="row clearfix">
+                                                                <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Awesome Image"></div>
+                                                                <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                                    <h5 class="m-b-0">Kendall Jenner</h5>
+                                                                    <p>Very nice and informative article. In all the years I've done small and side-projects as a freelancer, I've ran into a few problems here and there.</p>
+                                                                    <ul class="list-inline">
+                                                                        <li><a href="javascript:void(0);">Mar 20 2018</a></li>
+                                                                        <li><a href="javascript:void(0);">Reply</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                        </ul>                                        
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="header">
+                                                        <h2>Leave a reply <small>Your email address will not be published. Required fields are marked*</small></h2>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="comment-form">
+                                                            <form class="row clearfix">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" placeholder="Your Name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" placeholder="Email Address">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
+                                                                </div>                                
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>-->
+                        <div class="col-lg-8 col-md-12 left-box">
+                            <div class="card single_post">
+                                <div class="body">
+                                    <div class="img-post">
+                                        <img class="d-block img-fluid" src="${blog.thumbnailURL}" alt="First slide">
                                     </div>
-
-                                    <div class="product-info">
-                                        <h5 class="product-title">
-                                            <a href="DetailProduct?pid=${o.productId}">${o.productName}</a>
-                                        </h5>
-
-                                        <div class="product-price">
-                                            <!-- Hiển thị giá nếu có -->
-                                            <c:choose>
-                                                <c:when test="${not empty o.variants}">
-                                                    <span class="current-price">${o.variants[0].price}</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="current-price">Contact</span>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <span class="old-price">$129.99</span>
-                                        </div>
-
-                                        <div class="product-rating">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-half"></i>
-                                            <span>(24)</span>
-                                        </div>
+                                    <h3><a href="blog-details.html">${blog.title}</a></h3>
+                                    <p> ${blog.content}</p>
+                                </div>                        
+                            </div>
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Comments 3</h2>
+                                </div>
+                                <div class="body">
+                                    <ul class="comment-reply list-unstyled">
+                                        <li class="row clearfix">
+                                            <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Awesome Image"></div>
+                                            <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                <h5 class="m-b-0">Gigi Hadid </h5>
+                                                <p>Why are there so many tutorials on how to decouple WordPress? how fast and easy it is to get it running (and keep it running!) and its massive ecosystem. </p>
+                                                <ul class="list-inline">
+                                                    <li><a href="javascript:void(0);">Mar 09 2018</a></li>
+                                                    <li><a href="javascript:void(0);">Reply</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="row clearfix">
+                                            <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Awesome Image"></div>
+                                            <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                <h5 class="m-b-0">Christian Louboutin</h5>
+                                                <p>Great tutorial but few issues with it? If i try open post i get following errors. Please can you help me?</p>
+                                                <ul class="list-inline">
+                                                    <li><a href="javascript:void(0);">Mar 12 2018</a></li>
+                                                    <li><a href="javascript:void(0);">Reply</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="row clearfix">
+                                            <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Awesome Image"></div>
+                                            <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                <h5 class="m-b-0">Kendall Jenner</h5>
+                                                <p>Very nice and informative article. In all the years I've done small and side-projects as a freelancer, I've ran into a few problems here and there.</p>
+                                                <ul class="list-inline">
+                                                    <li><a href="javascript:void(0);">Mar 20 2018</a></li>
+                                                    <li><a href="javascript:void(0);">Reply</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>                                        
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Leave a reply <small>Your email address will not be published. Required fields are marked*</small></h2>
+                                </div>
+                                <div class="body">
+                                    <div class="comment-form">
+                                        <form class="row clearfix">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Your Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Email Address">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
+                                            </div>                                
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
-                    </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 right-box">
+                            <div class="card">
+                                <div class="body search">
+                                    <div class="input-group m-b-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Search...">                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Categories</h2>
+                                </div>
+                                <div class="body widget">
+                                    <ul class="list-unstyled categories-clouds m-b-0">
+                                        <c:forEach var="cat" items="${categorys}">
+                                            <li>
+                                                <a href="Blog?service=listByCategory&id=${cat.categoryId}">
+                                                    ${cat.categoryName}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="widget widget-latest-post">
+                                    <div class="widget-title">
+                                        <h3>Latest Posts</h3>
+                                    </div>
+                                    <div class="widget-body">
+                                        <c:forEach var="latest" items="${latestBlogs}">
+                                            <div class="latest-post-aside media">
+                                                <div class="lpa-left media-body">
+                                                    <div class="lpa-title">
+                                                        <h5>
+                                                            <a href="BlogDetailURL?service=blogDetail&id=${latest.blogID}">
+                                                                ${latest.title}
+                                                            </a>
+                                                        </h5>
+                                                        <a class="date" href="#">
+                                                            ${latest.createdAt}
+                                                        </a>
+                                                    </div>
+                                                    <div class="lpa-meta">
+                                                        <a class="name" href="#">Author #${latest.authorID}</a>
 
-                    <!-- Nút View All -->
-                    <div class="text-center mt-5" data-aos="fade-up">
-                        <a href="#" class="view-all-btn">View All Products <i class="bi bi-arrow-right"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="lpa-right">
+                                                    <a href="BlogDetailURL?service=blogDetail&id=${latest.blogID}">
+                                                        <img src="${latest.thumbnailURL}" width="80" height="60" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Tags</h2>
+                                </div>
+                                <div class="body widget">
+                                    <ul class="list-unstyled categories-clouds m-b-0">
+                                        <c:forEach var="tag" items="${tags}">
+                                            <li>
+                                                <span class="tag-label">${tag.tagName}</span>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
-            </section>
+            </div>
+
+            <!--             Info Cards Section 
+                        <section id="info-cards" class="info-cards section light-background">
+            
+                            
+            
+                             ✅ Đưa nút ra ngoài isotope-layout 
+            
+                        </section>
+                        <div class="text-center mt-5 mb-5" data-aos="fade-up">
+                            <a href="#" class="view-all-btn">
+                                View All Products <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>-->
+
+
             <!-- /Product List Section -->
 
         </main>
@@ -1568,13 +1573,13 @@
         </div>
 
         <script>
-                                                    setTimeout(function () {
-                                                        const msg = document.getElementById('login-message');
-                                                        if (msg) {
-                                                            msg.style.opacity = '0';
-                                                            setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
-                                                        }
-                                                    }, 3000);
+            setTimeout(function () {
+                const msg = document.getElementById('login-message');
+                if (msg) {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 500); // xoá hoàn toàn sau khi ẩn
+                }
+            }, 3000);
         </script>
         <%
                 session.removeAttribute("message");
