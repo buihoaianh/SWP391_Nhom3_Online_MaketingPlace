@@ -465,7 +465,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="col-12 col-md-6 col-lg-2">
                                             <div class="filter-item">
                                                 <label for="sortBy" class="form-label">Sort By</label>
