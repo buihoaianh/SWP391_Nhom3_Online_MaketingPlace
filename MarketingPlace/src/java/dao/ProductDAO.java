@@ -493,7 +493,34 @@ public class ProductDAO extends ConnectDB {
                         rs.getInt("ProductID"),
                         rs.getString("ProductName"),
                         rs.getString("ThumbnailURL"),
-                        rs.getDouble("MinPrice") 
+                        rs.getDouble("MinPrice")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Product> searchProductsInCategoryByName(int categoryId, String keyword) {
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, MIN(pv.Price) AS MinPrice "
+                    + "FROM Products p JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                    + "WHERE p.Status = 'Active' AND pv.Status = 'Active' "
+                    + "AND p.CategoryID = ? AND p.ProductName LIKE ? "
+                    + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ps.setString(2, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("ThumbnailURL"),
+                        rs.getDouble("MinPrice")
                 );
                 list.add(p);
             }
