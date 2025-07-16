@@ -406,7 +406,7 @@
                                         </div>
                                         <h3 class="category-title">${c.categoryName}</h3>
 
-                                        <a href="ProductByCategory" class="stretched-link"></a>
+                                        <a href="ProductByCategory?cid=${c.categoryID}" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </c:forEach>      
