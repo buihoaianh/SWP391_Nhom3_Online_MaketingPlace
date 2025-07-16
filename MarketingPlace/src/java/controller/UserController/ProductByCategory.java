@@ -31,8 +31,6 @@ public class ProductByCategory extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -46,12 +44,28 @@ public class ProductByCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int categoryId = Integer.parseInt(request.getParameter("cid"));
+        String keyword = request.getParameter("query");
+        String priceFilter = request.getParameter("price");
         ProductDAO dao = new ProductDAO();
-        ArrayList<Product> products = dao.getProductsByCategoryWithPrice(categoryId);
+        ArrayList<Product> products;
+        if (keyword != null && !keyword.trim().isEmpty()) {
+         
+            products = dao.searchProductsInCategoryByName(categoryId, keyword);
+        } else if (priceFilter != null && !priceFilter.trim().isEmpty()) {
+          
+            products = dao.getProductsByCategoryWithPriceFilter(categoryId, priceFilter);
+        } else {
+           
+            products = dao.getProductsByCategoryWithPrice(categoryId);
+        }
+
         request.setAttribute("products", products);
-        request.getRequestDispatcher("/jsp/public/Category.jsp").forward(request, response);
+        request.setAttribute("cid", categoryId);
+        request.setAttribute("query", keyword);
+        request.setAttribute("price", priceFilter);
+        request.getRequestDispatcher("jsp/public/Category.jsp").forward(request, response);
     }
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -63,7 +77,7 @@ public class ProductByCategory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       request.getRequestDispatcher("/jsp/public/Category.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/public/Category.jsp").forward(request, response);
     }
 
     /**
