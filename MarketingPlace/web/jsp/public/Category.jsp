@@ -469,16 +469,21 @@
                                             </form>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-2">
-                                            <div class="filter-item">
-                                                <label for="sortBy" class="form-label">Sort By</label>
-                                                <select class="form-select" id="sortBy">
-                                                    <option selected="">Featured</option>
-                                                    <option>Price: Low to High</option>
-                                                    <option>Price: High to Low</option>
-                                                    <option>Customer Rating</option>
-                                                    <option>Newest Arrivals</option>
-                                                </select>
-                                            </div>
+                                            <form action="ProductByCategory" method="get">
+                                                <input type="hidden" name="cid" value="${param.cid}" />
+                                                <input type="hidden" name="query" value="${param.query}" />
+                                                <input type="hidden" name="priceRange" value="${param.priceRange}" />
+
+                                                <div class="filter-item">
+                                                    <label for="sortBy" class="form-label">Sort By</label>
+                                                    <select class="form-select" id="sortBy" name="sort" onchange="this.form.submit()">
+                                                        <option value="" ${empty sort ? "selected" : ""}>Featured</option>
+                                                        <option value="lowtohigh" ${sort == 'lowtohigh' ? "selected" : ""}>Price: Low to High</option>
+                                                        <option value="hightolow" ${sort == 'hightolow' ? "selected" : ""}>Price: High to Low</option>
+                                                        <option value="newest" ${sort == 'newest' ? "selected" : ""}>Newest Arrivals</option>
+                                                    </select>
+                                                </div>
+                                            </form>
                                         </div>
 
                                         <div class="col-12 col-md-6 col-lg-4">
