@@ -6,13 +6,107 @@ package dao;
 
 import config.ConnectDB;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import model.Order;
+import model.OrderItem;
+import model.Product;
+import model.ProductImage;
 
 /**
  *
  * @author Admin
  */
 public class OrderDAO extends ConnectDB {
+
+    public List<Order> getOrdersByCustomerId(int customerId) throws SQLException {
+    List<Order> orders = new ArrayList<>();
+
+    String sql = """
+        SELECT 
+            o.OrderID, o.OrderDate, o.TotalAmount,
+            o.PaymentID, o.OrderStatusID,
+            pay.PaymentMethodID,
+            os.OrderStatusName,
+            o.ProvinceName, o.DistrictName, o.WardName,
+            od.Quantity, od.UnitPrice,
+            pv.Price,
+            p.ProductID, p.ProductName,
+            img.ImageURL
+        FROM [Order] o
+        JOIN OrderDetails od ON o.OrderID = od.OrderID
+        JOIN ProductVariant pv ON od.ProductVariantID = pv.ProductVariantId
+        JOIN Products p ON pv.ProductId = p.ProductID
+        JOIN OrderStatus os ON o.OrderStatusID = os.OrderStatusID
+        JOIN Payments pay ON o.PaymentID = pay.PaymentID
+        OUTER APPLY (
+            SELECT TOP 1 ImageURL FROM ProductImages 
+            WHERE ProductID = p.ProductID ORDER BY ImageID
+        ) AS img
+        WHERE o.CustomerID = ?
+        ORDER BY o.OrderDate DESC
+    """;
+
+    PreparedStatement ps = connect.prepareStatement(sql);
+    ps.setInt(1, customerId);
+    ResultSet rs = ps.executeQuery();
+
+    Map<Integer, Order> orderMap = new LinkedHashMap<>();
+
+    while (rs.next()) {
+        int orderId = rs.getInt("OrderID");
+        Order order = orderMap.get(orderId);
+        if (order == null) {
+            order = new Order();
+            order.setOrderId(orderId);
+            order.setOrderDate(rs.getTimestamp("OrderDate"));
+            order.setTotalAmount(rs.getString("TotalAmount"));
+            order.setOrderStatusId(rs.getInt("OrderStatusID")); // ✅ status ID
+            order.setOrderStatusName(rs.getString("OrderStatusName"));
+            order.setPaymentId(rs.getInt("PaymentID"));
+            order.setPaymentMethodId(rs.getInt("PaymentMethodID")); // ✅ method ID (1=COD, 2=VNPay)
+            order.setProvinceName(rs.getString("ProvinceName"));
+            order.setDistrictName(rs.getString("DistrictName"));
+            order.setWardName(rs.getString("WardName"));
+            order.setItems(new ArrayList<>());
+            orderMap.put(orderId, order);
+        }
+
+        Product product = new Product();
+        product.setProductId(rs.getInt("ProductID"));
+        product.setProductName(rs.getString("ProductName"));
+
+        ProductImage productImage = new ProductImage();
+        productImage.setImageUrl(rs.getString("ImageURL"));
+        List<ProductImage> images = new ArrayList<>();
+        images.add(productImage);
+        product.setImages(images);
+
+        OrderItem item = new OrderItem();
+        item.setProduct(product);
+        item.setQuantity(rs.getInt("Quantity"));
+        item.setUnitPrice(rs.getString("UnitPrice"));
+
+        order.getItems().add(item);
+    }
+
+    return new ArrayList<>(orderMap.values());
+}
+
+
+    public boolean updateOrderStatus(int orderId, int newStatusId) {
+        String sql = "UPDATE [Order] SET OrderStatusID = ? WHERE OrderID = ?";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, newStatusId);
+            ps.setInt(2, orderId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public int insertOrder(Order order) {
         String sql = "INSERT INTO [Order] (SellerID, CustomerID, OrderDate, TotalAmount, "
@@ -44,24 +138,77 @@ public class OrderDAO extends ConnectDB {
         }
         return -1;
     }
-    
-     public static void main(String[] args) {
-        // Tạo order mẫu
-        Order order = new Order();
-        order.setSellerId(17);         // ID phải tồn tại trong bảng Account
-        order.setCustomerId(20);       // ID phải tồn tại trong bảng Account
-        order.setPaymentId(1);        // ID phải tồn tại trong bảng Payments
-        order.setOrderStatusId(1);    // ID phải tồn tại trong bảng OrderStatus
-        order.setTotalAmount("150000"); // Tổng tiền đơn hàng (chuỗi)
 
-        OrderDAO dao = new OrderDAO();
-        int orderId = dao.insertOrder(order);
+    public List<Order> getAllOrdersBySellerId(int sellerId) {
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT o.OrderID, o.CustomerID, a.FullName AS CustomerName, "
+                + "o.OrderDate, o.TotalAmount, os.OrderStatusName AS StatusName "
+                + "FROM [Order] o "
+                + "JOIN OrderStatus os ON o.OrderStatusID = os.OrderStatusID "
+                + "JOIN Account a ON o.CustomerID = a.AccountID "
+                + "WHERE o.SellerID = ? "
+                + "ORDER BY o.OrderID DESC";
 
-        if (orderId > 0) {
-            System.out.println("✅ Insert thành công! OrderID = " + orderId);
-        } else {
-            System.out.println("❌ Insert thất bại.");
+        try (PreparedStatement stm = connect.prepareStatement(sql)) {
+            stm.setInt(1, sellerId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setOrderId(rs.getInt("OrderID"));
+                o.setCustomerId(rs.getInt("CustomerID"));
+                o.setCustomerName(rs.getString("CustomerName")); // Tên khách
+                o.setOrderDate(rs.getTimestamp("OrderDate"));
+                o.setTotalAmount(rs.getString("TotalAmount"));
+                o.setOrderStatusName(rs.getString("StatusName"));
+                list.add(o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return list;
     }
+
+    public static void main(String[] args) {
+    OrderDAO orderDAO = new OrderDAO();
+    try {
+        List<Order> orders = orderDAO.getOrdersByCustomerId(24);
+
+        if (orders.isEmpty()) {
+            System.out.println("Không có đơn hàng nào cho khách hàng này.");
+            return;
+        }
+
+        for (Order order : orders) {
+            System.out.println("============== ĐƠN HÀNG ==============");
+            System.out.println("Order ID     : " + order.getOrderId());
+            System.out.println("Order Date   : " + order.getOrderDate());
+            System.out.println("Status       : " + order.getOrderStatusName() + " (ID: " + order.getOrderStatusId() + ")");
+            System.out.println("Payment ID   : " + order.getPaymentId());
+            System.out.println("Method ID    : " + order.getPaymentMethodId());
+            System.out.println("Total Amount : " + order.getTotalAmount());
+            System.out.println("Address      : " + order.getWardName() + ", "
+                    + order.getDistrictName() + ", " + order.getProvinceName());
+            System.out.println("----- Sản phẩm -----");
+
+            for (OrderItem item : order.getItems()) {
+                Product p = item.getProduct();
+                System.out.println(" - Tên sản phẩm: " + p.getProductName());
+                if (p.getImages() != null && !p.getImages().isEmpty()) {
+                    System.out.println("   Ảnh: " + p.getImages().get(0).getImageUrl());
+                } else {
+                    System.out.println("   Ảnh: Không có ảnh");
+                }
+                System.out.println("   Số lượng: " + item.getQuantity());
+                System.out.println("   Giá: " + item.getUnitPrice());
+            }
+
+            System.out.println("======================================\n");
+        }
+    } catch (SQLException e) {
+        System.err.println("Lỗi khi lấy đơn hàng: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
 
 }
