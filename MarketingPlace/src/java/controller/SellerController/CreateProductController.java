@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package controller.SellerController;
 
+import controller.admin.*;
 import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
@@ -37,7 +38,7 @@ import utils.Helpers;
  *
  * @author Admin
  */
-@WebServlet(name = "CreateProductController", urlPatterns = {"/admin/create-product"})
+@WebServlet(name = "CreateProductController", urlPatterns = {"/seller/create-product"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024)
 public class CreateProductController extends HttpServlet {
 
