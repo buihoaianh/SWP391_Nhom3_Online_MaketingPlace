@@ -58,8 +58,8 @@
                             <div class="row">
                                 <div class="col-md-4 text-center">
                                     <c:choose>
-                                        <c:when test="${not empty u.imageURL}">
-                                            <img src="${u.imageURL}"
+                                        <c:when test="${not empty u.ImageURL}">
+                                            <img src="${u.ImageURL}"
                                                  alt="Avatar"
                                                  class="mb-3"
                                                  style="width: 230px;
@@ -69,7 +69,7 @@
                                                  border: 2px solid #ddd;">
                                         </c:when>
                                         <c:otherwise>
-                                            <img src="${u.imageURL}"
+                                            <img src="${u.ImageURL}"
                                                  alt="Avatar"
                                                  class="mb-3"
                                                  style="width: 230px;
@@ -81,10 +81,10 @@
                                     </c:choose>
 
                                     <h3 class="card-title mb-1" style="font-size: 1.5rem;">
-                                        ${u.fullName}
+                                        ${u.FullName}
                                     </h3>
                                     <p class="text-secondary mb-3" style="font-size: 1.1rem;">
-                                        Account ID: ${u.accountID}
+                                        Account ID: ${u.AccountID}
                                     </p>
 
                                 </div>
@@ -94,59 +94,63 @@
                                         <tbody>
                                             <tr>
                                                 <th class="w-25">Role ID</th>
-                                                <td>${u.roleID}</td>
+                                                <td>${u.RoleID}</td>
                                             </tr>
                                             <tr>
                                                 <th>Email</th>
-                                                <td>${u.email}</td>
+                                                <td>${u.Email}</td>
                                             </tr>
                                             <tr>
                                                 <th>Phone Number</th>
-                                                <td>${u.phoneNumber}</td>
+                                                <td>${u.PhoneNumber}</td>
                                             </tr>
                                             <tr>
                                                 <th>Address</th>
-                                                <td>${u.address}</td>
+                                                <td>${u.Address}</td>
                                             </tr>
                                             <tr>
                                                 <th>Create Date</th>
                                                 <td>
-                                                    ${createDateAsDate}
+                                                    ${u.CreateDate}
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <th>Status</th>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${u.status}">
+                                                        <c:when test="${r.status eq 'Active'}">
                                                             <span class="badge bg-success">Active</span>
                                                         </c:when>
-                                                        <c:otherwise>
+                                                        <c:when test="${r.status eq 'Inactive'}">
                                                             <span class="badge bg-secondary">Inactive</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="badge bg-warning text-dark">Inactive</span>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <th>Description</th>
-                                                <td>${u.description}</td>
+                                                <td>${u.Description}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <!-- ✅ Chỉ hiển thị nút Approve nếu trạng thái là Pending -->
-                                    <c:if test="${r.status eq 'Pending'}">
+                                            
+                                            
+                                    <c:if test="${empty r.status}">
                                         <a href="${pageContext.request.contextPath}/admin/request/update?action=approve&id=${r.requestId}"
                                            class="btn btn-success btn-sm">
                                             Approve
                                         </a>
-                                    </c:if>
 
-                                    <!-- ✅ Luôn hiển thị nút Reject trừ khi đã bị Reject rồi -->
-                                    <c:if test="${r.status ne 'Reject'}">
-                                        <a href="#" onclick="openRejectModal(${r.requestId})"
-                                           class="btn btn-danger btn-sm">
-                                            Reject
-                                        </a>
+                                        <form action="${pageContext.request.contextPath}/admin/request/reject" method="post" style="display:inline;">
+                                            <input type="hidden" name="requestId" value="${r.requestId}">
+                                            <input type="hidden" name="reason" value="Bạn đã bị vi band"> <!-- hoặc cho người dùng nhập -->
+                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                        </form>
                                     </c:if>
 
                                     <a href="${pageContext.request.contextPath}/admin/requests"
@@ -182,6 +186,7 @@
                 </div>
             </form>
         </div>
+
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

@@ -65,7 +65,7 @@
                     <div class="row g-4">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-light rounded h-100 p-4">
-                                <form class="row g-3 needs-validation" action="admin/create-product" method="post" enctype="multipart/form-data">
+                                <form class="row g-3 needs-validation" action="seller/create-product" method="post" enctype="multipart/form-data">
                                     <!-- Product Name -->
                                     <div class="col-6">
                                         <label for="productName" class="form-label">Product Name</label>

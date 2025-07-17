@@ -7,7 +7,26 @@ public class OrderDetail {
     private int quantity;
     private String unitPrice;
 
+        
+    private ProductVariant productVariant;  // Thay vì chỉ lấy ID
+    
     public OrderDetail() {}
+
+    public OrderDetail(ProductVariant productVariant) {
+        this.productVariant = productVariant;
+    }
+    
+    
+
+    public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice, ProductVariant productVariant) {
+        this.orderDetailsId = orderDetailsId;
+        this.orderId = orderId;
+        this.productVariantId = productVariantId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.productVariant = productVariant;
+    }
+    
 
     public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice) {
         this.orderDetailsId = orderDetailsId;
@@ -15,6 +34,14 @@ public class OrderDetail {
         this.productVariantId = productVariantId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+    }
+    
+    public ProductVariant getProductVariant() {
+        return productVariant;
+    }
+
+    public void setProductVariant(ProductVariant productVariant) {
+        this.productVariant = productVariant;
     }
 
     // Getters and Setters

@@ -4,7 +4,7 @@
  */
 package controller.admin;
 
-import dao.ProductDAO;
+import dao.SellerRequestDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Product;
+import model.SellerRequest;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ProductController", urlPatterns = {"/admin/products"})
-public class ProductController extends HttpServlet {
+@WebServlet(name = "RequestController", urlPatterns = {"/admin/requests"})
+public class RequestController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +34,13 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        SellerRequestDAO dao = new SellerRequestDAO();
         try {
-            ProductDAO dao = new ProductDAO();
-            List<Product> products = dao.getProducts();
-            request.setAttribute("products", products);
-            request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+            List<SellerRequest> list = dao.getAllRequests();
+            request.setAttribute("requests", list);
+            request.getRequestDispatcher("/jsp/admin/RequestList.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ServletException(e);
         }
     }
 

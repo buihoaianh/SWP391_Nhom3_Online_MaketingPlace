@@ -2,7 +2,6 @@ package dao;
 
 import config.ConnectDB;
 import model.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class CategoriesDAO extends ConnectDB {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Categories category = new Categories();
-                category.setCategoryID(resultSet.getInt("CategoryID"));
+                category.setCategoryId(resultSet.getInt("CategoryID"));
                 category.setCategoryName(resultSet.getString("CategoryName"));
                 category.setDescription(resultSet.getString("Description"));
                 categories.add(category);
@@ -31,6 +30,8 @@ public class CategoriesDAO extends ConnectDB {
         }
         return categories;
     }
+    
+    
     // CREATE
     public boolean addCategory(Categories category) {
         String sql = "INSERT INTO [dbo].[Categories]\n"
@@ -65,7 +66,7 @@ public class CategoriesDAO extends ConnectDB {
             pre.setString(1, category.getCategoryName());
             pre.setString(2, category.getImageURL());
             pre.setString(3, category.getDescription());
-            pre.setInt(4, category.getCategoryID());
+            pre.setInt(4, category.getCategoryId());
             return pre.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("updateCategory error: " + e.getMessage());
@@ -109,7 +110,7 @@ public class CategoriesDAO extends ConnectDB {
         }
         return list;
     }
-
+    
     public List<Categories> getAllCategories() {
         List<Categories> list = new ArrayList<>();
         String sql = "SELECT * FROM Categories";
@@ -197,7 +198,7 @@ public class CategoriesDAO extends ConnectDB {
         }
         return 0;
     }
-
+    
     public static void main(String[] args) {
         CategoriesDAO dao = new CategoriesDAO();
         // ADD 

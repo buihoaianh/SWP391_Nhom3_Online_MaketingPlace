@@ -30,8 +30,8 @@
                 <i class="fas fa-home text-dark"></i>Dashboard
             </a>
             <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/list-seller" class="nav-link text-dark">
-                    <i class="fas fa-regular fa-user text-dark"></i>List Seller</a>
+                <a href="${pageContext.request.contextPath}/seller/requests" class="nav-link text-dark">
+                    <i class="fas fa-user-circle text-dark"></i>Seller Request</a>
             </div>
             <div class="nav-item text-dark">
                 <a href="${pageContext.request.contextPath}/getListCustomer" class="nav-link text-dark">
