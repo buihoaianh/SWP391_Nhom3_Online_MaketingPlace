@@ -2,7 +2,6 @@ package controller.UserController;
 
 
 import dao.CategoriesDAO;
-import dao.CategoryDAO;
 import dao.ColorDAO;
 import dao.FeedbackDAO;
 import dao.OrderDAO;

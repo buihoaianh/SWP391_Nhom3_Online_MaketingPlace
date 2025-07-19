@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,12 +63,15 @@
                                         <div class="card-body px-3 py-4-5">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <a href="seller-profile" class="stats-icon purple d-flex align-items-center justify-content-center" style="text-decoration: none;">
-                                                        <i class="iconly-boldShow"></i>
-                                                    </a>
+                                                    <div class="stats-icon blue">
+                                                        <i class="iconly-boldWallet"></i>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-8 d-flex flex-column justify-content-center">
-                                                    <h6 class="text-muted font-semibold">Profile Views</h6>
+                                                <div class="col-md-8">
+                                                    <h6 class="text-muted font-semibold">Total Revenue</h6>
+                                                    <h6 class="font-extrabold mb-0">
+                                                        <fmt:formatNumber value="${totalRevenue}" type="number" groupingUsed="true"/> ₫
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +87,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <h6 class="text-muted font-semibold">Followers</h6>
+                                                    <h6 class="text-muted font-semibold">Total Feedback</h6>
                                                     <h6 class="font-extrabold mb-0">183.000</h6>
                                                 </div>
                                             </div>
@@ -95,12 +100,14 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="stats-icon green">
-                                                        <i class="iconly-boldAdd-User"></i>
+                                                        <i class="iconly-boldBag"></i> <!-- Icon tiền -->
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <h6 class="text-muted font-semibold">Following</h6>
-                                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                                    <h6 class="text-muted font-semibold">Total Order</h6>
+                                                    <h6 class="font-extrabold mb-0">
+                                                        <fmt:formatNumber value="${totalOrders}" type="number" groupingUsed="true" />
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,8 +123,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <h6 class="text-muted font-semibold">Saved Post</h6>
-                                                    <h6 class="font-extrabold mb-0">112</h6>
+                                                    <h6 class="text-muted font-semibold">Total Product</h6>
+                                                    <h6 class="font-extrabold mb-0">
+                                                        <c:out value="${totalProducts}" />
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,10 +137,11 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4>Statistic Customer</h4>
+                                            <h4>Monthly Revenue (VNĐ)</h4>
                                         </div>
                                         <div class="card-body">
                                             <div id="chart-profile"></div>
+
                                             <c:set var="labels" value="" />
                                             <c:set var="values" value="" />
                                             <c:forEach var="entry" items="${stats}">
@@ -140,28 +150,59 @@
                                             </c:forEach>
                                             <c:set var="labels" value="${fn:substring(labels, 0, fn:length(labels) - 1)}" />
                                             <c:set var="values" value="${fn:substring(values, 0, fn:length(values) - 1)}" />
+
                                             <script>
                                                 document.addEventListener("DOMContentLoaded", function () {
+                                                    // Chuyển values từ JSP sang biến JavaScript
+                                                    var dataValues = [${values}];
+                                                    var maxValue = Math.max(...dataValues);
+                                                    var yMax = Math.ceil(maxValue * 1.2 / 100000) * 100000; // tăng thêm 20%, làm tròn theo 100k
+
                                                     var optionsProfileVisit = {
                                                         chart: {
                                                             type: 'bar',
                                                             height: 350
                                                         },
                                                         series: [{
-                                                                name: 'Customer Accounts',
-                                                                data: [${values}]
+                                                                name: 'Revenue',
+                                                                data: dataValues
                                                             }],
                                                         xaxis: {
                                                             categories: [${labels}]
                                                         },
                                                         yaxis: {
+                                                            max: yMax,
+                                                            tickAmount: 6,
                                                             labels: {
                                                                 formatter: function (val) {
-                                                                    return parseInt(val); // ép về số nguyên
+                                                                    return new Intl.NumberFormat('vi-VN', {
+                                                                        style: 'currency',
+                                                                        currency: 'VND'
+                                                                    }).format(val);
                                                                 }
+                                                            }
+                                                        },
+                                                        tooltip: {
+                                                            y: {
+                                                                formatter: function (val) {
+                                                                    return new Intl.NumberFormat('vi-VN', {
+                                                                        style: 'currency',
+                                                                        currency: 'VND'
+                                                                    }).format(val);
+                                                                }
+                                                            }
+                                                        },
+                                                        dataLabels: {
+                                                            enabled: true,
+                                                            formatter: function (val) {
+                                                                return new Intl.NumberFormat('vi-VN').format(val);
+                                                            },
+                                                            style: {
+                                                                colors: ['#fff'] // màu chữ trên cột
                                                             }
                                                         }
                                                     };
+
                                                     var chartProfileVisit = new ApexCharts(document.querySelector("#chart-profile"), optionsProfileVisit);
                                                     chartProfileVisit.render();
                                                 });
@@ -226,13 +267,23 @@
                             <div class="card">
                                 <div class="card-body py-4 px-5">
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-xl rounded-circle overflow-hidden shadow" style="width: 80px; height: 80px; border: 2px solid #ddd;">
-                                            <img src="${pageContext.request.contextPath}/${sessionScope.user.imageURL}" alt="User Avatar" 
-                                                 style="width: 100%; height: 100%; object-fit: cover;">
-                                        </div>
-                                        <div class="ms-3 name">
-                                            <h5 class="font-bold"><c:out value="${sessionScope.user.fullName}" /></h5>
-                                            <h6 class="text-muted mb-0"><c:out value="${sessionScope.user.email}" /></h6>
+                                        <img src="${pageContext.request.contextPath}/${sessionScope.user.imageURL}"
+                                             alt="User Avatar"
+                                             style="
+                                             width: 80px;
+                                             height: 80px;
+                                             border-radius: 50%;
+                                             border: 2px solid #ddd;
+                                             object-fit: cover;
+                                             flex-shrink: 0;
+                                             ">
+                                        <div class="ms-3 name" style="min-width: 0; flex: 1;">
+                                            <h5 class="font-bold mb-1" style="font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                <c:out value="${sessionScope.user.fullName}" />
+                                            </h5>
+                                            <h6 class="text-muted mb-0" style="font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                <c:out value="${sessionScope.user.email}" />
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>
@@ -255,34 +306,97 @@
                             </div>
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Visitors Profile</h4>
+                                    <h4>Order Status</h4>
                                 </div>
-                                <div class="card-body">
-                                    <div id="chart-visitors-profile"></div>
+                                <div class="card-body text-center">
+                                    <div id="order-status-chart"></div>
                                 </div>
                             </div>
+
+                            <c:set var="labels" value="" />
+                            <c:set var="values" value="" />
+                            <c:forEach var="entry" items="${orderStatusStats}">
+                                <!-- Convert Vietnamese labels to English -->
+                                <c:choose>
+                                    <c:when test="${entry.key == 'Thành công'}">
+                                        <c:set var="labels" value="${labels}'Success'," />
+                                    </c:when>
+                                    <c:when test="${entry.key == 'Đã hủy'}">
+                                        <c:set var="labels" value="${labels}'Cancelled'," />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="labels" value="${labels}'${entry.key}'," />
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:set var="values" value="${values}${entry.value}," />
+                            </c:forEach>
+                            <c:set var="labels" value="${fn:substring(labels, 0, fn:length(labels) - 1)}" />
+                            <c:set var="values" value="${fn:substring(values, 0, fn:length(values) - 1)}" />
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var options = {
+                                        chart: {
+                                            type: 'donut',
+                                            width: '100%',
+                                        },
+                                        labels: [${labels}],
+                                        series: [${values}],
+                                        colors: ['#28a745', '#dc3545'],
+                                        plotOptions: {
+                                            pie: {
+                                                donut: {
+                                                    size: '30%' // Dày hơn: vòng to, lỗ nhỏ
+                                                }
+                                            }
+                                        },
+                                        dataLabels: {
+                                            formatter: function (val, opts) {
+                                                return val.toFixed(1) + "%";
+                                            },
+                                            style: {
+                                                fontSize: '16px',
+                                                fontWeight: 'bold',
+                                            }
+                                        },
+                                        legend: {
+                                            position: 'bottom',
+                                            markers: {
+                                                width: 10,
+                                                height: 10
+                                            }
+                                        },
+                                        tooltip: {
+                                            y: {
+                                                formatter: function (val) {
+                                                    return new Intl.NumberFormat('en-US').format(val) + " orders";
+                                                }
+                                            }
+                                        }
+                                    };
+
+                                    var chart = new ApexCharts(document.querySelector("#order-status-chart"), options);
+                                    chart.render();
+                                });
+                            </script>
+
                         </div>
                     </section>
                 </div>
 
                 <footer>
                     <div class="footer clearfix mb-0 text-muted">
-                        <div class="float-start">
-                            <p>2021 &copy; Mazer</p>
-                        </div>
-                        <div class="float-end">
-                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                    href="http://ahmadsaugi.com">A. Saugi</a></p>
-                        </div>
+                        <p>Create by Vu Ngoc Chinh<span class="text-danger">&nbsp;<i class="bi bi-heart"></i></span></p>
                     </div>
-                </footer>
             </div>
-        </div>
-        <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
-    </body>
+        </footer>
+    </div>
+</div>
+<script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
+<script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
+<script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
+</body>
 
 </html>

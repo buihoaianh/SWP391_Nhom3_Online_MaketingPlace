@@ -6,14 +6,12 @@
 package controller.SellerController;
 
 import dao.CategoriesDAO;
-import dao.CategoryDAO;
 import dao.ColorDAO;
 import dao.FeedbackDAO;
 import dao.ProductDAO;
 import dao.SizeDAO;
 import dao.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

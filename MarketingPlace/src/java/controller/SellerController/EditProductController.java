@@ -4,9 +4,7 @@
  */
 package controller.SellerController;
 
-import controller.admin.*;
 import dao.CategoriesDAO;
-import dao.CategoryDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
 import dao.SizeDAO;
@@ -17,14 +15,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import model.Account;
 import model.Categories;
 import model.Color;
 import model.Product;

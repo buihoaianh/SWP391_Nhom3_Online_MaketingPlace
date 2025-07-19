@@ -19,9 +19,6 @@
             <file>file:/D:/Work/Java/JSPServlet/SWP391_Nhom3_Online_MaketingPlace/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/sidebarAdmin.jsp</file>
         </group>
         <group>
-            <file>file:/C:/Users/Admin/Desktop/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/config/ConnectDB.java</file>
-        </group>
-        <group>
             <file>file:/C:/Users/Hi%20Windows%2011%20Home/Downloads/SWP6/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/utils/Helpers.java</file>
             <file>file:/C:/Users/Hi%20Windows%2011%20Home/Downloads/SWP6/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/OrderDAO.java</file>
             <file>file:/C:/Users/Hi%20Windows%2011%20Home/Downloads/SWP6/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/model/OrderDetail.java</file>
@@ -44,6 +41,12 @@
             <file>file:/C:/Users/Hi%20Windows%2011%20Home/Downloads/SWP6/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/jsp/admin/loginRegister.jsp</file>
             <file>file:/C:/Users/Hi%20Windows%2011%20Home/Downloads/SWP6/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/web/components/sidebarAdmin.jsp</file>
             <file>file:/C:/Users/Hi%20Windows%2011%20Home/Downloads/SWP6/SWP6/SWP391_Nhom3_Online_MaketingPlace/MarketingPlace/src/java/dao/ProductDAO.java</file>
+        </group>
+        <group>
+            <file>file:/D:/SWP/status_order/MarketingPlace/src/java/dao/OrderDAO.java</file>
+            <file>file:/D:/SWP/status_order/MarketingPlace/web/jsp/seller/SellerDashboard.jsp</file>
+            <file>file:/D:/SWP/status_order/MarketingPlace/src/java/controller/UserController/LoginAccount.java</file>
+            <file>file:/D:/SWP/status_order/MarketingPlace/src/java/controller/SellerController/SellerDashboard.java</file>
         </group>
     </open-files>
 </project-private>
