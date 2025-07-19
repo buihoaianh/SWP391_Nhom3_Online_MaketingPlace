@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+
 package controller.SellerController;
+
 
 import dao.CategoriesDAO;
 import dao.ProductDAO;
@@ -19,10 +21,7 @@ import java.util.List;
 import model.Categories;
 import model.Product;
 
-/**
- *
- * @author MinhTran
- */
+
 @WebServlet(name = "ProductController", urlPatterns = {"/seller/products"})
 public class ProductController extends HttpServlet {
 
@@ -85,7 +84,9 @@ public class ProductController extends HttpServlet {
             List<Product> matchedProducts = new ArrayList<>();
 
             for (Categories c : categoryList) {
+
                 List<Product> productsByCat = daop.getProductsByCategoryId(c.getCategoryID());
+
                 matchedProducts.addAll(productsByCat);
             }
 

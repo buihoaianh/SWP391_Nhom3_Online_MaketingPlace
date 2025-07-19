@@ -26,8 +26,8 @@ public class ColorDAO {
         List<Color> list = new ArrayList<>();
         String query = "select * from [Color]";
         try {
-            conn = ConnectDB.getConnection(); //mo ket noi toi sql
-            ps = conn.prepareStatement(query);//nem cau lenh query sang sql
+
+            ps = ConnectDB.getConnection().prepareStatement(query);//nem cau lenh query sang sql
             rs = ps.executeQuery();//chay cau lenh query, nhan ket qua tra ve
             while (rs.next()) {
                 Color o = new Color(rs.getInt(1),
@@ -58,8 +58,7 @@ public class ColorDAO {
         }
         return null;
     }
-    
-    
+
 }
     
 

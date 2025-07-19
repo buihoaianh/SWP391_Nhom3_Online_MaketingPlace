@@ -168,6 +168,7 @@ public class OrderDAO extends ConnectDB {
         return list;
     }
     
+
      public Order getOrderById(int orderId) {
     String sql = "SELECT * FROM [Order] WHERE OrderID = ?";
     try (
@@ -193,6 +194,7 @@ public class OrderDAO extends ConnectDB {
 
     return null;
 }
+
 
     public static void main(String[] args) {
     OrderDAO orderDAO = new OrderDAO();

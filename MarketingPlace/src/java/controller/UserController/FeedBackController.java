@@ -8,6 +8,7 @@ package controller.UserController;
 import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.FeedbackDAO;
+
 import dao.ProductDAO;
 import dao.SizeDAO;
 import java.io.IOException;
@@ -19,7 +20,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+
 import java.util.List;
+
 import model.Account;
 import model.Categories;
 import model.Color;
@@ -29,10 +32,7 @@ import model.OrderDetail;
 import model.Product;
 import model.Size;
 
-/**
- *
- * @author MinhTran
- */
+
 @WebServlet(name="FeedBackController", urlPatterns={"/feedback"})
 public class FeedBackController extends HttpServlet {
    
