@@ -21,10 +21,90 @@ import model.ProductImage;
  */
 public class OrderDAO extends ConnectDB {
 
-    public List<Order> getOrdersByCustomerId(int customerId) throws SQLException {
-    List<Order> orders = new ArrayList<>();
+    public int getTotalOrderBySeller(int sellerId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM [Order] WHERE SellerID = ?";
+        try (
+                PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
-    String sql = """
+    public double getTotalRevenueBySeller(int sellerId) {
+        String sql = "SELECT SUM(CAST(TotalAmount AS FLOAT)) FROM [Order] WHERE SellerID = ?";
+        try (
+                PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public Map<String, Integer> getOrderStatusStatsBySeller(int sellerId) {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        String sql = """
+        SELECT 
+            SUM(CASE WHEN OrderStatusID = 2 THEN 1 ELSE 0 END) AS SuccessOrders,
+            SUM(CASE WHEN OrderStatusID = 3 THEN 1 ELSE 0 END) AS CancelledOrders
+        FROM [Order]
+        WHERE SellerID = ?
+    """;
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+
+            ps.setInt(1, sellerId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                result.put("Thành công", rs.getInt("SuccessOrders"));
+                result.put("Đã hủy", rs.getInt("CancelledOrders"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Map<String, Double> getRevenueByMonth(int sellerId) {
+        Map<String, Double> revenueStats = new LinkedHashMap<>();
+
+        String sql = "SELECT FORMAT(OrderDate, 'yyyy-MM') AS Month, "
+                + "SUM(CAST(TotalAmount AS FLOAT)) AS TotalAmount "
+                + "FROM [Order] "
+                + "WHERE SellerID = ? "
+                + "GROUP BY FORMAT(OrderDate, 'yyyy-MM') "
+                + "ORDER BY Month";
+
+        try (
+                PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                revenueStats.put(rs.getString("Month"), rs.getDouble("TotalAmount"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return revenueStats;
+    }
+
+    public List<Order> getOrdersByCustomerId(int customerId) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+
+        String sql = """
         SELECT 
             o.OrderID, o.OrderDate, o.TotalAmount,
             o.PaymentID, o.OrderStatusID,
@@ -49,58 +129,56 @@ public class OrderDAO extends ConnectDB {
         ORDER BY o.OrderDate DESC
     """;
 
-    PreparedStatement ps = connect.prepareStatement(sql);
-    ps.setInt(1, customerId);
-    ResultSet rs = ps.executeQuery();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        ps.setInt(1, customerId);
+        ResultSet rs = ps.executeQuery();
 
-    Map<Integer, Order> orderMap = new LinkedHashMap<>();
+        Map<Integer, Order> orderMap = new LinkedHashMap<>();
 
-    while (rs.next()) {
-        int orderId = rs.getInt("OrderID");
-        Order order = orderMap.get(orderId);
-        if (order == null) {
-            order = new Order();
-            order.setOrderId(orderId);
-            order.setOrderDate(rs.getTimestamp("OrderDate"));
-            order.setTotalAmount(rs.getString("TotalAmount"));
-            order.setOrderStatusId(rs.getInt("OrderStatusID")); // ✅ status ID
-            order.setOrderStatusName(rs.getString("OrderStatusName"));
-            order.setPaymentId(rs.getInt("PaymentID"));
-            order.setPaymentMethodId(rs.getInt("PaymentMethodID")); // ✅ method ID (1=COD, 2=VNPay)
-            order.setProvinceName(rs.getString("ProvinceName"));
-            order.setDistrictName(rs.getString("DistrictName"));
-            order.setWardName(rs.getString("WardName"));
-            order.setItems(new ArrayList<>());
-            orderMap.put(orderId, order);
+        while (rs.next()) {
+            int orderId = rs.getInt("OrderID");
+            Order order = orderMap.get(orderId);
+            if (order == null) {
+                order = new Order();
+                order.setOrderId(orderId);
+                order.setOrderDate(rs.getTimestamp("OrderDate"));
+                order.setTotalAmount(rs.getString("TotalAmount"));
+                order.setOrderStatusId(rs.getInt("OrderStatusID")); // ✅ status ID
+                order.setOrderStatusName(rs.getString("OrderStatusName"));
+                order.setPaymentId(rs.getInt("PaymentID"));
+                order.setPaymentMethodId(rs.getInt("PaymentMethodID")); // ✅ method ID (1=COD, 2=VNPay)
+                order.setProvinceName(rs.getString("ProvinceName"));
+                order.setDistrictName(rs.getString("DistrictName"));
+                order.setWardName(rs.getString("WardName"));
+                order.setItems(new ArrayList<>());
+                orderMap.put(orderId, order);
+            }
+
+            Product product = new Product();
+            product.setProductId(rs.getInt("ProductID"));
+            product.setProductName(rs.getString("ProductName"));
+
+            ProductImage productImage = new ProductImage();
+            productImage.setImageUrl(rs.getString("ImageURL"));
+            List<ProductImage> images = new ArrayList<>();
+            images.add(productImage);
+            product.setImages(images);
+
+            OrderItem item = new OrderItem();
+            item.setProduct(product);
+            item.setQuantity(rs.getInt("Quantity"));
+            item.setUnitPrice(rs.getString("UnitPrice"));
+
+            order.getItems().add(item);
         }
 
-        Product product = new Product();
-        product.setProductId(rs.getInt("ProductID"));
-        product.setProductName(rs.getString("ProductName"));
-
-        ProductImage productImage = new ProductImage();
-        productImage.setImageUrl(rs.getString("ImageURL"));
-        List<ProductImage> images = new ArrayList<>();
-        images.add(productImage);
-        product.setImages(images);
-
-        OrderItem item = new OrderItem();
-        item.setProduct(product);
-        item.setQuantity(rs.getInt("Quantity"));
-        item.setUnitPrice(rs.getString("UnitPrice"));
-
-        order.getItems().add(item);
+        return new ArrayList<>(orderMap.values());
     }
 
-    return new ArrayList<>(orderMap.values());
-}
-    
     public Order getOrderById(int orderId) {
         String sql = "SELECT * FROM [Order] WHERE OrderID = ?";
         try (
-
-            PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)
-        ) {
+                PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
             ps.setInt(1, orderId);
             ResultSet rs = ps.executeQuery();
 
@@ -194,46 +272,45 @@ public class OrderDAO extends ConnectDB {
     }
 
     public static void main(String[] args) {
-    OrderDAO orderDAO = new OrderDAO();
-    try {
-        List<Order> orders = orderDAO.getOrdersByCustomerId(24);
+        OrderDAO orderDAO = new OrderDAO();
+        try {
+            List<Order> orders = orderDAO.getOrdersByCustomerId(24);
 
-        if (orders.isEmpty()) {
-            System.out.println("Không có đơn hàng nào cho khách hàng này.");
-            return;
-        }
-
-        for (Order order : orders) {
-            System.out.println("============== ĐƠN HÀNG ==============");
-            System.out.println("Order ID     : " + order.getOrderId());
-            System.out.println("Order Date   : " + order.getOrderDate());
-            System.out.println("Status       : " + order.getOrderStatusName() + " (ID: " + order.getOrderStatusId() + ")");
-            System.out.println("Payment ID   : " + order.getPaymentId());
-            System.out.println("Method ID    : " + order.getPaymentMethodId());
-            System.out.println("Total Amount : " + order.getTotalAmount());
-            System.out.println("Address      : " + order.getWardName() + ", "
-                    + order.getDistrictName() + ", " + order.getProvinceName());
-            System.out.println("----- Sản phẩm -----");
-
-            for (OrderItem item : order.getItems()) {
-                Product p = item.getProduct();
-                System.out.println(" - Tên sản phẩm: " + p.getProductName());
-                if (p.getImages() != null && !p.getImages().isEmpty()) {
-                    System.out.println("   Ảnh: " + p.getImages().get(0).getImageUrl());
-                } else {
-                    System.out.println("   Ảnh: Không có ảnh");
-                }
-                System.out.println("   Số lượng: " + item.getQuantity());
-                System.out.println("   Giá: " + item.getUnitPrice());
+            if (orders.isEmpty()) {
+                System.out.println("Không có đơn hàng nào cho khách hàng này.");
+                return;
             }
 
-            System.out.println("======================================\n");
-        }
-    } catch (SQLException e) {
-        System.err.println("Lỗi khi lấy đơn hàng: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
+            for (Order order : orders) {
+                System.out.println("============== ĐƠN HÀNG ==============");
+                System.out.println("Order ID     : " + order.getOrderId());
+                System.out.println("Order Date   : " + order.getOrderDate());
+                System.out.println("Status       : " + order.getOrderStatusName() + " (ID: " + order.getOrderStatusId() + ")");
+                System.out.println("Payment ID   : " + order.getPaymentId());
+                System.out.println("Method ID    : " + order.getPaymentMethodId());
+                System.out.println("Total Amount : " + order.getTotalAmount());
+                System.out.println("Address      : " + order.getWardName() + ", "
+                        + order.getDistrictName() + ", " + order.getProvinceName());
+                System.out.println("----- Sản phẩm -----");
 
+                for (OrderItem item : order.getItems()) {
+                    Product p = item.getProduct();
+                    System.out.println(" - Tên sản phẩm: " + p.getProductName());
+                    if (p.getImages() != null && !p.getImages().isEmpty()) {
+                        System.out.println("   Ảnh: " + p.getImages().get(0).getImageUrl());
+                    } else {
+                        System.out.println("   Ảnh: Không có ảnh");
+                    }
+                    System.out.println("   Số lượng: " + item.getQuantity());
+                    System.out.println("   Giá: " + item.getUnitPrice());
+                }
+
+                System.out.println("======================================\n");
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy đơn hàng: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 }

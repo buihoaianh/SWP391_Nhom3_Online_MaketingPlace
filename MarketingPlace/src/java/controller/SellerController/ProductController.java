@@ -4,12 +4,9 @@
  */
 package controller.SellerController;
 
-import controller.admin.*;
 import dao.CategoriesDAO;
-import dao.CategoryDAO;
 import dao.ProductDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

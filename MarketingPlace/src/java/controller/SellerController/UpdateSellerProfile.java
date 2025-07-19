@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import model.Account;
 
-@WebServlet(name = "UpdateSellerProfile", urlPatterns = {"/update-seller-profile"})
+@WebServlet(name = "UpdateSellerProfile", urlPatterns = {"/seller/update-seller-profile"})
 @MultipartConfig // Bắt buộc để xử lý file upload
 public class UpdateSellerProfile extends HttpServlet {
 
