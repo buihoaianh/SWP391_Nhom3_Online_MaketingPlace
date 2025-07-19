@@ -94,7 +94,32 @@ public class OrderDAO extends ConnectDB {
 
     return new ArrayList<>(orderMap.values());
 }
+    
+    public Order getOrderById(int orderId) {
+        String sql = "SELECT * FROM [Order] WHERE OrderID = ?";
+        try (
 
+            PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("OrderID"));
+                order.setOrderDate(rs.getDate("OrderDate")); // hoặc getTimestamp nếu model dùng Timestamp
+                order.setTotalAmount(rs.getString("TotalAmount"));
+                order.setSellerId(rs.getInt("SellerID"));
+                // Thêm các field khác nếu cần
+                return order;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public boolean updateOrderStatus(int orderId, int newStatusId) {
         String sql = "UPDATE [Order] SET OrderStatusID = ? WHERE OrderID = ?";

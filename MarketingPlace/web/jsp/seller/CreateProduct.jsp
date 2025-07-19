@@ -1,14 +1,4 @@
-<%-- 
-    Document   : CreateProduct
-    Created on : Jun 19, 2025, 10:00:23 PM
-    Author     : Admin
---%>
 
-<%-- 
-    Document   : Dashboard
-    Created on : May 27, 2025, 9:25:13 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -65,7 +55,7 @@
                     <div class="row g-4">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-light rounded h-100 p-4">
-                                <form class="row g-3 needs-validation" action="admin/create-product" method="post" enctype="multipart/form-data">
+                                <form class="row g-3 needs-validation" action="seller/create-product" method="post" enctype="multipart/form-data">
                                     <!-- Product Name -->
                                     <div class="col-6">
                                         <label for="productName" class="form-label">Product Name</label>

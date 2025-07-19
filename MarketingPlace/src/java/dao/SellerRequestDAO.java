@@ -10,6 +10,8 @@ import model.SellerRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -102,11 +104,61 @@ public class SellerRequestDAO {
     return false;
 }
     
+     public void rejectRequest(int requestId, String reason, int reviewedBy, LocalDateTime reviewDate) {
+    String sql = "UPDATE SellerRequests SET Status = ?, RejectReason = ?, ReviewedBy = ?, ReviewDate = ? WHERE RequestID = ?";
+    try (
+         PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+        ps.setString(1, "Reject");
+        ps.setString(2, reason);
+        ps.setInt(3, reviewedBy);
+        ps.setTimestamp(4, Timestamp.valueOf(reviewDate));
+        ps.setInt(5, requestId);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
+    public SellerRequest getRequestById(int requestId) {
+        String sql = "SELECT * FROM SellerRequests WHERE RequestID = ?";
 
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
 
+            ps.setInt(1, requestId);
+            ResultSet rs = ps.executeQuery();
 
+            if (rs.next()) {
+                SellerRequest sr = new SellerRequest();
+                sr.setRequestId(rs.getInt("RequestID"));
+                sr.setAccountId(rs.getInt("AccountID"));
+                sr.setRequestDate(rs.getTimestamp("RequestDate"));
 
+                String rawStatus = rs.getString("Status");
+                if ("Approve".equalsIgnoreCase(rawStatus)) {
+                    sr.setStatus("Active");
+                } else if ("Reject".equalsIgnoreCase(rawStatus)) {
+                    sr.setStatus("Inactive");
+                } else {
+                    sr.setStatus(null); // chưa duyệt (null trong DB)
+                }
+
+                int reviewerId = rs.getInt("ReviewedBy");
+                sr.setReviewedBy(rs.wasNull() ? null : reviewerId);
+
+                sr.setReviewDate(rs.getTimestamp("ReviewDate"));
+                sr.setRejectReason(rs.getString("RejectReason"));
+
+                return sr;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
     private SellerRequest map(ResultSet rs) throws SQLException {
         SellerRequest sr = new SellerRequest();
         sr.setRequestId(rs.getInt("RequestID"));
