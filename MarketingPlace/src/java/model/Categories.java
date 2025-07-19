@@ -9,63 +9,70 @@ package model;
  * @author Admin
  */
 public class Categories {
-    private int CategoryID;
-    private String CategoryName;
-    private String ImageURL;
-    private String Description;
+    private int categoryId;
+    private String categoryName;
+    private String imageURL;
+    private String description;
 
-    public Categories(String CategoryName) {
-        this.CategoryName = CategoryName;
+    public Categories() {}
+
+    public Categories(int categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
+    
+    
+
+    public Categories(int categoryId, String categoryName, String imageURL, String description) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.imageURL = imageURL;
+        this.description = description;
     }
 
-    public Categories() {
+    public Categories(String categoryName) {
+        this.categoryName = categoryName;
+    }
+    
+    
+
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public Categories(int CategoryID, String CategoryName, String ImageURL, String Description) {
-        this.CategoryID = CategoryID;
-        this.CategoryName = CategoryName;
-        this.ImageURL = ImageURL;
-        this.Description = Description;
-    }
-
-    public int getCategoryID() {
-        return CategoryID;
-    }
-
-    public void setCategoryID(int CategoryID) {
-        this.CategoryID = CategoryID;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {
-        return CategoryName;
+        return categoryName;
     }
 
-    public void setCategoryName(String CategoryName) {
-        this.CategoryName = CategoryName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getImageURL() {
-        return ImageURL;
+        return imageURL;
     }
 
-    public void setImageURL(String ImageURL) {
-        this.ImageURL = ImageURL;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setDescription(String description) {
+        this.description = description;
     }
     
    
 
     @Override
     public String toString() {
-        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", ImageURL=" + ImageURL + ", Description=" + Description + '}';
+        return "Category{" + "categoryId=" + categoryId + ", categoryName=" + categoryName + ", imageURL=" + imageURL + ", description=" + description + '}';
     }
-
-   
 }
+

@@ -4,10 +4,7 @@
  */
 package dao;
 
-/**
- *
- * @author MinhTran
- */
+
 import com.sun.jdi.connect.spi.Connection;
 import config.ConnectDB;
 import java.sql.PreparedStatement;
@@ -207,6 +204,7 @@ public class FeedbackDAO {
         return null;
     }
 
+
 //    gửi về cho seller
     // Lấy đơn hàng thành công giữa buyer và seller cụ thể
     public List<Order> getSuccessfulOrdersByCustomerAndSeller(int sellerId) {
@@ -295,4 +293,5 @@ public class FeedbackDAO {
     }
 
 }
+
 

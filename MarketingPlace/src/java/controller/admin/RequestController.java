@@ -16,10 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.SellerRequest;
 
-/**
- *
- * @author MinhTran
- */
+
 @WebServlet(name = "RequestController", urlPatterns = {"/admin/requests"})
 public class RequestController extends HttpServlet {
 
@@ -84,4 +81,3 @@ public class RequestController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-}

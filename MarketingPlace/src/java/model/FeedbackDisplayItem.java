@@ -25,7 +25,9 @@ public class FeedbackDisplayItem {
     private String sizeName;
     private String colorName;
     private String categoryName;
+
     private String customerName;
+
 
 
 
@@ -45,6 +47,7 @@ public class FeedbackDisplayItem {
         this.colorName = colorName;
         this.categoryName = categoryName;
     }
+
 
     public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName, String customerName) {
         this.orderId = orderId;
@@ -69,6 +72,7 @@ public class FeedbackDisplayItem {
     public void setCustomerName(String customerName) { 
         this.customerName = customerName; 
     }
+
     
     public int getOrderId() {
         return orderId;

@@ -6,9 +6,10 @@ public class OrderDetail {
     private int productVariantId;
     private int quantity;
     private String unitPrice;
+
     private Order order;
     
-      
+
     private ProductVariant productVariant;  // Thay vì chỉ lấy ID
     
     public OrderDetail() {}
@@ -16,6 +17,7 @@ public class OrderDetail {
     public OrderDetail(ProductVariant productVariant) {
         this.productVariant = productVariant;
     }
+
 
     public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice, Order order, ProductVariant productVariant) {
         this.orderDetailsId = orderDetailsId;
@@ -27,6 +29,7 @@ public class OrderDetail {
         this.productVariant = productVariant;
     }
     
+
     public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice, ProductVariant productVariant) {
         this.orderDetailsId = orderDetailsId;
         this.orderId = orderId;
@@ -43,6 +46,14 @@ public class OrderDetail {
         this.productVariantId = productVariantId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+    }
+    
+    public ProductVariant getProductVariant() {
+        return productVariant;
+    }
+
+    public void setProductVariant(ProductVariant productVariant) {
+        this.productVariant = productVariant;
     }
 
     public ProductVariant getProductVariant() {

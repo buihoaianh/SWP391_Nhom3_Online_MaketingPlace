@@ -18,10 +18,13 @@ public class Feedbacks {
     private Timestamp CreateFeedbackDate;
     private int ProductVariantID;
     private int POrderID;
+
     private int Status;
+
 
     public Feedbacks() {
     }
+
 
     public Feedbacks(int FeedbackID, int AccountID, String FeedbackText, int Rating, Timestamp CreateFeedbackDate, int ProductVariantID, int POrderID, int Status) {
         this.FeedbackID = FeedbackID;
@@ -33,6 +36,7 @@ public class Feedbacks {
         this.POrderID = POrderID;
         this.Status = Status;
     }
+
 
     
     
@@ -102,6 +106,7 @@ public class Feedbacks {
         this.POrderID = POrderID;
     }
 
+
     public int getStatus() {
         return Status;
     }
@@ -109,6 +114,7 @@ public class Feedbacks {
     public void setStatus(int Status) {
         this.Status = Status;
     }
+
     
     
     

@@ -33,13 +33,16 @@ public class ProductDAO extends ConnectDB {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-
+    
+    
     public List<Product> getProducts() {
         List<Product> list = new ArrayList<>();
         String query = "SELECT p.*, c.CategoryName " +
                        "FROM Products p " +
                        "LEFT JOIN Categories c ON p.CategoryID = c.CategoryID " +
+
                        "WHERE p.isDeleted = 1 " +    
+
                        "ORDER BY p.CreateProductDate DESC";
 
         try { 
@@ -54,7 +57,9 @@ public class ProductDAO extends ConnectDB {
                     rs.getString("description"),
                     new Categories(rs.getString("CategoryName"))
                 );
+
                 o.setStatus(rs.getString("Status"));
+
                 list.add(o);
             }
         } catch (Exception e) {
@@ -62,6 +67,7 @@ public class ProductDAO extends ConnectDB {
         }
         return list;
     }
+    
 
     public void createProduct(Product po) {
         String sql = "INSERT INTO [Products] ([AccountID]\n"
@@ -676,7 +682,9 @@ public class ProductDAO extends ConnectDB {
                 p.setStatus(rs.getString("Status"));
 
                 Categories cat = new Categories();
+
                 cat.setCategoryID(rs.getInt("CategoryId"));
+
                 cat.setCategoryName(rs.getString("CategoryName"));
                 p.setCategory(cat);
 
