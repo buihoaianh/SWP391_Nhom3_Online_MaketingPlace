@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller.admin;
 
 import dao.SellerRequestDAO;
@@ -15,10 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.SellerRequest;
 
-/**
- *
- * @author Admin
- */
+
 @WebServlet(name = "RequestController", urlPatterns = {"/admin/requests"})
 public class RequestController extends HttpServlet {
 
@@ -83,4 +81,3 @@ public class RequestController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-}

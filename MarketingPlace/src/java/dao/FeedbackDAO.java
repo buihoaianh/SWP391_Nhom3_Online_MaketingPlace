@@ -4,6 +4,7 @@
  */
 package dao;
 
+
 import com.sun.jdi.connect.spi.Connection;
 import config.ConnectDB;
 import java.sql.PreparedStatement;
@@ -204,6 +205,93 @@ public class FeedbackDAO {
     }
 
 
+//    gửi về cho seller
+    // Lấy đơn hàng thành công giữa buyer và seller cụ thể
+    public List<Order> getSuccessfulOrdersByCustomerAndSeller(int sellerId) {
+        List<Order> list = new ArrayList<>();
 
+        String sql = """
+            SELECT o.OrderID, o.OrderDate, o.TotalAmount, o.SellerID, o.CustomerID
+            FROM [Order] o
+            JOIN OrderStatus os ON o.OrderStatusID = os.OrderStatusID
+            WHERE o.SellerID = ?
+              AND os.OrderStatusName = 'Success'
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, sellerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("OrderID"));
+                order.setOrderDate(rs.getDate("OrderDate"));
+                order.setTotalAmount(rs.getString("TotalAmount"));
+                order.setSellerId(rs.getInt("SellerID"));
+                order.setCustomerId(rs.getInt("CustomerID"));
+                list.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     
+    //lấy về các giá trị như sql bên dưới đưa về seller
+    public List<OrderDetail> getOrderProductDetailsByOrderIDSeller(int orderID) {
+        List<OrderDetail> list = new ArrayList<>();
+
+        String sql = "SELECT \n" +
+            "    od.OrderDetailsID,\n" +
+            "    od.OrderID,\n" +
+            "    od.ProductVariantID,\n" +
+            "    od.Quantity,\n" +
+            "    od.UnitPrice,\n" +
+            "    pv.Price,\n" +
+            "    pv.SizeID,\n" +
+            "    pv.ColorID,\n" +
+            "    pv.ProductID,\n" +
+            "    o.CustomerID\n" +
+            "FROM OrderDetails od\n" +
+            "JOIN ProductVariant pv ON od.ProductVariantID = pv.ProductVariantID\n" +
+            "JOIN [Order] o ON od.OrderID = o.OrderID\n" +
+            "WHERE od.OrderID = ? AND od.Status = 1;";
+
+        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                OrderDetail opd = new OrderDetail();
+                opd.setOrderDetailsId(rs.getInt("OrderDetailsID"));
+                opd.setOrderId(rs.getInt("OrderID"));
+                opd.setQuantity(rs.getInt("Quantity"));
+                opd.setUnitPrice(rs.getString("UnitPrice"));
+
+                ProductVariant pv = new ProductVariant();
+                pv.setProductVariantId(rs.getInt("ProductVariantID"));
+                pv.setPrice(rs.getLong("Price"));
+                pv.setSizeId(rs.getInt("SizeID"));
+                pv.setColorId(rs.getInt("ColorID"));
+                pv.setProductId(rs.getInt("ProductID"));
+                opd.setProductVariant(pv);
+
+                // CustomerID nằm trong bảng Order, nếu OrderDetail có chỗ chứa thì set vào:
+                Order o = new Order();
+                o.setCustomerId(rs.getInt("CustomerID")); // Lấy từ bảng Order
+                opd.setOrder(o); // Gán order vào cho OrderDetail
+
+
+                list.add(opd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }
+
+

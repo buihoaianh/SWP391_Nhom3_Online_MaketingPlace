@@ -40,7 +40,9 @@ public class ProductDAO extends ConnectDB {
         String query = "SELECT p.*, c.CategoryName " +
                        "FROM Products p " +
                        "LEFT JOIN Categories c ON p.CategoryID = c.CategoryID " +
-                       "WHERE p.isDeleted = 1 " +    // 👈 chỉ lấy sản phẩm chưa bị xóa mềm
+
+                       "WHERE p.isDeleted = 1 " +    
+
                        "ORDER BY p.CreateProductDate DESC";
 
         try { 
@@ -55,6 +57,9 @@ public class ProductDAO extends ConnectDB {
                     rs.getString("description"),
                     new Categories(rs.getString("CategoryName"))
                 );
+
+                o.setStatus(rs.getString("Status"));
+
                 list.add(o);
             }
         } catch (Exception e) {
@@ -131,8 +136,7 @@ public class ProductDAO extends ConnectDB {
                 + "from Products p\n"
                 + "where p.ProductID = ?";
         try {
-            conn = ConnectDB.getConnection(); //mo ket noi toi sql
-            ps = conn.prepareStatement(query);//nem cau lenh query sang sql
+            ps = ConnectDB.getConnection().prepareStatement(query);//nem cau lenh query sang sql
             ps.setString(1, id);
             rs = ps.executeQuery();//chay cau lenh query, nhan ket qua tra ve
             while (rs.next()) {
@@ -162,11 +166,11 @@ public class ProductDAO extends ConnectDB {
                 + "pv.Quantity from ProductVariant pv\n"
                 + "where pv.ProductId = ?\n";
         try {
-            conn = ConnectDB.getConnection(); //mo ket noi toi sql
-            ps = conn.prepareStatement(query);//nem cau lenh query sang sql
+            ps = ConnectDB.getConnection().prepareStatement(query);//nem cau lenh query sang sql
             ps.setInt(1, productId);
             rs = ps.executeQuery();//chay cau lenh query, nhan ket qua tra ve
             while (rs.next()) {
+
                 ProductVariant o = new ProductVariant(
                         rs.getInt("productVariantId"),
                         new Color(rs.getInt("ColorId")),
@@ -191,6 +195,7 @@ public class ProductDAO extends ConnectDB {
             psTmp.setInt(1, productId);
             ResultSet rsTemp = psTmp.executeQuery();//chay cau lenh query, nhan ket qua tra ve
             while (rsTemp.next()) {
+                
                 ProductImage o = new ProductImage(
                         rsTemp.getInt("imageId"),
                         rsTemp.getInt("productId"),
@@ -677,7 +682,9 @@ public class ProductDAO extends ConnectDB {
                 p.setStatus(rs.getString("Status"));
 
                 Categories cat = new Categories();
-                cat.setCategoryId(rs.getInt("CategoryId"));
+
+                cat.setCategoryID(rs.getInt("CategoryId"));
+
                 cat.setCategoryName(rs.getString("CategoryName"));
                 p.setCategory(cat);
 

@@ -19,8 +19,24 @@ public class Feedbacks {
     private int ProductVariantID;
     private int POrderID;
 
+    private int Status;
+
+
     public Feedbacks() {
     }
+
+
+    public Feedbacks(int FeedbackID, int AccountID, String FeedbackText, int Rating, Timestamp CreateFeedbackDate, int ProductVariantID, int POrderID, int Status) {
+        this.FeedbackID = FeedbackID;
+        this.AccountID = AccountID;
+        this.FeedbackText = FeedbackText;
+        this.Rating = Rating;
+        this.CreateFeedbackDate = CreateFeedbackDate;
+        this.ProductVariantID = ProductVariantID;
+        this.POrderID = POrderID;
+        this.Status = Status;
+    }
+
 
     
     
@@ -89,6 +105,16 @@ public class Feedbacks {
     public void setPOrderID(int POrderID) {
         this.POrderID = POrderID;
     }
+
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
     
     
     

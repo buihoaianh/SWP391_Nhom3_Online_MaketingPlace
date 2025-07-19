@@ -1,3 +1,9 @@
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
 package controller.UserController;
 
 
@@ -7,6 +13,10 @@ import dao.FeedbackDAO;
 import dao.OrderDAO;
 import dao.ProductDAO;
 import dao.SizeDAO;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
-import java.io.IOException;
+
 import java.nio.file.Paths;
 import java.util.Arrays;
 import model.Account;
@@ -27,6 +37,7 @@ import model.Order;
 import model.OrderDetail;
 import model.Product;
 import model.Size;
+
 
 @WebServlet(name = "FeedbackDetailController", urlPatterns = {"/seller/feedback-detail"})
 @MultipartConfig(
@@ -122,3 +133,4 @@ public class FeedbackDetailController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/feedback");
     }
 }
+

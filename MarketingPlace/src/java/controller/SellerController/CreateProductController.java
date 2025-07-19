@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.SellerController;
 
-import controller.admin.*;
+
+package controller.SellerController;
 import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
@@ -19,12 +19,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import java.io.File;
-import java.nio.file.Paths;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import model.Account;
 import model.Categories;
 import model.Color;
@@ -34,10 +33,7 @@ import model.ProductVariant;
 import model.Size;
 import utils.Helpers;
 
-/**
- *
- * @author Admin
- */
+
 @WebServlet(name = "CreateProductController", urlPatterns = {"/seller/create-product"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024)
 public class CreateProductController extends HttpServlet {

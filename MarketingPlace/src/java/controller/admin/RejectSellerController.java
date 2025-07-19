@@ -17,10 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import model.Account;
 
-/**
- *
- * @author Hi Windows 11 Home
- */
+
 @WebServlet(name="RejectSellerController", urlPatterns={"/admin/request/reject"})
 public class RejectSellerController extends HttpServlet {
    

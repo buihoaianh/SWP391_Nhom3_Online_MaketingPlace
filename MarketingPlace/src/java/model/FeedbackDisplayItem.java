@@ -26,6 +26,11 @@ public class FeedbackDisplayItem {
     private String colorName;
     private String categoryName;
 
+    private String customerName;
+
+
+
+
     public FeedbackDisplayItem() {
     }
 
@@ -43,7 +48,31 @@ public class FeedbackDisplayItem {
         this.categoryName = categoryName;
     }
 
+
+    public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName, String customerName) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderDetailId = orderDetailId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.productVariantId = productVariantId;
+        this.productName = productName;
+        this.thumbnailUrl = thumbnailUrl;
+        this.sizeName = sizeName;
+        this.colorName = colorName;
+        this.categoryName = categoryName;
+        this.customerName = customerName;
+    }
     
+
+    public String getCustomerName() { 
+        return customerName; 
+    }
+    
+    public void setCustomerName(String customerName) { 
+        this.customerName = customerName; 
+    }
+
     
     public int getOrderId() {
         return orderId;
@@ -135,3 +164,4 @@ public class FeedbackDisplayItem {
     
     
 }
+

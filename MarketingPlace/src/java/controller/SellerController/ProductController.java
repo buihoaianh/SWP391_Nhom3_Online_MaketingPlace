@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
+
 package controller.SellerController;
 
-import controller.admin.*;
+
 import dao.CategoriesDAO;
 import dao.ProductDAO;
 import java.io.IOException;
@@ -19,10 +21,7 @@ import java.util.List;
 import model.Categories;
 import model.Product;
 
-/**
- *
- * @author Admin
- */
+
 @WebServlet(name = "ProductController", urlPatterns = {"/seller/products"})
 public class ProductController extends HttpServlet {
 
@@ -85,7 +84,9 @@ public class ProductController extends HttpServlet {
             List<Product> matchedProducts = new ArrayList<>();
 
             for (Categories c : categoryList) {
-                List<Product> productsByCat = daop.getProductsByCategoryId(c.getCategoryId());
+
+                List<Product> productsByCat = daop.getProductsByCategoryId(c.getCategoryID());
+
                 matchedProducts.addAll(productsByCat);
             }
 
@@ -111,3 +112,4 @@ public class ProductController extends HttpServlet {
     }// </editor-fold>
 
 }
+

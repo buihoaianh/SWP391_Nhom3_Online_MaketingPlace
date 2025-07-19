@@ -17,7 +17,27 @@ public class ProductVariant {
     // ✅ Thêm mới
     private String status;
 
-    
+    public ProductVariant(int productVariantId, int productId, int SizeId) {
+        this.productVariantId = productVariantId;
+        this.productId = productId;
+        this.SizeId = SizeId;
+    }
+
+    public int getColorId() {
+        return ColorId;
+    }
+
+    public void setColorId(int ColorId) {
+        this.ColorId = ColorId;
+    }
+
+    public int getSizeId() {
+        return SizeId;
+    }
+
+    public void setSizeId(int SizeId) {
+        this.SizeId = SizeId;
+    }
     
     public ProductVariant() {
     }

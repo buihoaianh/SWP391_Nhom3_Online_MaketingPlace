@@ -5,6 +5,54 @@ import java.sql.*;
 import model.*;
 
 public class ProductVariantDAO extends ConnectDB {
+    
+    public ProductVariant getVariantForFeedbackById(int productId, int VariantId ){
+        String sql = "Select pv.Price, pv.ColorId, pv.SizeId, pv.Quantity, pv.Price from ProductVariant pv where ProductId = ? and ProductVariantId = ?";
+        try(
+            PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ps.setInt(2, VariantId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                // Product
+                Product product = new Product();
+                product.setProductId(rs.getInt("ProductId"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setAccountId(rs.getInt("AccountID"));
+                product.setThumbnailURL(rs.getString("ThumbnailURL"));
+                product.setCategoryID(rs.getInt("CategoryID"));
+                product.setDiscountId(rs.getInt("DiscountID"));
+                product.setCreateProductDate(rs.getTimestamp("CreateProductDate"));
+                product.setDescription(rs.getString("Description"));
+                product.setStatus(rs.getString("ProductStatus"));
+
+                // Color
+                Color color = new Color();
+                color.setId(rs.getInt("ColorId"));
+                color.setName(rs.getString("ColorName"));
+
+                // Size
+                Size size = new Size();
+                size.setId(rs.getInt("SizeId"));
+                size.setName(rs.getString("SizeName"));
+
+                // ProductVariant
+                ProductVariant variant = new ProductVariant();
+                variant.setProductVariantId(rs.getInt("ProductVariantId"));
+                variant.setProductId(rs.getInt("ProductId"));
+                variant.setQuantity(rs.getInt("Quantity"));
+                variant.setPrice(rs.getLong("Price"));
+                variant.setStatus(rs.getString("Status"));
+                variant.setProduct(product);
+                variant.setColor(color);
+                variant.setSize(size);
+            
+            }
+        }catch(Exception e){
+            
+        }
+        return null;
+    }
 
     public ProductVariant getVariantForFeedbackById(int productId, int VariantId ){
         String sql = "Select pv.Price, pv.ColorId, pv.SizeId, pv.Quantity, pv.Price from ProductVariant pv where ProductId = ? and ProductVariantId = ?";
