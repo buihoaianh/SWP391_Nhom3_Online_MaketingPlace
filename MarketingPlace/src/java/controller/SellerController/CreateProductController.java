@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+
+package controller.SellerController;
 
 import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
 import dao.SizeDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,10 +20,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import model.Account;
 import model.Categories;
 import model.Color;
@@ -33,11 +33,11 @@ import utils.Helpers;
 
 /**
  *
- * @author Admin
+ * @author MinhTran
  */
-@WebServlet(name = "EditProductController", urlPatterns = {"/admin/edit-product"})
+@WebServlet(name = "CreateProductController", urlPatterns = {"/seller/create-product"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024)
-public class EditProductController extends HttpServlet {
+public class CreateProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,20 +55,16 @@ public class EditProductController extends HttpServlet {
             CategoriesDAO cdao = new CategoriesDAO();
             List<Categories> categories = cdao.getAllCategories();
             request.setAttribute("categories", categories);
-            
+
             SizeDAO sdao = new SizeDAO();
             List<Size> sizes = sdao.getSizes();
             request.setAttribute("sizes", sizes);
-            
+
             ColorDAO colorDAO = new ColorDAO();
             List<Color> colors = colorDAO.getColors();
             request.setAttribute("colors", colors);
-            
-            String id = request.getParameter("id");
-            ProductDAO pdao = new ProductDAO();
-            Product p = pdao.getProductById(id);
-            request.setAttribute("p", p);
-            request.getRequestDispatcher("/jsp/seller/EditProduct.jsp").forward(request, response);
+
+            request.getRequestDispatcher("/jsp/seller/CreateProduct.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,40 +100,38 @@ public class EditProductController extends HttpServlet {
         try {
             ProductDAO pdao = new ProductDAO();
             // Lấy dữ liệu từ form
-            String productId = request.getParameter("productID");
-            String oldImage = request.getParameter("oldImage");
             String productName = request.getParameter("productName");
             String categoryID = request.getParameter("categoryID");
             String description = request.getParameter("description");
-            String status = request.getParameter("status");
 //            Part imagePart = request.getPart("image");
+            Timestamp createDate = new Timestamp(System.currentTimeMillis());
+
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("user");
+            int createdBy = acc.getAccountID();
 
             // Lấy danh sách biến thể sản phẩm
             String[] colors = request.getParameterValues("color[]");
             String[] sizes = request.getParameterValues("size[]");
             String[] prices = request.getParameterValues("price[]");
             String[] quantities = request.getParameterValues("quantity[]");
-            
+
             List<ProductVariant> variants = new ArrayList<>();
-//            String imageName = oldImage;
-//            if (imagePart != null && imagePart.getSize() > 0) {
-//                // Lấy ảnh đúng
-//                imageName = Helpers.saveImage(imagePart, request);
-//            }
+
+            // Lấy ảnh đúng
+            // Lấy tất cả phần tử upload
             List<ProductImage> imageNames = new ArrayList<>();
-            boolean haveNewImg = false;
+            //Part là đối tượng đại diện cho từng phần dữ liệu được gửi lên từ form (có thể là text, file,...).
             for (Part part : request.getParts()) {
                 // Lọc ra các file ảnh
                 if (part.getName().equals("image") && part.getSubmittedFileName() != null && !part.getSubmittedFileName().isEmpty()) {
                     //upload image
                     String fileName = Helpers.saveImage(part, request);
                     imageNames.add(new ProductImage(fileName));
-                    haveNewImg = true;
                 }
             }
-            
-            String thumbnail = haveNewImg ? imageNames.get(0).getImageUrl() : oldImage;
-            
+//            String imageName = Helpers.saveImage(imagePart, request);
+
             for (int i = 0; i < colors.length; i++) {
                 ProductVariant variant = new ProductVariant(
                         new Color(Integer.parseInt(colors[i])),
@@ -148,17 +142,15 @@ public class EditProductController extends HttpServlet {
             }
 
             // Lưu vào DB
-            Product product = new Product(Integer.parseInt(productId), thumbnail, productName, Integer.parseInt(categoryID), description, status, variants);
-            if(haveNewImg){
-                product.setImages(imageNames);
-            }
-            pdao.updateProduct(product);
+            Product product = new Product(createdBy, imageNames.get(0).getImageUrl(), productName, Integer.parseInt(categoryID), createDate, description, "Active", variants);
+            product.setImages(imageNames);
+            pdao.createProduct(product);
 
             // Chuyển hướng sau khi tạo sản phẩm thành công
-            request.setAttribute("message", "Edit Product Success!");
+            request.setAttribute("message", "Create Product Success!");
             request.getRequestDispatcher("products").forward(request, response);
         } catch (Exception e) {
-            request.setAttribute("errorMessage", "Edit Product Fail!: " + e.getMessage());
+            request.setAttribute("errorMessage", "Create Product Fail!: " + e.getMessage());
             request.getRequestDispatcher("products").forward(request, response);
         }
     }

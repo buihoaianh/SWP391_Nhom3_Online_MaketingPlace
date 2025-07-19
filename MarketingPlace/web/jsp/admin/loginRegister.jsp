@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Resgister
-    Created on : May 23, 2025, 12:19:25 AM
-    Author     : Hi Windows 11 Home
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -12,8 +7,6 @@
 %>
 
 
-
-<h1 class="page-title"><%= pageTitle %></h1>
 
 <!DOCTYPE html>
 <html lang="en">

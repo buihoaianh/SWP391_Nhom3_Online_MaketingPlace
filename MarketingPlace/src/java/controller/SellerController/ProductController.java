@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
 
-import dao.SellerDao;
-import dao.SellerRequestDAO;
-import dao.UserDAO;
+package controller.SellerController;
+
+import dao.CategoriesDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,18 +14,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import model.Account;
-import model.SellerRequest;
+import java.util.ArrayList;
+import java.util.List;
+import model.Categories;
+import model.Product;
 
 /**
  *
- * @author Admin
+ * @author MinhTran
  */
-@WebServlet(name = "RequestDetailController", urlPatterns = {"/admin/request-detail"})
-public class RequestDetailController extends HttpServlet {
+@WebServlet(name = "ProductController", urlPatterns = {"/seller/products"})
+public class ProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,41 +36,18 @@ public class RequestDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    
-    try {
-        String idParam = request.getParameter("id");
-        int reqId = Integer.parseInt(idParam);
-
-        SellerRequestDAO requestDAO = new SellerRequestDAO();
-        SellerRequest r = requestDAO.getRequestById(reqId);
-
-        if (r == null) {
-            // requestId không tồn tại, báo lỗi luôn
-            request.setAttribute("error", "Yêu cầu không tồn tại");
-            request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp").forward(request, response);
-            return;
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            ProductDAO dao = new ProductDAO();
+            List<Product> products = dao.getProducts();
+            request.setAttribute("products", products);
+            request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("Lỗi xảy ra: " + e.getMessage());
         }
-
-        UserDAO dao = new UserDAO();
-        Account user = dao.getUserById(r.getAccountId());
-
-        request.setAttribute("u", user);  // thông tin người bán
-        request.setAttribute("r", r);     // thông tin trạng thái yêu cầu
-        
-        if (r == null || user == null) {
-            request.setAttribute("error", "Dữ liệu không tồn tại.");
-            request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp").forward(request, response);
-            return;
-        }
-
-        request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp").forward(request, response);
-
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -99,7 +75,29 @@ public class RequestDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String categoryName = request.getParameter("category");
+        CategoriesDAO dao = new CategoriesDAO();
+        ProductDAO daop = new ProductDAO();
+
+        if (categoryName != null && !categoryName.trim().isEmpty()) {
+            List<Categories> categoryList = dao.searchCategoryByName(categoryName);
+            List<Product> matchedProducts = new ArrayList<>();
+
+            for (Categories c : categoryList) {
+                List<Product> productsByCat = daop.getProductsByCategoryId(c.getCategoryID());
+                matchedProducts.addAll(productsByCat);
+            }
+
+            request.setAttribute("products", matchedProducts);
+        } else {
+            List<Product> allProducts = daop.getProducts();
+            request.setAttribute("products", allProducts);
+        }
+
+        request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+
+
     }
 
     /**
@@ -113,3 +111,4 @@ public class RequestDetailController extends HttpServlet {
     }// </editor-fold>
 
 }
+
