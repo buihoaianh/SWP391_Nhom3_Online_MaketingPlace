@@ -730,6 +730,37 @@ public class ProductDAO extends ConnectDB {
         }
     }
 
+    public ArrayList<Product> searchProducts(String keyword) {
+        ArrayList<Product> list = new ArrayList<>();
+        String sql = "SELECT p.ProductID, p.ProductName, p.ThumbnailURL, pv.Price, c.CategoryName "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.CategoryID = c.CategoryID "
+                + "JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "WHERE p.ProductName LIKE ? "
+                + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, pv.Price, c.CategoryName";
+
+        try (
+            PreparedStatement ps = connect.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("ProductID"));
+                p.setProductName(rs.getString("ProductName"));
+                p.setThumbnailURL(rs.getString("ThumbnailURL"));
+                p.setPrice(rs.getDouble("Price")); 
+                p.setCategoryName(rs.getString("CategoryName")); 
+
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
         int testProductId = 12; // ← ID sản phẩm có thật trong database của bạn
