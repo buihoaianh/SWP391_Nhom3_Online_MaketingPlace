@@ -65,9 +65,9 @@
                 </a>
 
                 <!-- Search -->
-                <form class="search-form desktop-search-form">
+                <form class="search-form desktop-search-form" method="get" action="Search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" name="query" class="form-control" placeholder="Search for products">
                         <button class="btn" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
