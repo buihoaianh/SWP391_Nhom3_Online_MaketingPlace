@@ -82,79 +82,79 @@
 
             <!-- Main Header -->
             <div class="main-header">
-                <div class="container-fluid container-xl">
-                    <div class="d-flex py-3 align-items-center justify-content-between">
+            <div class="container-fluid container-xl">
+            <div class="d-flex py-3 align-items-center justify-content-between">
 
-                        <!-- Logo -->
-                        <a href="index.html" class="logo d-flex align-items-center">
-                            <!-- Uncomment the line below if you also wish to use an image logo -->
-                            <!-- <img src="${pageContext.request.contextPath}/assets/img/logo.webp" alt=""> -->
-                            <h1 class="sitename">eStore</h1>
-                        </a>
+            <!-- Logo -->
+            <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="${pageContext.request.contextPath}/assets/img/logo.webp" alt=""> -->
+            <h1 class="sitename">eStore</h1>
+            </a>
 
-                        <!-- Search -->
-                        <form class="search-form desktop-search-form">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search for products">
-                                <button class="btn" type="submit">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </div>
-                        </form>
+            <!-- Search -->
+            <form class="search-form desktop-search-form">
+            <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for products">
+            <button class="btn" type="submit">
+            <i class="bi bi-search"></i>
+            </button>
+            </div>
+            </form>
 
-                        <!-- Actions -->
-                        <div class="header-actions d-flex align-items-center justify-content-end">
+            <!-- Actions -->
+            <div class="header-actions d-flex align-items-center justify-content-end">
 
-                            <!-- Mobile Search Toggle -->
-                            <button class="header-action-btn mobile-search-toggle d-xl-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-expanded="false" aria-controls="mobileSearch">
-                                <i class="bi bi-search"></i>
-                            </button>
+            <!-- Mobile Search Toggle -->
+            <button class="header-action-btn mobile-search-toggle d-xl-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-expanded="false" aria-controls="mobileSearch">
+            <i class="bi bi-search"></i>
+            </button>
 
-                            <!-- Account -->
-                            <div class="dropdown account-dropdown">
-                                <button class="header-action-btn" data-bs-toggle="dropdown">
-                                    <i class="bi bi-person"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <div class="dropdown-header">
-                                        <h6>Welcome to <span class="sitename">eStore</span></h6>
-                                        <p class="mb-0">Access account &amp; manage orders</p>
-                                    </div>
-                                    <div class="dropdown-body">
-                                        <a class="dropdown-item d-flex align-items-center" href="jsp/Profile.jsp">
-                                            <i class="bi bi-person-circle me-2"></i>
-                                            <span>My Profile</span>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                            <i class="bi bi-bag-check me-2"></i>
-                                            <span>My Orders</span>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                            <i class="bi bi-heart me-2"></i>
-                                            <span>My Wishlist</span>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                            <i class="bi bi-gear me-2"></i>
-                                            <span>Settings</span>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-footer">
-                                        <%
-                                            // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
-                                            if (session.getAttribute("user") != null) {
-                                                // Đã login -> hiển thị nút Logout
-                                        %>
-                                        <a href="<%= request.getContextPath()%>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
-                                        <%
-                                        } else {
-                                            // Chưa login -> hiển thị Sign In/Register
-                                        %>
-                                        <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                        <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
-                                        <% }%>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- Account -->
+            <div class="dropdown account-dropdown">
+            <button class="header-action-btn" data-bs-toggle="dropdown">
+            <i class="bi bi-person"></i>
+            </button>
+            <div class="dropdown-menu">
+            <div class="dropdown-header">
+            <h6>Welcome to <span class="sitename">eStore</span></h6>
+            <p class="mb-0">Access account &amp; manage orders</p>
+            </div>
+            <div class="dropdown-body">
+            <a class="dropdown-item d-flex align-items-center" href="jsp/Profile.jsp">
+            <i class="bi bi-person-circle me-2"></i>
+            <span>My Profile</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="account.html">
+            <i class="bi bi-bag-check me-2"></i>
+            <span>My Orders</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="account.html">
+            <i class="bi bi-heart me-2"></i>
+            <span>My Wishlist</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="account.html">
+            <i class="bi bi-gear me-2"></i>
+            <span>Settings</span>
+            </a>
+            </div>
+            <div class="dropdown-footer">
+            <%
+                // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
+                if (session.getAttribute("user") != null) {
+                    // Đã login -> hiển thị nút Logout
+            %>
+            <a href="<%= request.getContextPath()%>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
+            <%
+            } else {
+                // Chưa login -> hiển thị Sign In/Register
+            %>
+            <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
+            <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
+            <% }%>
+            </div>
+            </div>
+            </div>
 
             .product-card:hover {
                 transform: translateY(-5px);
@@ -503,163 +503,51 @@
 
                 <!-- Section Title -->
                 <div class="container section-title" data-aos="fade-up">
-                    <h2>Best Sellers</h2>
-                    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+                    <h2>New Arrivals</h2>
+                    
                 </div><!-- End Section Title -->
 
                 <div class="container" data-aos="fade-up" data-aos-delay="100">
 
                     <div class="row gy-4">
+                        <c:forEach items="${newarrivals}" var="i">
+                            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="${i.thumbnailURL} class="img-fluid default-image" alt="Product" loading="lazy">
+                                  
+                                        <div class="product-tags">
+                                            <span class="badge bg-accent">New</span>
+                                        </div>
+                             
+
+                                    </div>
+                                    <div class="product-info">
+                                        <h3 class="product-title"><a href="DetailProduct?pid=${i.productId}">${i.productName}</a></h3>
+                                        <div class="product-price">
+                                            <span class="current-price">$${i.price}</span>
+                                        </div>
+                                        <div class="product-rating">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-half"></i>
+                                            <span class="rating-count">(42)</span>
+                                        </div>
+                                        <button class="btn btn-add-to-cart">
+                                            <i class="bi bi-bag-plus me-2"></i>Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div><!-- End Product 1 -->
+                        </c:forEach>
                         <!-- Product 1 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-1.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-1-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-accent">New</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
 
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="">Lorem ipsum dolor sit amet</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$89.99</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-half"></i>
-                                        <span class="rating-count">(42)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 1 -->
 
-                        <!-- Product 2 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-4-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-sale">Sale</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="productDetail?pid=">Consectetur adipiscing elit</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$64.99</span>
-                                        <span class="original-price">$79.99</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <span class="rating-count">(28)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 2 -->
+ 
 
-                        <!-- Product 3 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-7.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-7-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="product-details.html">Sed do eiusmod tempor incididunt</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$119.00</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <span class="rating-count">(56)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 3 -->
-
-                        <!-- Product 4 -->
-                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-12.webp" class="img-fluid default-image" alt="Product" loading="lazy">
-                                    <img src="${pageContext.request.contextPath}/assets/img/product/product-12-variant.webp" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                                    <div class="product-tags">
-                                        <span class="badge bg-sold-out">Sold Out</span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                                            <i class="bi bi-heart"></i>
-                                        </button>
-                                        <button class="btn-quickview" type="button" aria-label="Quick view">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="product-info">
-                                    <h3 class="product-title"><a href="product-details.html">Ut labore et dolore magna aliqua</a></h3>
-                                    <div class="product-price">
-                                        <span class="current-price">$75.50</span>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i>
-                                        <span class="rating-count">(15)</span>
-                                    </div>
-                                    <button class="btn btn-add-to-cart btn-disabled" disabled="">
-                                        <i class="bi bi-bag-plus me-2"></i>Sold Out
-                                    </button>
-                                </div>
-                            </div>
-                        </div><!-- End Product 4 -->
+                       
                     </div>
 
                 </div>
