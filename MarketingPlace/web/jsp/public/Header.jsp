@@ -58,7 +58,7 @@
             <div class="d-flex py-3 align-items-center justify-content-between">
 
                 <!-- Logo -->
-                <a href="index.html" class="logo d-flex align-items-center">
+                <a href="Home" class="logo d-flex align-items-center">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
                     <!-- <img src="${pageContext.request.contextPath}/assets/img/logo.webp" alt=""> -->
                     <h1 class="sitename">eStore</h1>
@@ -92,6 +92,10 @@
                                 <h6>Welcome to <span class="sitename">eStore</span></h6>
                                 <p class="mb-0">Access account &amp; manage orders</p>
                             </div>
+
+                            <%
+                                if (session.getAttribute("user") != null) {
+                            %>
                             <div class="dropdown-body">
                                 <a class="dropdown-item d-flex align-items-center" href="jsp/Profile.jsp">
                                     <i class="bi bi-person-circle me-2"></i>
@@ -101,44 +105,42 @@
                                     <i class="bi bi-bag-check me-2"></i>
                                     <span>My Orders</span>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                    <i class="bi bi-heart me-2"></i>
-                                    <span>My Wishlist</span>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                    <i class="bi bi-gear me-2"></i>
-                                    <span>Settings</span>
-                                </a>
                             </div>
+                            <%
+                                }
+                            %>
+
                             <div class="dropdown-footer">
                                 <%
-                                    // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
                                     if (session.getAttribute("user") != null) {
-                                        // Đã login -> hiển thị nút Logout
                                 %>
                                 <a href="<%= request.getContextPath()%>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
                                 <%
-                                } else {
-                                    // Chưa login -> hiển thị Sign In/Register
+                                    } else {
                                 %>
                                 <a href="jsp/guest/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
                                 <a href="jsp/guest/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
-                                <% }%>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     </div>
 
                     <!-- Wishlist -->
-                    <a href="account.html" class="header-action-btn d-none d-md-block">
-                        <i class="bi bi-heart"></i>
-                        <span class="badge">0</span>
-                    </a>
+
 
                     <!-- Cart -->
+                    <%
+                       if (session.getAttribute("user") != null) {
+                    %>
                     <a href="cartList" class="header-action-btn">
                         <i class="bi bi-cart3"></i>
                         <span id="quantityCart" class="badge"><%=cart != null ? cart.size() : 0%></span>
                     </a>
+                    <%
+                        }
+                    %>
 
                     <!-- Mobile Navigation Toggle -->
                     <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
