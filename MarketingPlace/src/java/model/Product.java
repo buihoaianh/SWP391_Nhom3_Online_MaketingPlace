@@ -17,6 +17,7 @@ public class Product {
     private String description;
     private String status;
     private double price;
+    private String categoryName;
 
     // Mới thêm:
     private List<String> imageUrls;
@@ -108,6 +109,16 @@ public class Product {
     this.thumbnailURL = thumbnailURL;
     this.price = price;
 }
+
+    public Product(int productId, String productName, String thumbnailURL, double price, String categoryName) {
+        this.productId = productId;
+        this.productName = productName;
+        this.thumbnailURL = thumbnailURL;
+        this.price = price;
+        this.categoryName = categoryName;
+    }
+    
+    
 
     public int getProductId() {
         return productId;
@@ -228,4 +239,14 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+    
+    
 }

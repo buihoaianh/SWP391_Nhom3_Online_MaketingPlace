@@ -27,7 +27,7 @@ public class LoginAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/user/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/guest/login.jsp").forward(request, response);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class LoginAccount extends HttpServlet {
 
         if (!emailExist || null == user) {
             request.setAttribute("mess", "Sai email!");
-            request.getRequestDispatcher("jsp/admin/loginRegister.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/guest/loginRegister.jsp").forward(request, response);
             return;
         }
 
@@ -61,7 +61,7 @@ public class LoginAccount extends HttpServlet {
 
         if (!isPasswordMatch) {
             request.setAttribute("mess", "Sai mật khẩu!");
-            request.getRequestDispatcher("jsp/admin/loginRegister.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/guest/loginRegister.jsp").forward(request, response);
             return;
         }
         HttpSession session = request.getSession();

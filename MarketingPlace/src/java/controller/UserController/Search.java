@@ -2,11 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package controller.UserController;
 
-import dao.SellerDao;
-import dao.SellerRequestDAO;
-import dao.UserDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,18 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import model.Account;
-import model.SellerRequest;
+import java.util.ArrayList;
+import model.Product;
 
 /**
  *
- * @author Admin
+ * @author tulok
  */
-@WebServlet(name = "RequestDetailController", urlPatterns = {"/admin/request-detail"})
-public class RequestDetailController extends HttpServlet {
+@WebServlet(name = "Search", urlPatterns = {"/Search"})
+public class Search extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,43 +31,7 @@ public class RequestDetailController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
     
-    try {
-        String idParam = request.getParameter("id");
-        int reqId = Integer.parseInt(idParam);
-
-        SellerRequestDAO requestDAO = new SellerRequestDAO();
-        SellerRequest r = requestDAO.getRequestById(reqId);
-
-        if (r == null) {
-            // requestId không tồn tại, báo lỗi luôn
-            request.setAttribute("error", "Yêu cầu không tồn tại");
-            request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp").forward(request, response);
-            return;
-        }
-
-        UserDAO dao = new UserDAO();
-        Account user = dao.getUserById(r.getAccountId());
-
-        request.setAttribute("u", user);  // thông tin người bán
-        request.setAttribute("r", r);     // thông tin trạng thái yêu cầu
-        
-        if (r == null || user == null) {
-            request.setAttribute("error", "Dữ liệu không tồn tại.");
-            request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp").forward(request, response);
-            return;
-        }
-
-        request.getRequestDispatcher("/jsp/admin/RequestDetail.jsp").forward(request, response);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -85,7 +44,15 @@ public class RequestDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String keyword = request.getParameter("query");
+
+        ProductDAO productDAO = new ProductDAO();
+        ArrayList<Product> results = productDAO.searchProducts(keyword);
+
+        request.setAttribute("query", keyword);
+        request.setAttribute("results", results);
+        request.setAttribute("resultCount", results.size());
+        request.getRequestDispatcher("jsp/public/Search.jsp").forward(request, response);
     }
 
     /**
@@ -99,7 +66,7 @@ public class RequestDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("jsp/public/Search.jsp").forward(request, response);
     }
 
     /**

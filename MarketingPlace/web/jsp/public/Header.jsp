@@ -58,16 +58,16 @@
             <div class="d-flex py-3 align-items-center justify-content-between">
 
                 <!-- Logo -->
-                <a href="index.html" class="logo d-flex align-items-center">
+                <a href="Home" class="logo d-flex align-items-center">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
                     <!-- <img src="${pageContext.request.contextPath}/assets/img/logo.webp" alt=""> -->
                     <h1 class="sitename">eStore</h1>
                 </a>
 
                 <!-- Search -->
-                <form class="search-form desktop-search-form">
+                <form class="search-form desktop-search-form" method="get" action="Search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" name="query" class="form-control" placeholder="Search for products">
                         <button class="btn" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
@@ -92,6 +92,10 @@
                                 <h6>Welcome to <span class="sitename">eStore</span></h6>
                                 <p class="mb-0">Access account &amp; manage orders</p>
                             </div>
+
+                            <%
+                                if (session.getAttribute("user") != null) {
+                            %>
                             <div class="dropdown-body">
                                 <a class="dropdown-item d-flex align-items-center" href="jsp/Profile.jsp">
                                     <i class="bi bi-person-circle me-2"></i>
@@ -101,44 +105,42 @@
                                     <i class="bi bi-bag-check me-2"></i>
                                     <span>My Orders</span>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                    <i class="bi bi-heart me-2"></i>
-                                    <span>My Wishlist</span>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="account.html">
-                                    <i class="bi bi-gear me-2"></i>
-                                    <span>Settings</span>
-                                </a>
                             </div>
+                            <%
+                                }
+                            %>
+
                             <div class="dropdown-footer">
                                 <%
-                                    // Kiểm tra session user (ví dụ: attribute "user" được lưu khi login thành công)
                                     if (session.getAttribute("user") != null) {
-                                        // Đã login -> hiển thị nút Logout
                                 %>
                                 <a href="<%= request.getContextPath()%>/LogoutAccount" class="btn btn-primary w-100 mb-2">Logout</a>
                                 <%
-                                } else {
-                                    // Chưa login -> hiển thị Sign In/Register
+                                    } else {
                                 %>
-                                <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
-                                <% }%>
+                                <a href="jsp/guest/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
+                                <a href="jsp/guest/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     </div>
 
                     <!-- Wishlist -->
-                    <a href="account.html" class="header-action-btn d-none d-md-block">
-                        <i class="bi bi-heart"></i>
-                        <span class="badge">0</span>
-                    </a>
+
 
                     <!-- Cart -->
+                    <%
+                       if (session.getAttribute("user") != null) {
+                    %>
                     <a href="cartList" class="header-action-btn">
                         <i class="bi bi-cart3"></i>
                         <span id="quantityCart" class="badge"><%=cart != null ? cart.size() : 0%></span>
                     </a>
+                    <%
+                        }
+                    %>
 
                     <!-- Mobile Navigation Toggle -->
                     <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
@@ -156,127 +158,6 @@
                     <ul>
                         <li><a href="Home" class="active">Home</a></li>
                         <li><a href="about.html">About</a></li>
-
-
-                        <!-- Products Mega Menu 1 -->
-                        <li class="products-megamenu-1"><a href="#"><span>Megamenu 1</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-
-                            <!-- Products Mega Menu 1 Mobile View -->
-                            <ul class="mobile-megamenu">
-
-                                <li><a href="#">Featured Products</a></li>
-                                <li><a href="#">New Arrivals</a></li>
-                                <li><a href="#">Sale Items</a></li>
-
-                                <li class="dropdown"><a href="#"><span>Clothing</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                    <ul>
-                                        <li><a href="#">Men's Wear</a></li>
-                                        <li><a href="#">Women's Wear</a></li>
-                                        <li><a href="#">Kids Collection</a></li>
-                                        <li><a href="#">Sportswear</a></li>
-                                        <li><a href="#">Accessories</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown"><a href="#"><span>Electronics</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                    <ul>
-                                        <li><a href="#">Smartphones</a></li>
-                                        <li><a href="#">Laptops</a></li>
-                                        <li><a href="#">Audio Devices</a></li>
-                                        <li><a href="#">Smart Home</a></li>
-                                        <li><a href="#">Accessories</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown"><a href="#"><span>Home &amp; Living</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                    <ul>
-                                        <li><a href="#">Furniture</a></li>
-                                        <li><a href="#">Decor</a></li>
-                                        <li><a href="#">Kitchen</a></li>
-                                        <li><a href="#">Bedding</a></li>
-                                        <li><a href="#">Lighting</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown"><a href="#"><span>Beauty</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                    <ul>
-                                        <li><a href="#">Skincare</a></li>
-                                        <li><a href="#">Makeup</a></li>
-                                        <li><a href="#">Haircare</a></li>
-                                        <li><a href="#">Fragrances</a></li>
-                                        <li><a href="#">Personal Care</a></li>
-                                    </ul>
-                                </li>
-
-                            </ul><!-- End Products Mega Menu 1 Mobile View -->
-
-                            <!-- Products Mega Menu 1 Desktop View -->
-                            <div class="desktop-megamenu">
-
-                                <div class="megamenu-tabs">
-                                    <ul class="nav nav-tabs" id="productMegaMenuTabs" role="tablist">
-
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new-content-1862" type="button" aria-selected="false" tabindex="-1" role="tab">New Arrivals</button>
-                                        </li>
-
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="category-tab" data-bs-toggle="tab" data-bs-target="#category-content-1862" type="button" aria-selected="false" tabindex="-1" role="tab">Categories</button>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <!-- Tabs Content -->
-                                <div class="megamenu-content tab-content">
-
-                                    <!-- Featured Tab -->
-
-
-                                    <!-- New Arrivals Tab -->
-                                    <div class="tab-pane fade" id="new-content-1862" role="tabpanel" aria-labelledby="new-tab">
-                                        <div class="product-grid">
-                                            <c:forEach items="${newarrivals}" var="a">
-                                            <div class="product-card">
-                                                <div class="product-image">
-                                                    <img src="${a.thumbnailURL}" alt="New Arrival" loading="lazy">
-                                                    <span class="badge-new">New</span>
-                                                </div>
-                                                <div class="product-info">
-                                                    <h5>${a.productName}</h5>
-                                                    <p class="price">${a.price}</p>
-                                                    <a href="DetailProduct?pid=${a.productId}" class="btn-view">View Product</a>
-                                                </div>
-                                            </div>
-                                            </c:forEach>
-                                            </div>
-                                        </div>
-                                
-
-
-
-                                    <!-- Categories Tab -->
-                                    <div class="tab-pane fade" id="category-content-1862" role="tabpanel" aria-labelledby="category-tab">
-                                        <div class="category-grid">
-                                            <c:forEach items="${categories}" var="c">
-                                                <div class="category-column">
-                                                    <h4>${c.categoryName}</h4>
-                                                    <ul>
-                                                        <li><a href="#">Men's Wear</a></li>
-                                                        <li><a href="#">Women's Wear</a></li>
-                                                        <li><a href="#">Kids Collection</a></li>
-                                                        <li><a href="#">Sportswear</a></li>
-                                                        <li><a href="#">Accessories</a></li>
-                                                    </ul>
-                                                </div>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div><!-- End Products Mega Menu 1 Desktop View -->
-
-                        </li><!-- End Products Mega Menu 1 -->
                         <li><a href="Contact">Contact</a></li>
 
                     </ul>

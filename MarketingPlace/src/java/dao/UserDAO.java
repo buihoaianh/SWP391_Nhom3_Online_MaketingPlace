@@ -37,7 +37,6 @@ public class UserDAO extends ConnectDB {
         }
         return rs;
     }
-    
 
     public ResultSet getListProductOfCustomer(int customerId) {
         ResultSet rs = null;
@@ -54,7 +53,6 @@ public class UserDAO extends ConnectDB {
         }
         return rs;
     }
-
 
     public Account checkEmailExists(String email) {
         String sql = "SELECT * FROM Account WHERE Email = ?";
@@ -195,8 +193,6 @@ public class UserDAO extends ConnectDB {
         }
 
     }
-    
-    
 
     public Account getUserById(int id) {
         String sql = "SELECT * FROM Account WHERE AccountID = ?";
@@ -295,11 +291,17 @@ public class UserDAO extends ConnectDB {
         return stats;
     }
 
-    public List<Account> getRandomTopCustomers(int limit) {
+    public List<Account> getTopCustomersBySeller(int sellerId, int limit) {
         List<Account> list = new ArrayList<>();
-        String sql = "SELECT TOP (?) * FROM Account WHERE RoleID = 3 ORDER BY NEWID()";
+        String sql = "SELECT TOP (?) a.AccountID, a.FullName, a.Email, a.ImageURL, COUNT(o.OrderID) AS TotalOrders "
+                + "FROM [Order] o "
+                + "JOIN Account a ON o.CustomerID = a.AccountID "
+                + "WHERE o.SellerID = ? "
+                + "GROUP BY a.AccountID, a.FullName, a.Email, a.ImageURL "
+                + "ORDER BY COUNT(o.OrderID) DESC";
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
             ps.setInt(1, limit);
+            ps.setInt(2, sellerId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Account acc = new Account();
@@ -340,7 +342,7 @@ public class UserDAO extends ConnectDB {
         }
         return null;
     }
-    
+
     public boolean updateAccount(Account account) {
         String sql = "UPDATE Account SET FullName=?, Email=?, PhoneNumber=?, Address=?, ImageURL=?, Description=?, CreateDate=? WHERE AccountID=?";
         try (PreparedStatement stmt = connect.prepareStatement(sql)) {
@@ -358,6 +360,5 @@ public class UserDAO extends ConnectDB {
         }
         return false;
     }
-    
 
 }

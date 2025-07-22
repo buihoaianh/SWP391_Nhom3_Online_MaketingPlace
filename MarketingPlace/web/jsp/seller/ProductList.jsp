@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Dashboard
-    Created on : May 27, 2025, 9:25:13 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -55,9 +50,24 @@
 
             <div class="content">
                 <h1>List Product1</h1>
-                <div style="float: right; margin-bottom: 10px">
-                    <a href="admin/create-product" class="btn btn-success" style="height: 40px">Create Product</a>
+                <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <!-- Form tìm kiếm -->
+                    <form action="seller/products" method="post" style="display: flex; align-items: center;">
+                        <label for="category" style="margin-right: 5px;">Search:</label>
+                        <input type="text" name="category" id="category" value="${param.category}" placeholder="Tìm danh mục..." style="height: 36px; padding: 0 10px;"/>
+                        <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 5px;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <!-- Nút Clear (icon backspace) -->
+                        <a href="seller/products" class="btn btn-warning btn-sm" style="margin-left: 5px;" title="Clear">
+                            <i class="fas fa-backspace"></i>
+                        </a>
+                    </form>
+
+                    <!-- Nút tạo sản phẩm -->
+                    <a href="seller/create-product" class="btn btn-success" style="height: 40px;">Create Product</a>
                 </div>
+
                 <table border="1">
                     <thead>
                         <tr>
@@ -68,6 +78,7 @@
                             <th>Description</th>
                             <th>Status</th>
                             <th>Action</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,14 +86,24 @@
                         <c:forEach items="${products}" var="po">
                             <tr>
                                 <td>${po.productId}</td>
-                                <td>${po.category.CategoryName}</td>
+                                <td>${po.category.categoryName}</td>
                                 <td>${po.productName}</td>
                                 <td><img src="${po.thumbnailURL}" width="50px" alt="alt"/></td>
                                 <td>${po.description}</td> 
                                 <td>${po.status}</td>
-                                <td><a href="admin/edit-product?id=${po.productId}" class="btn btn-primary">
+                                <td><a href="seller/edit-product?id=${po.productId}" class="btn btn-primary">
                                         <i class="fa fa-edit"></i>
                                     </a></td>
+                                <td>
+                                <form action="seller/delete-product" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="${po.productId}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirm to delete product!')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                                </td>
+
+                                    
                             </tr>
                         </c:forEach>
 

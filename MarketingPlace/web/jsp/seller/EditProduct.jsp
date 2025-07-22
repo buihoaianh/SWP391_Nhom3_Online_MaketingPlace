@@ -1,14 +1,4 @@
-<%-- 
-    Document   : CreateProduct
-    Created on : Jun 19, 2025, 10:00:23 PM
-    Author     : Admin
---%>
 
-<%-- 
-    Document   : Dashboard
-    Created on : May 27, 2025, 9:25:13 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -65,12 +55,12 @@
                     <div class="row g-4">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-light rounded h-100 p-4">
-                                <form class="row g-3 needs-validation" action="admin/edit-product" method="post" enctype="multipart/form-data">
+                                <form class="row g-3 needs-validation" action="seller/edit-product" method="post" enctype="multipart/form-data">
                                     <!-- Product Name -->
                                     <div class="col-md-6">
                                         <label for="productName" class="form-label">Product Name</label>
                                         <input type="hidden" class="form-control" id="productID" name="productID" value="${p.productId}">
-                                        <input type="hidden" class="form-control" id="oldImage" name="oldImage" value="${p.imageUrl}">
+                                        <input type="hidden" class="form-control" id="oldImage" name="oldImage" value="${p.thumbnailURL}">
                                         <input type="text" class="form-control" id="productName" name="productName" required value="${p.productName}">
                                     </div>
                                     <!-- Category -->
@@ -78,8 +68,8 @@
                                         <label for="categoryID" class="form-label">Category</label>
                                         <select class="form-select" id="categoryID" name="categoryID" required>
                                             <option selected disabled value="">Choose a Category...</option>
-                                            <c:forEach items="${categories}" var="s">
-                                                <option value="${s.categoryId}" ${p.categoryId eq s.categoryId ? 'selected' : '' }>${s.categoryName}</option>
+                                            <c:forEach items="${categories}" var="ca">
+                                                <option value="${ca.categoryId}" ${p.categoryID eq ca.categoryId ? 'selected' : '' }>${ca.categoryName}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

@@ -1,99 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.SellerController;
 
+import dao.OrderDAO;
+import dao.ProductDAO;
 import dao.UserDAO;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import jakarta.servlet.http.*;
+import java.io.IOException;
+import java.util.*;
 import model.Account;
 
-/**
- *
- * @author Admin
- */
 @WebServlet(name = "SellerDashboard", urlPatterns = {"/seller/seller-dashboard"})
 public class SellerDashboard extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("/jsp/seller/SellerDashboard.jsp").forward(request, response);
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO dao = new UserDAO();
 
-        // B1: Khởi tạo danh sách 12 tháng với giá trị mặc định là 0
-        Map<String, Integer> stats = new java.util.LinkedHashMap<>();
+        // Lấy seller đang đăng nhập từ session
+        HttpSession session = request.getSession();
+        Account seller = (Account) session.getAttribute("user");
+        if (seller == null || seller.getRoleID() != 2) {
+            response.sendRedirect(request.getContextPath() + "/jsp/admin/loginRegister.jsp?tab=login");
+            return;
+        }
+
+        int sellerId = seller.getAccountID();
+
+        OrderDAO orderDAO = new OrderDAO();
+
+        // 1. Lấy doanh thu theo tháng
+        Map<String, Double> stats = new LinkedHashMap<>();
         for (int i = 1; i <= 12; i++) {
-            String month = String.format("2025-%02d", i); // format: yyyy-MM
-            stats.put(month, 0);
+            String month = String.format("2025-%02d", i);
+            stats.put(month, 0.0);
+        }
+        Map<String, Double> dbStats = orderDAO.getRevenueByMonth(sellerId);
+        for (Map.Entry<String, Double> entry : dbStats.entrySet()) {
+            stats.put(entry.getKey(), entry.getValue());
         }
 
-        // B2: Gộp dữ liệu từ DB vào map đã khởi tạo
-        Map<String, Integer> dbStats = dao.getCustomerAccountStatsByMonth(); // đã lấy dữ liệu thật
-        for (Map.Entry<String, Integer> entry : dbStats.entrySet()) {
-            stats.put(entry.getKey(), entry.getValue()); // cập nhật lại giá trị nếu có
-        }
+        // 2. Lấy thống kê đơn "Thành công" và "Đã hủy"
+        Map<String, Integer> orderStatusStats = orderDAO.getOrderStatusStatsBySeller(sellerId);
 
-        List<Account> topCustomers = dao.getRandomTopCustomers(3);
-        request.setAttribute("topCustomers", topCustomers);
+        // 3. Top 3 khách hàng ngẫu nhiên
+        UserDAO dao = new UserDAO();
+        List<Account> topCustomers = dao.getTopCustomersBySeller(sellerId, 3);
+        double totalRevenue = orderDAO.getTotalRevenueBySeller(sellerId);
+        request.setAttribute("totalRevenue", totalRevenue);
+        int totalOrders = orderDAO.getTotalOrderBySeller(sellerId);
+        request.setAttribute("totalOrders", totalOrders);
+        ProductDAO productDAO = new ProductDAO();
+        int totalProducts = productDAO.getTotalProductsBySeller(sellerId);
+        request.setAttribute("totalProducts", totalProducts);
 
-        // B3: Gửi đến JSP
+        // Gửi tới JSP
         request.setAttribute("stats", stats);
+        request.setAttribute("orderStatusStats", orderStatusStats);
+        request.setAttribute("topCustomers", topCustomers);
         request.getRequestDispatcher("/jsp/seller/SellerDashboard.jsp").forward(request, response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
