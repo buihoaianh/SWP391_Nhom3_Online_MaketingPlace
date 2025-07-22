@@ -121,8 +121,8 @@
                                 } else {
                                     // Chưa login -> hiển thị Sign In/Register
                                 %>
-                                <a href="jsp/admin/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                <a href="jsp/admin/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
+                                <a href="jsp/guest/loginRegister.jsp?tab=login" class="btn btn-primary w-100 mb-2">Sign In</a>
+                                <a href="jsp/guest/loginRegister.jsp?tab=register" class="btn btn-outline-primary w-100">Register</a>
                                 <% }%>
                             </div>
                         </div>

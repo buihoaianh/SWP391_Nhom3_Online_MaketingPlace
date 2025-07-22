@@ -24,7 +24,7 @@ public class MyOrderServlet extends HttpServlet {
 
             Account acc = (Account) session.getAttribute("user");
             int customerId = acc.getAccountID();
-
+            
             OrderDAO dao = new OrderDAO();
             List<Order> orders = dao.getOrdersByCustomerId(customerId);
 
