@@ -60,6 +60,12 @@
                 </li>
                 
                 <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/seller/list-voucher" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>List Voucher</span>
+                    </a>
+                </li>
+                <li class="sidebar-item active ">
                     <a href="${pageContext.request.contextPath}/seller/seller-profile" class='sidebar-link'>
                         <i class="iconly-boldShow"></i>
                         <span>View Profile</span>
