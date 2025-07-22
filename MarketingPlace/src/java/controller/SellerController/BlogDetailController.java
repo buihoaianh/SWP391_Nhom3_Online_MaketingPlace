@@ -8,6 +8,7 @@ import dao.BlogCategoryDAO;
 import dao.BlogDAO;
 import dao.CategoriesDAO;
 import dao.TagDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,11 +22,16 @@ import model.Categories;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.ArrayList;
+import model.Account;
 import model.Blog;
 import model.BlogCategory;
 import model.BlogTag;
+import org.apache.catalina.User;
 
-
+/**
+ *
+ * @author Admin
+ */
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1MB
         maxFileSize = 1024 * 1024 * 5, // 5MB
@@ -49,6 +55,7 @@ public class BlogDetailController extends HttpServlet {
         BlogDAO dao = new BlogDAO();
         TagDAO tagDao = new TagDAO();
         BlogCategoryDAO blogCategoryDAO = new BlogCategoryDAO();
+        UserDAO userDAO = new UserDAO();
         String service = request.getParameter("service");
         if (service == null) {
             service = "listBlogs";
@@ -61,6 +68,8 @@ public class BlogDetailController extends HttpServlet {
                 BlogCategory category = blogCategoryDAO.getCategoryById(blog.getCategoryID());
                 List<BlogTag> tags = tagDao.getTagsByBlogId(id);
                 List<BlogCategory> categorys = blogCategoryDAO.getAllCategories();
+                Account user = userDAO.getUserById(blog.getAuthorID());
+                request.setAttribute("user", user);
                 request.setAttribute("blog", blog);
                 request.setAttribute("category", category);
                 request.setAttribute("tags", tags);

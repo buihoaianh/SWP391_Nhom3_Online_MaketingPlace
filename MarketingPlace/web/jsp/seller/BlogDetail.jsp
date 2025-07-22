@@ -311,166 +311,110 @@
 
             <div id="main">
                 <div class="container">
-                    <div class="row clearfix">
-                        <div class="col-lg-8 col-md-12 left-box">
-                            <div class="card single_post">
-                                <div class="body">
-                                    <h3><a href="BlogDetailURL?service=blogDetail&id=${blog.blogID}">Ttile: ${blog.title}</a></h3>
-                                    <p>Author: ${blog.authorID}</p>
-                                    <p>Create date ${blog.createdAt}</p>
-                                </div>                        
-                            </div>
-                            <div class="card single_post">
-                                <div class="body">
-                                    <div class="img-post">
-                                        <img class="d-block img-fluid" src="${blog.thumbnailURL}" alt="First slide">
-                                    </div>
-<!--                                    <h3><a href="blog-details.html">${blog.title}</a></h3>-->
-                                    <p> ${blog.content}</p>
-                                </div>                        
-                            </div>
-                            <!--                            <div class="card">
-                                                            <div class="header">
-                                                                <h2>Comments 3</h2>
-                                                            </div>
-                                                            <div class="body">
-                                                                <ul class="comment-reply list-unstyled">
-                                                                    <li class="row clearfix">
-                                                                        <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Awesome Image"></div>
-                                                                        <div class="text-box col-md-10 col-8 p-l-0 p-r0">
-                                                                            <h5 class="m-b-0">Gigi Hadid </h5>
-                                                                            <p>Why are there so many tutorials on how to decouple WordPress? how fast and easy it is to get it running (and keep it running!) and its massive ecosystem. </p>
-                                                                            <ul class="list-inline">
-                                                                                <li><a href="javascript:void(0);">Mar 09 2018</a></li>
-                                                                                <li><a href="javascript:void(0);">Reply</a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li class="row clearfix">
-                                                                        <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Awesome Image"></div>
-                                                                        <div class="text-box col-md-10 col-8 p-l-0 p-r0">
-                                                                            <h5 class="m-b-0">Christian Louboutin</h5>
-                                                                            <p>Great tutorial but few issues with it? If i try open post i get following errors. Please can you help me?</p>
-                                                                            <ul class="list-inline">
-                                                                                <li><a href="javascript:void(0);">Mar 12 2018</a></li>
-                                                                                <li><a href="javascript:void(0);">Reply</a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </li>
-                                                                    <li class="row clearfix">
-                                                                        <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Awesome Image"></div>
-                                                                        <div class="text-box col-md-10 col-8 p-l-0 p-r0">
-                                                                            <h5 class="m-b-0">Kendall Jenner</h5>
-                                                                            <p>Very nice and informative article. In all the years I've done small and side-projects as a freelancer, I've ran into a few problems here and there.</p>
-                                                                            <ul class="list-inline">
-                                                                                <li><a href="javascript:void(0);">Mar 20 2018</a></li>
-                                                                                <li><a href="javascript:void(0);">Reply</a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>                                        
-                                                            </div>
-                                                        </div>-->
-                            <!--                            <div class="card">
-                                                            <div class="header">
-                                                                <h2>Leave a reply <small>Your email address will not be published. Required fields are marked*</small></h2>
-                                                            </div>
-                                                            <div class="body">
-                                                                <div class="comment-form">
-                                                                    <form class="row clearfix">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control" placeholder="Your Name">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control" placeholder="Email Address">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-12">
-                                                                            <div class="form-group">
-                                                                                <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
-                                                                            </div>
-                                                                            <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
-                                                                        </div>                                
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>-->
-                        </div>
-                        <div class="col-lg-4 col-md-12 right-box">
-                            <div class="card">
-                                <div class="body search">
-                                    <div class="input-group m-b-0">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Search...">                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <!--                            <div class="card">
-                                                            <div class="header">
-                                                                <h2>Categories Clouds</h2>
-                                                            </div>
-                                                            <div class="body widget">
-                                                                <ul class="list-unstyled categories-clouds m-b-0">
-                                                                    <li><a href="javascript:void(0);">eCommerce</a></li>
-                                                                    <li><a href="javascript:void(0);">Microsoft Technologies</a></li>
-                                                                    <li><a href="javascript:void(0);">Creative UX</a></li>
-                                                                    <li><a href="javascript:void(0);">Wordpress</a></li>
-                                                                    <li><a href="javascript:void(0);">Angular JS</a></li>
-                                                                    <li><a href="javascript:void(0);">Enterprise Mobility</a></li>
-                                                                    <li><a href="javascript:void(0);">Website Design</a></li>
-                                                                    <li><a href="javascript:void(0);">HTML5</a></li>
-                                                                    <li><a href="javascript:void(0);">Infographics</a></li>
-                                                                    <li><a href="javascript:void(0);">Wordpress Development</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>-->
-                            <div class="card">
-                                <div class="header">
-                                    <h2>Categories</h2>
-                                </div>
-                                <div class="body widget">
-                                    <ul class="list-unstyled categories-clouds m-b-0">
-                                        <c:forEach var="cat" items="${categorys}">
-                                            <li>
-                                                <a href="BlogDetailURL?service=listByCategory&id=${cat.categoryId}">
-                                                    ${cat.categoryName}
-                                                </a>    
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="rows">
 
-                            <div class="card">
-                                <div class="header">
-                                    <h2>Tags</h2>
+                        <!-- Blog Image + Content -->
+                        <div class="card single_post mb-4">
+                            <div class="card single_post mb-4 p-4 shadow-sm border-0">
+                                <!-- Blog Title -->
+                                <h2 class="text-dark mb-3">
+                                    <a href="BlogDetailURL?service=blogDetail&id=${blog.blogID}" class="text-decoration-none">
+                                        ${blog.title}
+                                    </a>
+                                </h2>
+
+                                <!-- Author & Date -->
+                                <div class="d-flex justify-content-between text-muted mb-3">
+                                    <small><i class="fas fa-user me-1"></i><strong>Author:</strong> ${user.fullName}</small>
+                                    <small><i class="fas fa-calendar-alt me-1"></i><strong>Created:</strong> ${blog.createdAt}</small>
                                 </div>
-                                <div class="body widget">
-                                    <ul class="list-unstyled categories-clouds m-b-0">
-                                        <c:forEach var="tag" items="${tags}">
-                                            <li>
-                                                <span class="tag-label">${tag.tagName}</span>
-                                            </li>
+
+                                <!-- Categories -->
+                                <div class="mb-3">
+                                    <h6 class="text-uppercase text-secondary mb-2">Categories</h6>
+                                    <div>
+                                        <c:forEach var="cat" items="${categorys}">
+                                            <a href="BlogDetailURL?service=listByCategory&id=${cat.categoryId}" 
+                                               class="badge bg-primary text-white me-1 mb-1 text-decoration-none">
+                                                ${cat.categoryName}
+                                            </a>
                                         </c:forEach>
-                                    </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Tags -->
+                                <div class="mb-3">
+                                    <h6 class="text-uppercase text-secondary mb-2">Tags</h6>
+                                    <div>
+                                        <c:forEach var="tag" items="${tags}">
+                                            <span class="badge bg-secondary me-1 mb-1">${tag.tagName}</span>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <div class="img-post text-center mb-3">
+                                    <img class="img-fluid rounded shadow-sm" src="${blog.thumbnailURL}" alt="${blog.title}">
+                                </div>
+                                <div class="blog-content">
+                                    <p>${blog.content}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!--                            <div class="col-lg-4 col-md-12 right-box">
+                                                    <div class="card">
+                                                        <div class="body search">
+                                                            <div class="input-group m-b-0">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control" placeholder="Search...">                                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="header">
+                                                            <h2>Categories</h2>
+                                                        </div>
+                                                        <div class="body widget">
+                                                            <ul class="list-unstyled categories-clouds m-b-0">
+                    <c:forEach var="cat" items="${categorys}">
+                        <li>
+                            <a href="BlogDetailURL?service=listByCategory&id=${cat.categoryId}">
+                        ${cat.categoryName}
+                    </a>    
+                </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="header">
+                <h2>Tags</h2>
+            </div>
+            <div class="body widget">
+                <ul class="list-unstyled categories-clouds m-b-0">
+                    <c:forEach var="tag" items="${tags}">
+                        <li>
+                            <span class="tag-label">${tag.tagName}</span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </div>
+    </div>-->
                 </div>
             </div>
         </div>
 
-        <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
-        <script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
-    </body>
+    <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
+    <script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
+    <script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
+</body>
 
 </html>

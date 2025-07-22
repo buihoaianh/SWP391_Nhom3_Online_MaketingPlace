@@ -38,6 +38,15 @@
                     </a>
                 </li>
 
+                
+                 <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/BlogURL" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>List Blogs</span>
+                    </a>
+                </li>
+                
+
                 <li class="sidebar-item active ">
                     <a href="${pageContext.request.contextPath}/seller/list-customer" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
