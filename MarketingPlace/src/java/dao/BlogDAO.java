@@ -131,12 +131,50 @@ public class BlogDAO extends ConnectDB {
         return null;
     }
 
+//    public List<Blog> getBlogsByPage(int pageIndex, int pageSize) {
+//        List<Blog> list = new ArrayList<>();
+//        String sql = """
+//            SELECT * FROM Blogs ORDER BY CreatedAt DESC
+//            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+//        """;
+//        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+//            ps.setInt(1, (pageIndex - 1) * pageSize);
+//            ps.setInt(2, pageSize);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Blog b = new Blog(
+//                        rs.getInt("BlogID"),
+//                        rs.getInt("AuthorID"),
+//                        rs.getString("Title"),
+//                        rs.getString("Content"),
+//                        rs.getString("ThumbnailURL"),
+//                        rs.getInt("CategoryID"),
+//                        rs.getString("Status"),
+//                        rs.getTimestamp("CreatedAt").toLocalDateTime(),
+//                        rs.getTimestamp("UpdatedAt").toLocalDateTime(),
+//                        rs.getInt("ViewCount")
+//                );
+//                list.add(b);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
     public List<Blog> getBlogsByPage(int pageIndex, int pageSize) {
         List<Blog> list = new ArrayList<>();
+//        String sql = """
+//            SELECT * FROM Blogs ORDER BY CreatedAt DESC
+//            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+//        """;
         String sql = """
-            SELECT * FROM Blogs ORDER BY CreatedAt DESC
-            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
-        """;
+    SELECT b.*, c.CategoryName 
+    FROM Blogs b
+    JOIN Categories c ON b.CategoryID = c.CategoryID
+    ORDER BY b.CreatedAt DESC
+    OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+""";
+
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
             ps.setInt(1, (pageIndex - 1) * pageSize);
             ps.setInt(2, pageSize);
@@ -154,6 +192,7 @@ public class BlogDAO extends ConnectDB {
                         rs.getTimestamp("UpdatedAt").toLocalDateTime(),
                         rs.getInt("ViewCount")
                 );
+                b.setCategoryName(rs.getString("CategoryName")); // ? set tên category
                 list.add(b);
             }
         } catch (SQLException e) {

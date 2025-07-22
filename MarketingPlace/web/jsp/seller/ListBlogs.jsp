@@ -311,7 +311,7 @@
                                     <td><img src="${blog.thumbnailURL}" width="100"/></td>
                                     <td>${blog.blogID}</td>
                                     <td>${blog.title}</td>
-                                    <td>${blog.categoryID}</td>
+                                    <td>${blog.categoryName}</td>   
                                     <td>${blog.status}</td>
                                     <td>${blog.createdAt}</td>
                                     <td>
