@@ -740,6 +740,7 @@ public class ProductDAO extends ConnectDB {
                 + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, pv.Price, c.CategoryName";
 
         try (
+                
             PreparedStatement ps = connect.prepareStatement(sql)) {
 
             ps.setString(1, "%" + keyword + "%");
