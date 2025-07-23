@@ -46,7 +46,7 @@
             <!-- Spinner End -->
 
 
-            <%@ include file="../../components/sidebarAdmin.jsp" %>
+           
 
             <div class="content">
                 <h1>List Product1</h1>
@@ -88,7 +88,7 @@
                                 <td>${po.productId}</td>
                                 <td>${po.category.categoryName}</td>
                                 <td>${po.productName}</td>
-                                <td><img src="${po.thumbnailURL}" width="50px" alt="alt"/></td>
+                                <td><img src="${pageContext.request.contextPath}/${po.thumbnailURL}" width="50px" alt="alt"/></td>
                                 <td>${po.description}</td> 
                                 <td>${po.status}</td>
                                 <td><a href="seller/edit-product?id=${po.productId}" class="btn btn-primary">

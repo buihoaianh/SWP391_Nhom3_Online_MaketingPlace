@@ -5,6 +5,7 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -26,10 +27,54 @@ public class FeedbackDisplayItem {
     private String colorName;
     private String categoryName;
     private String customerName;
+    
+    private String feedbackText;
+    private List<String> feedbackImages; // vì 1 feedback có thể có nhiều ảnh
+    private Date feedbackDate;
+    private int rating;
+    private long totalPrice;
 
 
 
     public FeedbackDisplayItem() {
+    }
+    
+    public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName, String customerName, String feedbackText, List<String> feedbackImages, Date feedbackDate, int rating) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderDetailId = orderDetailId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.productVariantId = productVariantId;
+        this.productName = productName;
+        this.thumbnailUrl = thumbnailUrl;
+        this.sizeName = sizeName;
+        this.colorName = colorName;
+        this.categoryName = categoryName;
+        this.customerName = customerName;
+        this.feedbackText = feedbackText;
+        this.feedbackImages = feedbackImages;
+        this.feedbackDate = feedbackDate;
+        this.rating = rating;
+    }
+    public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName, String customerName, String feedbackText, List<String> feedbackImages, Date feedbackDate, int rating, long totalPrice) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderDetailId = orderDetailId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.productVariantId = productVariantId;
+        this.productName = productName;
+        this.thumbnailUrl = thumbnailUrl;
+        this.sizeName = sizeName;
+        this.colorName = colorName;
+        this.categoryName = categoryName;
+        this.customerName = customerName;
+        this.feedbackText = feedbackText;
+        this.feedbackImages = feedbackImages;
+        this.feedbackDate = feedbackDate;
+        this.rating = rating;
+        this.totalPrice = totalPrice;
     }
 
     public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName) {
@@ -59,6 +104,46 @@ public class FeedbackDisplayItem {
         this.colorName = colorName;
         this.categoryName = categoryName;
         this.customerName = customerName;
+    }
+
+    public String getFeedbackText() {
+        return feedbackText;
+    }
+
+    public void setFeedbackText(String feedbackText) {
+        this.feedbackText = feedbackText;
+    }
+
+    public List<String> getFeedbackImages() {
+        return feedbackImages;
+    }
+
+    public void setFeedbackImages(List<String> feedbackImages) {
+        this.feedbackImages = feedbackImages;
+    }
+
+    public Date getFeedbackDate() {
+        return feedbackDate;
+    }
+
+    public void setFeedbackDate(Date feedbackDate) {
+        this.feedbackDate = feedbackDate;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
     }
     
 

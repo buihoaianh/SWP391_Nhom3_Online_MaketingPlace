@@ -17,6 +17,7 @@ public class Order {
     private String provinceName, districtName, wardName;
     private String customerName;
     private int paymentMethodId;
+    private List<OrderDetail> details;
 
     public int getPaymentMethodId() {
         return paymentMethodId;
@@ -59,6 +60,14 @@ public class Order {
         this.orderStatusName = orderStatusName;
         this.totalAmount = totalAmount;
         this.paymentId = paymentId;
+    }
+
+    public List<OrderDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<OrderDetail> details) {
+        this.details = details;
     }
 
     public List<OrderItem> getItems() {
