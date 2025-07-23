@@ -10,22 +10,20 @@ package model;
  */
 public class Member {
     private int MemberID;
-    private int MemberPointID;
     private String MemberName;
-    private int MinPoint;
-    private int MaxPoint;
+    private String MinAmount;
+    private String MaxAmount;
     private String Description;
     private String ImageURL;
 
     public Member() {
     }
 
-    public Member(int MemberID, int MemberPointID, String MemberName, int MinPoint, int MaxPoint, String Description, String ImageURL) {
+    public Member(int MemberID, String MemberName, String MinAmount, String MaxAmount, String Description, String ImageURL) {
         this.MemberID = MemberID;
-        this.MemberPointID = MemberPointID;
         this.MemberName = MemberName;
-        this.MinPoint = MinPoint;
-        this.MaxPoint = MaxPoint;
+        this.MinAmount = MinAmount;
+        this.MaxAmount = MaxAmount;
         this.Description = Description;
         this.ImageURL = ImageURL;
     }
@@ -38,14 +36,6 @@ public class Member {
         this.MemberID = MemberID;
     }
 
-    public int getMemberPointID() {
-        return MemberPointID;
-    }
-
-    public void setMemberPointID(int MemberPointID) {
-        this.MemberPointID = MemberPointID;
-    }
-
     public String getMemberName() {
         return MemberName;
     }
@@ -54,20 +44,20 @@ public class Member {
         this.MemberName = MemberName;
     }
 
-    public int getMinPoint() {
-        return MinPoint;
+    public String getMinAmount() {
+        return MinAmount;
     }
 
-    public void setMinPoint(int MinPoint) {
-        this.MinPoint = MinPoint;
+    public void setMinAmount(String MinAmount) {
+        this.MinAmount = MinAmount;
     }
 
-    public int getMaxPoint() {
-        return MaxPoint;
+    public String getMaxAmount() {
+        return MaxAmount;
     }
 
-    public void setMaxPoint(int MaxPoint) {
-        this.MaxPoint = MaxPoint;
+    public void setMaxAmount(String MaxAmount) {
+        this.MaxAmount = MaxAmount;
     }
 
     public String getDescription() {
@@ -88,8 +78,9 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Member{" + "MemberID=" + MemberID + ", MemberPointID=" + MemberPointID + ", MemberName=" + MemberName + ", MinPoint=" + MinPoint + ", MaxPoint=" + MaxPoint + ", Description=" + Description + ", ImageURL=" + ImageURL + '}';
+        return "Member{" + "MemberID=" + MemberID + ", MemberName=" + MemberName + ", MinAmount=" + MinAmount + ", MaxAmount=" + MaxAmount + ", Description=" + Description + ", ImageURL=" + ImageURL + '}';
     }
 
+  
     
 }

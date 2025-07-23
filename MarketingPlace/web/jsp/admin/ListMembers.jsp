@@ -68,6 +68,21 @@
                 white-space: nowrap;
             }
 
+            .btn-warning {
+                color: white !important;
+            }
+
+            .pagination .page-item.active .page-link {
+                background-color: #3396D8 !important;
+                border-color: #3396D8 !important;
+                color: white !important;
+            }
+
+            .pagination .page-link:hover {
+                background-color: #2879b5;
+                color: white;
+            }
+
         </style>
     </head>
 
@@ -94,8 +109,9 @@
                     <a href="${pageContext.request.contextPath}/admin/MemberURL" class="btn btn-secondary">View All</a>
                 </form>
 
-                <div class="mb-3">
+                <div class="mb-3 d-flex gap-2">
                     <a href="MemberURL?service=insertForm" class="btn btn-success">Add New Member</a>
+
                 </div>
 
                 <table class="table table-hover table-bordered text-center align-middle custom-table">
@@ -104,8 +120,8 @@
                             <th class="text-center">ID</th>
                             <th class="text-center">Image</th>
                             <th class="text-center">Name</th>
-                            <th class="text-center">Min Point</th>
-                            <th class="text-center">Max Point</th>
+                            <th class="text-center">Min Amount</th>
+                            <th class="text-center">Max Amount</th>
                             <th class="text-center">Description</th>
                             <th class="text-center">Update</th>
                             <th class="text-center">Delete</th>
@@ -116,11 +132,17 @@
                             <tr>
                                 <td>${member.memberID}</td>
                                 <td>
-                                    <img src="${pageContext.request.contextPath}/${member.imageURL}" width="60" height="60" style="object-fit: cover;"/>
+                                    <img src="${pageContext.request.contextPath}/${member.imageURL}" alt="${member.memberName}" style="width:100px;height:auto;" />
+
                                 </td>
-                                <td>${member.memberName}</td>
-                                <td>${member.minPoint}</td>
-                                <td>${member.maxPoint}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/admin/listMember/CustomerMemberLevelController?memberID=${member.memberID}">
+                                        ${member.memberName}
+                                    </a>
+                                </td>
+
+                                <td>${member.minAmount}</td>
+                                <td>${member.maxAmount}</td>
                                 <td>${member.description}</td>
                                 <td>
                                     <a href="MemberURL?service=updateForm&id=${member.memberID}" class="btn btn-warning btn-sm" style="background-color: #3396D8; color: white;">Update</a>
@@ -138,6 +160,18 @@
                         </c:if>
                     </tbody>
                 </table>
+
+                <c:if test="${totalPages > 1}">
+                    <nav class="d-flex justify-content-center mt-3">
+                        <ul class="pagination">
+                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                <li class="page-item ${i == page ? 'active' : ''}">
+                                    <a class="page-link" href="MemberURL?service=listMembers&page=${i}">${i}</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </nav>
+                </c:if>
 
             </div>
 

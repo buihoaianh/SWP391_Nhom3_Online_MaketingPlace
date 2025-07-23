@@ -148,13 +148,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="minPoint" class="form-label">Min Point</label>
-                        <input type="number" class="form-control" id="minPoint" name="minPoint" required>
+                        <label for="minAmount" class="form-label">Min Amount</label>
+                        <input type="number" class="form-control" id="minAmount" name="minAmount" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="maxPoint" class="form-label">Max Point</label>
-                        <input type="number" class="form-control" id="maxPoint" name="maxPoint" required>
+                        <label for="maxAmount" class="form-label">Max Amount</label>
+                        <input type="number" class="form-control" id="maxAmount" name="maxAmount" required>
                     </div>
 
                     <div class="mb-3">
@@ -175,7 +175,7 @@
                     <button type="submit" class="btn btn-submit w-50 rounded-pill d-block mx-auto">Add Member</button>
                 </form>
             </div>
-
+c
             <script>
     const fileInput = document.getElementById("imageFile");
     const fileNameSpan = document.getElementById("file-name");

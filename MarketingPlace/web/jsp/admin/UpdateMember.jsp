@@ -130,13 +130,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label>Min Point</label>
-                        <input type="number" name="minPoint" class="form-control" value="${member.minPoint}" required>
+                        <label>Min Amount</label>
+                        <input type="number" name="minAmount" class="form-control" value="${member.minAmount}" required>
                     </div>
 
                     <div class="mb-3">
-                        <label>Max Point</label>
-                        <input type="number" name="maxPoint" class="form-control" value="${member.maxPoint}" required>
+                        <label>Max Amount</label>
+                        <input type="number" name="maxAmount" class="form-control" value="${member.maxAmount}" required>
                     </div>
 
                     <div class="mb-3">
@@ -147,9 +147,9 @@
                     <div class="mb-3">
                         <label>Current Image</label>
                         <input type="text" class="form-control" value="${member.imageURL}" readonly>
-                        <img src="${pageContext.request.contextPath}${member.imageURL}" alt="Image" class="preview"/>
-
+                        <img src="${pageContext.request.contextPath}/${member.imageURL}" alt="Image" class="preview"/>
                     </div>
+
 
                     <div class="mb-4">
                         <label class="form-label fw-bold" style="color: #3192D3;">Upload New Image</label>

@@ -30,8 +30,7 @@ public class CustomerDAO extends ConnectDB {
         List<Integer> customerIds = new ArrayList<>();
         String sql = "SELECT AccountID FROM Account WHERE RoleID = 3";
 
-        try (PreparedStatement ps = connect.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 customerIds.add(rs.getInt("AccountID"));
             }
@@ -43,13 +42,12 @@ public class CustomerDAO extends ConnectDB {
 
     public Account getCustomerById(int accountId) {
         Account acc = null;
-        String sql = "SELECT "
-                   + "a.AccountID, a.RoleID, a.ImageURL, a.FullName, a.Email, a.Password, "
-                   + "a.PhoneNumber, a.Address, a.CreateDate, a.Status, a.Description, "
-                   + "r.RoleID AS r_RoleID, r.RoleName AS r_RoleName "
-                   + "FROM Account a "
-                   + "INNER JOIN Roles r ON a.RoleID = r.RoleID "
-                   + "WHERE a.RoleID = 3 AND a.AccountID = ?";
+        String sql = "SELECT a.*, r.RoleName, m.MemberName "
+                + "FROM Account a "
+                + "JOIN Roles r ON a.RoleID = r.RoleID "
+                + "LEFT JOIN CustomerMemberLevel cml ON a.AccountID = cml.CustomerID "
+                + "LEFT JOIN Member m ON cml.MemberID = m.MemberID "
+                + "WHERE a.RoleID = 3 AND a.AccountID = ?";
 
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
             ps.setInt(1, accountId);
@@ -67,8 +65,10 @@ public class CustomerDAO extends ConnectDB {
                     Timestamp ts = rs.getTimestamp("CreateDate");
                     acc.setCreateDate(ts != null ? ts.toLocalDateTime() : null);
                     acc.setStatus(rs.getBoolean("Status"));
-                    acc.setDescription(rs.getString("Description"));
-                    Role role = new Role(rs.getInt("r_RoleID"), rs.getString("r_RoleName"));
+                    String level = rs.getString("MemberName");
+                    acc.setDescription(level != null ? level : "Unranked");
+
+                    Role role = new Role(rs.getInt("RoleID"), rs.getString("RoleName"));
                 }
             }
         } catch (SQLException e) {
@@ -102,12 +102,14 @@ public class CustomerDAO extends ConnectDB {
 
     public List<Account> searchCustomer(String keyword) {
         List<Account> list = new ArrayList<>();
-        String sql = "SELECT a.*, r.RoleName FROM Account a "
-                   + "JOIN Roles r ON a.RoleID = r.RoleID "
-                   + "WHERE a.RoleID = 3 AND ("
-                   + "    a.AccountID LIKE ? OR "
-                   + "    a.FullName COLLATE Latin1_General_CI_AI LIKE ?"
-                   + ")";
+        String sql = "SELECT a.*, r.RoleName, m.MemberName "
+                + "FROM Account a "
+                + "JOIN Roles r ON a.RoleID = r.RoleID "
+                + "LEFT JOIN CustomerMemberLevel cml ON a.AccountID = cml.CustomerID "
+                + "LEFT JOIN Member m ON cml.MemberID = m.MemberID "
+                + "WHERE a.RoleID = 3 AND ("
+                + "a.AccountID LIKE ? OR "
+                + "a.FullName COLLATE Latin1_General_CI_AI LIKE ?)";
 
         try (PreparedStatement ps = connect.prepareStatement(sql)) {
             ps.setString(1, "%" + keyword + "%");
@@ -127,7 +129,9 @@ public class CustomerDAO extends ConnectDB {
                     Timestamp ts = rs.getTimestamp("CreateDate");
                     acc.setCreateDate(ts != null ? ts.toLocalDateTime() : null);
                     acc.setStatus(rs.getBoolean("Status"));
-                    acc.setDescription(rs.getString("Description"));
+                    String level = rs.getString("MemberName");
+                    acc.setDescription(level != null ? level : "Unranked");
+
                     list.add(acc);
                 }
             }
@@ -146,6 +150,36 @@ public class CustomerDAO extends ConnectDB {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void updateCustomerDescriptionsFromMemberLevel() {
+        String sql = """
+        UPDATE A
+        SET A.Description = M.MemberName
+        FROM Account A
+        JOIN CustomerMemberLevel CML ON A.AccountID = CML.CustomerID
+        JOIN Member M ON CML.MemberID = M.MemberID
+        WHERE A.RoleID = 3
+    """;
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUnrankedDescriptionForUnlinkedCustomers() {
+        String sql = """
+        UPDATE Account
+        SET Description = 'Unranked'
+        WHERE RoleID = 3
+          AND AccountID NOT IN (SELECT CustomerID FROM CustomerMemberLevel)
+    """;
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
