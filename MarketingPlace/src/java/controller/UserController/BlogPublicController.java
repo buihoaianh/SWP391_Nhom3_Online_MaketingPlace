@@ -70,7 +70,7 @@ public class BlogPublicController extends HttpServlet {
                 int total = dao.countBlogs();
                 int totalPages = (int) Math.ceil((double) total / pageSize);
                 List<BlogCategory> categoryList = blogCategoryDAO.getAllCategories();
-                List<Blog> list = dao.getBlogsByPage(page, pageSize);
+                List<Blog> list = dao.getBlogsPublicByPage(page, pageSize);
                 List<Blog> latestBlogs = dao.getLatestBlogs(3);
                 List<BlogTag> tagList = tagDao.getAllTags();
                 request.setAttribute("tagList", tagList);
