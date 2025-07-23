@@ -24,6 +24,10 @@ public class ListCustomerController extends HttpServlet {
 
         String keyword = request.getParameter("keyword");
         CustomerDAO dao = new CustomerDAO();
+
+        dao.updateCustomerDescriptionsFromMemberLevel();
+        dao.setUnrankedDescriptionForUnlinkedCustomers();
+
         List<Account> customerList;
 
         if (keyword != null && !keyword.trim().isEmpty()) {
@@ -41,7 +45,7 @@ public class ListCustomerController extends HttpServlet {
 
         request.setAttribute("customerList", customerList);
         request.getRequestDispatcher("/jsp/seller/ListCustomer.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 
     @Override
