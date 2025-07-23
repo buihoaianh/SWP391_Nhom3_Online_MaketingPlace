@@ -1293,7 +1293,7 @@
                                                 <div class="lpa-left media-body">
                                                     <div class="lpa-title">
                                                         <h5>
-                                                            <a href="BlogDetailURL?service=blogDetail&id=${latest.blogID}">
+                                                            <a href="BlogDetail?service=blogDetail&id=${latest.blogID}">
                                                                 ${latest.title}
                                                             </a>
                                                         </h5>

@@ -205,17 +205,14 @@
                                     <img id="imagePreview" class="img-preview" />
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Category</td>
-                            <tr>
-                                <td>Category</td>
-                                <td>
-                                    <select name="categoryID" required>
-                                        <c:forEach var="cat" items="${categoryList}">
-                                            <option value="${cat.categoryId}">${cat.categoryName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
+                            <td>Category</td>
+                            <td>
+                                <select name="categoryID" required>
+                                    <c:forEach var="cat" items="${categoryList}">
+                                        <option value="${cat.categoryId}">${cat.categoryName}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
                             </tr>
 
                             </tr>
