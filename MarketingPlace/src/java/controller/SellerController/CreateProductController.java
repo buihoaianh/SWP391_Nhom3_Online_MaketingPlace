@@ -38,7 +38,7 @@ import utils.Helpers;
  *
  * @author Admin
  */
-@WebServlet(name = "CreateProductController", urlPatterns = {"/seller/create-product"})
+@WebServlet(name = "CreateProductController", urlPatterns = { "/seller/create-product" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024)
 public class CreateProductController extends HttpServlet {
 
@@ -46,10 +46,10 @@ public class CreateProductController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,14 +73,15 @@ public class CreateProductController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -91,10 +92,10 @@ public class CreateProductController extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -106,7 +107,7 @@ public class CreateProductController extends HttpServlet {
             String productName = request.getParameter("productName");
             String categoryID = request.getParameter("categoryID");
             String description = request.getParameter("description");
-//            Part imagePart = request.getPart("image");
+            // Part imagePart = request.getPart("image");
             Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
             HttpSession session = request.getSession();
@@ -124,16 +125,18 @@ public class CreateProductController extends HttpServlet {
             // Lấy ảnh đúng
             // Lấy tất cả phần tử upload
             List<ProductImage> imageNames = new ArrayList<>();
-            //Part là đối tượng đại diện cho từng phần dữ liệu được gửi lên từ form (có thể là text, file,...).
+            // Part là đối tượng đại diện cho từng phần dữ liệu được gửi lên từ form (có thể
+            // là text, file,...).
             for (Part part : request.getParts()) {
                 // Lọc ra các file ảnh
-                if (part.getName().equals("image") && part.getSubmittedFileName() != null && !part.getSubmittedFileName().isEmpty()) {
-                    //upload image
-                    String fileName = Helpers.saveImage(part, request);
+                if (part.getName().equals("image") && part.getSubmittedFileName() != null
+                        && !part.getSubmittedFileName().isEmpty()) {
+                    // upload image
+                    String fileName = Helpers.saveImage(part, request, "product");
                     imageNames.add(new ProductImage(fileName));
                 }
             }
-//            String imageName = Helpers.saveImage(imagePart, request);
+            // String imageName = Helpers.saveImage(imagePart, request);
 
             for (int i = 0; i < colors.length; i++) {
                 ProductVariant variant = new ProductVariant(
@@ -145,7 +148,8 @@ public class CreateProductController extends HttpServlet {
             }
 
             // Lưu vào DB
-            Product product = new Product(createdBy, imageNames.get(0).getImageUrl(), productName, Integer.parseInt(categoryID), createDate, description, "Active", variants);
+            Product product = new Product(createdBy, imageNames.get(0).getImageUrl(), productName,
+                    Integer.parseInt(categoryID), createDate, description, "Active", variants);
             product.setImages(imageNames);
             pdao.createProduct(product);
 

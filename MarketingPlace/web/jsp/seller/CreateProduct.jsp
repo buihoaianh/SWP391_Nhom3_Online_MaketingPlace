@@ -67,7 +67,7 @@
                                         <select class="form-select" id="categoryID" name="categoryID" required>
                                             <option selected disabled value="">Choose a Category...</option>
                                             <c:forEach items="${categories}" var="s">
-                                                <option value="${s.categoryId}">${s.categoryName}</option>
+                                                <option value="${s.categoryID}">${s.categoryName}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

@@ -4,6 +4,7 @@
  */
 package controller.SellerController;
 
+import controller.admin.*;
 import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
@@ -15,9 +16,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.File;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import model.Account;
 import model.Categories;
 import model.Color;
 import model.Product;
@@ -30,7 +37,7 @@ import utils.Helpers;
  *
  * @author Admin
  */
-@WebServlet(name = "EditProductController", urlPatterns = {"/seller/edit-product"})
+@WebServlet(name = "EditProductController", urlPatterns = { "/seller/edit-product" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024)
 public class EditProductController extends HttpServlet {
 
@@ -38,10 +45,10 @@ public class EditProductController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,15 +57,15 @@ public class EditProductController extends HttpServlet {
             CategoriesDAO cdao = new CategoriesDAO();
             List<Categories> categories = cdao.getAllCategories();
             request.setAttribute("categories", categories);
-            
+
             SizeDAO sdao = new SizeDAO();
             List<Size> sizes = sdao.getSizes();
             request.setAttribute("sizes", sizes);
-            
+
             ColorDAO colorDAO = new ColorDAO();
             List<Color> colors = colorDAO.getColors();
             request.setAttribute("colors", colors);
-            
+
             String id = request.getParameter("id");
             ProductDAO pdao = new ProductDAO();
             Product p = pdao.getProductById(id);
@@ -71,14 +78,15 @@ public class EditProductController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -89,10 +97,10 @@ public class EditProductController extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -107,34 +115,35 @@ public class EditProductController extends HttpServlet {
             String categoryID = request.getParameter("categoryID");
             String description = request.getParameter("description");
             String status = request.getParameter("status");
-//            Part imagePart = request.getPart("image");
+            // Part imagePart = request.getPart("image");
 
             // Lấy danh sách biến thể sản phẩm
             String[] colors = request.getParameterValues("color[]");
             String[] sizes = request.getParameterValues("size[]");
             String[] prices = request.getParameterValues("price[]");
             String[] quantities = request.getParameterValues("quantity[]");
-            
+
             List<ProductVariant> variants = new ArrayList<>();
-//            String imageName = oldImage;
-//            if (imagePart != null && imagePart.getSize() > 0) {
-//                // Lấy ảnh đúng
-//                imageName = Helpers.saveImage(imagePart, request);
-//            }
+            // String imageName = oldImage;
+            // if (imagePart != null && imagePart.getSize() > 0) {
+            // // Lấy ảnh đúng
+            // imageName = Helpers.saveImage(imagePart, request);
+            // }
             List<ProductImage> imageNames = new ArrayList<>();
             boolean haveNewImg = false;
             for (Part part : request.getParts()) {
                 // Lọc ra các file ảnh
-                if (part.getName().equals("image") && part.getSubmittedFileName() != null && !part.getSubmittedFileName().isEmpty()) {
-                    //upload image
-                    String fileName = Helpers.saveImage(part, request);
+                if (part.getName().equals("image") && part.getSubmittedFileName() != null
+                        && !part.getSubmittedFileName().isEmpty()) {
+                    // upload image
+                    String fileName = Helpers.saveImage(part, request, "product");
                     imageNames.add(new ProductImage(fileName));
                     haveNewImg = true;
                 }
             }
-            
+
             String thumbnail = haveNewImg ? imageNames.get(0).getImageUrl() : oldImage;
-            
+
             for (int i = 0; i < colors.length; i++) {
                 ProductVariant variant = new ProductVariant(
                         new Color(Integer.parseInt(colors[i])),
@@ -145,8 +154,9 @@ public class EditProductController extends HttpServlet {
             }
 
             // Lưu vào DB
-            Product product = new Product(Integer.parseInt(productId), thumbnail, productName, Integer.parseInt(categoryID), description, status, variants);
-            if(haveNewImg){
+            Product product = new Product(Integer.parseInt(productId), thumbnail, productName,
+                    Integer.parseInt(categoryID), description, status, variants);
+            if (haveNewImg) {
                 product.setImages(imageNames);
             }
             pdao.updateProduct(product);

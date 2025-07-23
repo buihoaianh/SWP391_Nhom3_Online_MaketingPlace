@@ -65,11 +65,11 @@
                                     </div>
                                     <!-- Category -->
                                     <div class="col-md-6">
-                                        <label for="categoryID" class="form-label">Category</label>
+                                        <label for="categoryID" class="form-label">Categories</label>
                                         <select class="form-select" id="categoryID" name="categoryID" required>
                                             <option selected disabled value="">Choose a Category...</option>
                                             <c:forEach items="${categories}" var="ca">
-                                                <option value="${ca.categoryId}" ${p.categoryID eq ca.categoryId ? 'selected' : '' }>${ca.categoryName}</option>
+                                                <option value="${ca.categoryID}" ${p.categoryID eq ca.categoryID ? 'selected' : '' }>${ca.categoryName}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -85,7 +85,7 @@
                                         <input type="file" id="image" class="form-control image" name="image" onchange="previewImage(this)" multiple="">
                                         <div class="preview-container">
                                             <c:forEach items="${p.images}" var="i">
-                                                <img src="${i.imageUrl}" alt="Preview" class="img-preview mt-2" style="width: 50px; height: 50px; margin: 5px">
+                                                <img src="${pageContext.request.contextPath}/${i.imageUrl}" alt="Preview" class="img-preview mt-2" style="width: 50px; height: 50px; margin: 5px">
                                             </c:forEach>
                                         </div>
                                     </div>

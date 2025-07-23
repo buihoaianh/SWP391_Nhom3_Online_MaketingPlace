@@ -65,6 +65,43 @@ public class ProductDAO extends ConnectDB {
         }
         return count;
     }
+     public List<Product> getAllProducts() {
+        List<Product> list = new ArrayList<>();
+        String sql =
+          "SELECT " +
+          "  p.ProductID, p.ThumbnailURL, p.ProductName, p.Description, p.Status, p.isDeleted, " +
+          "  p.AccountID AS SellerID, " +
+          "  p.CategoryID, c.CategoryName " +
+          "FROM Products p " +
+          "LEFT JOIN Categories c ON p.CategoryID = c.CategoryID";
+
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId    (rs.getInt   ("ProductID"));
+                p.setThumbnailURL (rs.getString("ThumbnailURL"));
+                p.setProductName  (rs.getString("ProductName"));
+                p.setDescription  (rs.getString("Description"));
+                p.setStatus       (rs.getString("Status"));      // gán status
+                p.setIsDeleted    (rs.getInt   ("isDeleted"));
+                p.setAccountId    (rs.getInt   ("SellerID"));    // dùng alias SellerID
+
+                Categories cat = new Categories();
+                cat.setCategoryID  (rs.getInt   ("CategoryID"));
+                cat.setCategoryName(rs.getString("CategoryName"));
+                p.setCategory(cat);
+
+                list.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public List<Product> getProducts() {
         List<Product> list = new ArrayList<>();

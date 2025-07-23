@@ -7,6 +7,7 @@ public class OrderDetail {
     private int quantity;
     private String unitPrice;
     private Order order;
+    private int Status;
 
     
     private ProductVariant productVariant;  // Thay vì chỉ lấy ID
@@ -28,7 +29,16 @@ public class OrderDetail {
     }
     
     
-    
+    public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice, Order order, int Status, ProductVariant productVariant) {
+        this.orderDetailsId = orderDetailsId;
+        this.orderId = orderId;
+        this.productVariantId = productVariantId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.order = order;
+        this.Status = Status;
+        this.productVariant = productVariant;
+    }
     
 
     public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice, ProductVariant productVariant) {
@@ -47,6 +57,14 @@ public class OrderDetail {
         this.productVariantId = productVariantId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
     }
 
     public Order getOrder() {

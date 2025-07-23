@@ -18,6 +18,8 @@ public class Product {
     private String status;
     private double price;
     private String categoryName;
+    private int isDeleted;
+    private Account account;
 
     // Mới thêm:
     private List<String> imageUrls;
@@ -116,6 +118,22 @@ public class Product {
         this.thumbnailURL = thumbnailURL;
         this.price = price;
         this.categoryName = categoryName;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
     
     

@@ -5,6 +5,8 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Feedbacks {
@@ -16,6 +18,7 @@ public class Feedbacks {
     private int ProductVariantID;
     private int POrderID;
     private int Status;
+    private List<String> imageUrls = new ArrayList<>();
 
     public Feedbacks() {
     }
@@ -41,6 +44,14 @@ public class Feedbacks {
         this.CreateFeedbackDate = CreateFeedbackDate;
         this.ProductVariantID = ProductVariantID;
         this.POrderID = POrderID;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     public int getFeedbackID() {
