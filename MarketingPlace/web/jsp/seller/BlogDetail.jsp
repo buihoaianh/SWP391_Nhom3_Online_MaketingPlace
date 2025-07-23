@@ -333,6 +333,15 @@
                                 <div class="mb-3">
                                     <h6 class="text-uppercase text-secondary mb-2">Categories</h6>
                                     <div>
+                                            <a href="BlogDetailURL?service=listByCategory&id=${category.categoryId}" 
+                                               class="badge bg-primary text-white me-1 mb-1 text-decoration-none">
+                                                ${category.categoryName}
+                                            </a>
+                                    </div>
+                                </div>
+<!--                                <div class="mb-3">
+                                    <h6 class="text-uppercase text-secondary mb-2">Categories</h6>
+                                    <div>
                                         <c:forEach var="cat" items="${categorys}">
                                             <a href="BlogDetailURL?service=listByCategory&id=${cat.categoryId}" 
                                                class="badge bg-primary text-white me-1 mb-1 text-decoration-none">
@@ -340,7 +349,7 @@
                                             </a>
                                         </c:forEach>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <!-- Tags -->
                                 <div class="mb-3">
