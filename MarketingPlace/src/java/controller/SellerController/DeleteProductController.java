@@ -13,7 +13,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Product;
 
 /**
@@ -32,11 +34,13 @@ public class DeleteProductController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("user");
         response.setContentType("text/html;charset=UTF-8");
         int productId = Integer.parseInt(request.getParameter("id"));
         ProductDAO dao = new ProductDAO();
         dao.softDeleteProduct(productId);
-        List<Product> products = dao.getProducts();
+        List<Product> products = dao.getProducts(acc.getAccountID());
         request.setAttribute("products", products);
         request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response); // quay lại danh sách sau khi xóa
         

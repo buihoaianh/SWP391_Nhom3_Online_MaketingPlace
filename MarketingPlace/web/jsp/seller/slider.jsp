@@ -62,9 +62,16 @@
                 </li>
                 
                 <li class="sidebar-item active ">
-                    <a href="${pageContext.request.contextPath}/seller/list-product" class='sidebar-link'>
+                    <a href="${pageContext.request.contextPath}/seller/products" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>List Product</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/seller/feedback" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>List Feedback</span>
                     </a>
                 </li>
                 

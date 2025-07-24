@@ -73,6 +73,10 @@ public class RejectSellerController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
          // Lấy requestId và lý do từ form gửi lên
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         int requestId = Integer.parseInt(request.getParameter("requestId"));
         String reason = request.getParameter("reason");
 
@@ -93,7 +97,7 @@ public class RejectSellerController extends HttpServlet {
         dao.rejectRequest(requestId, reason, reviewerId, now);
 
         // Quay lại trang chi tiết yêu cầu
-        request.getRequestDispatcher("/jsp/admin/RequestList.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/admin/requests");
     }
 
     /** 
