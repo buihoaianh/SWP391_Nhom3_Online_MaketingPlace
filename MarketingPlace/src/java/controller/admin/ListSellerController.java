@@ -37,7 +37,7 @@ public class ListSellerController extends HttpServlet {
         if (keyword != null && !keyword.trim().isEmpty()) {
             sellerList = dao.searchSeller(keyword.trim());
         } else {
-            List<Integer> sellerIds = dao.getSellerAccountIDs();
+            List<Integer> sellerIds = dao.getApprovedSellerIDs();
             sellerList = new ArrayList<>();
             for (Integer id : sellerIds) {
                 Account acc = dao.getSellerById(id);
