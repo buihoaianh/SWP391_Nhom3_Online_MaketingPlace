@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.UserController;
+package controller.admin;
 
+import controller.UserController.*;
 import dao.SellerDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,7 +37,7 @@ public class ListSellerController extends HttpServlet {
         if (keyword != null && !keyword.trim().isEmpty()) {
             sellerList = dao.searchSeller(keyword.trim());
         } else {
-            List<Integer> sellerIds = dao.getSellerAccountIDs();
+            List<Integer> sellerIds = dao.getApprovedSellerIDs();
             sellerList = new ArrayList<>();
             for (Integer id : sellerIds) {
                 Account acc = dao.getSellerById(id);

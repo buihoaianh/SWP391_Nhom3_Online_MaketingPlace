@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 import model.Role;
 
 public class SellerDao extends ConnectDB {
+
     private final Logger logger;
     private Connection connect;
-
 
     public SellerDao() {
         this.logger = Logger.getLogger(this.getClass().getName());
@@ -33,24 +33,23 @@ public class SellerDao extends ConnectDB {
             e.printStackTrace();
         }
     }
-    
 
-    public List<Integer> getSellerAccountIDs() {
+    public List<Integer> getApprovedSellerIDs() {
         List<Integer> sellerIds = new ArrayList<>();
-        String sql = "SELECT AccountID FROM Account WHERE RoleID = 2";
+        String sql = "SELECT DISTINCT AccountID FROM SellerRequests WHERE Status = 'Approve'";
 
         try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 sellerIds.add(rs.getInt("AccountID"));
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
+
         return sellerIds;
     }
-    //lay 1 seller
 
+    //lay 1 seller
     public Account getSellerById(int accountId) {
         Account acc = null;
         String sql = "SELECT "
@@ -109,7 +108,7 @@ public class SellerDao extends ConnectDB {
     }
 
     public void printAllSellers() {
-        List<Integer> sellerIds = getSellerAccountIDs();
+        List<Integer> sellerIds = getApprovedSellerIDs();
         if (sellerIds.isEmpty()) {
             System.out.println("Not find seller (RoleID = 2).");
             return;
@@ -178,7 +177,6 @@ public class SellerDao extends ConnectDB {
         }
         return false;
     }
- 
 
     public static void main(String[] args) {
         SellerDao dao = new SellerDao();
