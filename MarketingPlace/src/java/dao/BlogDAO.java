@@ -77,16 +77,6 @@ public class BlogDAO extends ConnectDB {
         return false;
     }
 
-//    public boolean deleteBlog(int id) {
-//        String sql = "DELETE FROM Blogs WHERE BlogID = ?";
-//        try (PreparedStatement ps = connect.prepareStatement(sql)) {
-//            ps.setInt(1, id);
-//            return ps.executeUpdate() > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
     public boolean deleteBlog(int blogId) {
         String deleteBlogTagMapSQL = "DELETE FROM BlogTagMap WHERE BlogID = ?";
         String deleteBlogSQL = "DELETE FROM Blogs WHERE BlogID = ?";
@@ -131,50 +121,8 @@ public class BlogDAO extends ConnectDB {
         return null;
     }
 
-//    public List<Blog> getBlogsByPage(int pageIndex, int pageSize) {
-//        List<Blog> list = new ArrayList<>();
-//        String sql = """
-//            SELECT * FROM Blogs ORDER BY CreatedAt DESC
-//            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
-//        """;
-//        try (PreparedStatement ps = connect.prepareStatement(sql)) {
-//            ps.setInt(1, (pageIndex - 1) * pageSize);
-//            ps.setInt(2, pageSize);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                Blog b = new Blog(
-//                        rs.getInt("BlogID"),
-//                        rs.getInt("AuthorID"),
-//                        rs.getString("Title"),
-//                        rs.getString("Content"),
-//                        rs.getString("ThumbnailURL"),
-//                        rs.getInt("CategoryID"),
-//                        rs.getString("Status"),
-//                        rs.getTimestamp("CreatedAt").toLocalDateTime(),
-//                        rs.getTimestamp("UpdatedAt").toLocalDateTime(),
-//                        rs.getInt("ViewCount")
-//                );
-//                list.add(b);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return list;
-//    }
     public List<Blog> getBlogsByPage(int pageIndex, int pageSize) {
         List<Blog> list = new ArrayList<>();
-//        String sql = """
-//            SELECT * FROM Blogs ORDER BY CreatedAt DESC
-//            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
-//        """;
-//        String sql = """
-//    SELECT b.*, c.CategoryName 
-//    FROM Blogs b
-//    JOIN Categories c ON b.CategoryID = c.CategoryID
-//    ORDER BY b.CreatedAt DESC
-//    OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
-//""";
-
         String sql = """
     SELECT b.*, c.CategoryID, c.CategoryName, c.Description
     FROM Blogs b
@@ -284,6 +232,33 @@ public class BlogDAO extends ConnectDB {
         }
         return list;
     }
+public List<Blog> searchBlogByTitleAndStatus(String keyword, String status) {
+    List<Blog> list = new ArrayList<>();
+    String sql = "SELECT * FROM Blogs WHERE Title COLLATE Latin1_General_CI_AI LIKE ? AND Status = ?";
+    try (PreparedStatement ps = connect.prepareStatement(sql)) {
+        ps.setString(1, "%" + keyword + "%");
+        ps.setString(2, status);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Blog b = new Blog(
+                    rs.getInt("BlogID"),
+                    rs.getInt("AuthorID"),
+                    rs.getString("Title"),
+                    rs.getString("Content"),
+                    rs.getString("ThumbnailURL"),
+                    rs.getInt("CategoryID"),
+                    rs.getString("Status"),
+                    rs.getTimestamp("CreatedAt").toLocalDateTime(),
+                    rs.getTimestamp("UpdatedAt").toLocalDateTime(),
+                    rs.getInt("ViewCount")
+            );
+            list.add(b);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return list;
+}
 
     // Lấy BlogID mới nhất (tùy DB có thể dùng RETURNING hoặc @@IDENTITY)
     public int getLastInsertedBlogId() {

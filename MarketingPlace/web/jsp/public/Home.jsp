@@ -504,7 +504,7 @@
                 <!-- Section Title -->
                 <div class="container section-title" data-aos="fade-up">
                     <h2>New Arrivals</h2>
-                    
+
                 </div><!-- End Section Title -->
 
                 <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -515,11 +515,11 @@
                                 <div class="product-card">
                                     <div class="product-image">
                                         <img src="${i.thumbnailURL} class="img-fluid default-image" alt="Product" loading="lazy">
-                                  
+
                                         <div class="product-tags">
                                             <span class="badge bg-accent">New</span>
                                         </div>
-                             
+
 
                                     </div>
                                     <div class="product-info">
@@ -545,9 +545,9 @@
                         <!-- Product 1 -->
 
 
- 
 
-                       
+
+
                     </div>
 
                 </div>

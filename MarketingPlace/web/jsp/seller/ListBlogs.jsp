@@ -248,18 +248,30 @@
                 <div class="main-content-card animate-fade-in">
                     <h1>List Blogs</h1>
 
-                    <div class="controls">
-                        <form action="BlogURL" method="get">
-                            <input type="hidden" name="service" value="searchBlog"/>
-                            <input type="text" name="keyword" value="${searchKeyword}" placeholder="Search by title..." required/>
-                            <button type="submit">Search</button>
-                        </form>
+                    <!--                    <div class="controls">
+                                            <form action="BlogURL" method="get">
+                                                <input type="hidden" name="service" value="searchBlog"/>
+                                                <input type="text" name="keyword" value="${searchKeyword}" placeholder="Search by title..." required/>
+                                                <button type="submit">Search</button>
+                                            </form>
+                    
+                                            <form action="BlogURL" method="get">
+                                                <input type="hidden" name="service" value="listBlogs"/>
+                                                <button type="submit">View All</button>
+                                            </form>
+                                        </div>-->
+                    <form action="BlogURL" method="get">
+                        <input type="hidden" name="service" value="searchBlog"/>
+                        <input type="text" name="keyword" value="${searchKeyword}" placeholder="Search by title..." />
 
-                        <form action="BlogURL" method="get">
-                            <input type="hidden" name="service" value="listBlogs"/>
-                            <button type="submit">View All</button>
-                        </form>
-                    </div>
+                        <select name="status">
+                            <option value="all" ${status == 'all' ? 'selected' : ''}>All</option>
+                            <option value="Published" ${status == 'Published' ? 'selected' : ''}>Published</option>
+                            <option value="Draft" ${status == 'Draft' ? 'selected' : ''}>Draft</option>
+                        </select>
+
+                        <button type="submit">Search</button>
+                    </form>
 
                     <div class="add-new" style="margin: 10px 0;">
                         <a href="BlogURL?service=insertForm">Add New Blog</a>

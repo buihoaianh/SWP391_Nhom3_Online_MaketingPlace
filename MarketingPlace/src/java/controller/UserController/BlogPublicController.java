@@ -58,7 +58,7 @@ public class BlogPublicController extends HttpServlet {
         switch (service) {
             case "listBlogs" -> {
                 int page = 1;
-                int pageSize = 5;
+                int pageSize = 4;
                 String pageParam = request.getParameter("page");
                 if (pageParam != null && !pageParam.isEmpty()) {
                     try {

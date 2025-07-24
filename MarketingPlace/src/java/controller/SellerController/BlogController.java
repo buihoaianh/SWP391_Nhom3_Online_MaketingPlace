@@ -191,9 +191,18 @@ public class BlogController extends HttpServlet {
 
             case "searchBlog" -> {
                 String keyword = request.getParameter("keyword");
-                List<Blog> result = dao.searchBlogByTitle(keyword);
+                String status = request.getParameter("status"); // thêm status
+
+                List<Blog> result;
+                if (status == null || status.equals("all")) {
+                    result = dao.searchBlogByTitle(keyword); // Tìm tất cả bất kể status
+                } else {
+                    result = dao.searchBlogByTitleAndStatus(keyword, status); // Chỉ tìm theo status
+                }
+
                 request.setAttribute("blogData", result);
                 request.setAttribute("searchKeyword", keyword);
+                request.setAttribute("status", status); // để giữ lại lựa chọn trên form
                 request.getRequestDispatcher("jsp/seller/ListBlogs.jsp").forward(request, response);
             }
 
