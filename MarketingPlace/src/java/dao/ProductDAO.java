@@ -135,13 +135,7 @@ public class ProductDAO extends ConnectDB {
     }
 
     public void createProduct(Product po) {
-        String sql = "INSERT INTO [Products] ([AccountID]\n"
-                + "      ,[ThumbnailURL]\n"
-                + "      ,[ProductName]\n"
-                + "      ,[CategoryID]\n"
-                + "      ,[CreateProductDate]\n"
-                + "      ,[Description]\n"
-                + "      ,[Status]) VALUES (?, ?, ?, ?, ?,?,?)";
+       String sql = "INSERT INTO [Products] ([AccountID], [ThumbnailURL], [ProductName], [CategoryID], [CreateProductDate], [Description], [Status], [isDeleted]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = ConnectDB.getConnection(); //mo ket noi toi sql
@@ -153,6 +147,7 @@ public class ProductDAO extends ConnectDB {
             ps.setTimestamp(5, po.getCreateProductDate());
             ps.setString(6, po.getDescription());
             ps.setString(7, po.getStatus());
+            ps.setInt(8, 1);
             ps.executeUpdate();
 
             int productId = 0;
