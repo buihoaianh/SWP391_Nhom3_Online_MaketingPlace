@@ -1,7 +1,7 @@
 <%-- 
     Document   : slider
     Created on : Jun 18, 2025, 12:35:31 AM
-    Author     : Admin
+    Author     : chinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
