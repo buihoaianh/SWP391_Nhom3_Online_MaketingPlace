@@ -725,14 +725,15 @@ public class ProductDAO extends ConnectDB {
         return null;
     }
 
-    public List<Product> getProductsByCategoryId(int categoryId) {
+    public List<Product> getProductsByCategoryId(int categoryId, int AccountId) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT p.*, c.CategoryName FROM Products p "
                 + "JOIN Categories c ON p.CategoryID = c.CategoryID "
-                + "WHERE p.CategoryID = ?";
+                + "WHERE p.CategoryID = ? and p.AccountID = ?";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             pre.setInt(1, categoryId);
+            pre.setInt(2,AccountId);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Product p = new Product();

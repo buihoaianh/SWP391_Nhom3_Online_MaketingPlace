@@ -5,14 +5,24 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="model.Account" %>
+
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache"); 
+    response.setDateHeader("Expires", 0); 
+
+    if (session != null && session.getAttribute("user") != null) {
+        response.sendRedirect(request.getContextPath() + "/Home");
+        return;
+    }
+%>
+
 <%
     String tab = request.getParameter("tab");
     if (tab == null) tab = "login";
     String pageTitle = "login".equals(tab) ? "Login" : "Register";
 %>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -470,6 +480,17 @@
   const tab = urlParams.get('tab') || 'login';
   const trigger = document.querySelector(`a[href="#login-register-${tab}-form"]`);
   if (trigger) new bootstrap.Tab(trigger).show();
+</script>
+
+<script>
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+            // Có thể redirect hoặc reload để refresh session
+            location.reload();
+        };
+    }
 </script>
 
 

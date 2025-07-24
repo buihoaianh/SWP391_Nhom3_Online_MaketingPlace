@@ -68,7 +68,7 @@
                     <div class="row g-4">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-light rounded h-100 p-4">
-                                <form class="row g-3 needs-validation" action="seller/edit-product" method="post" enctype="multipart/form-data">
+                                <form class="row g-3 needs-validation" action="${pageContext.request.contextPath}/seller/edit-product" method="post" enctype="multipart/form-data">
                                      Product Name 
                                     <div class="col-md-6">
                                         <label for="productName" class="form-label">Product Name</label>

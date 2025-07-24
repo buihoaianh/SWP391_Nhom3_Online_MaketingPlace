@@ -32,6 +32,14 @@ public class AutoLoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession(false);
+        String uri = request.getRequestURI();
+        boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
+
+        if (isLoggedIn && (uri.endsWith("loginRegister.jsp") || uri.endsWith("/login") || uri.endsWith("/register"))) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;
+        }
+
         //getSession(false) chỉ lấy session hiện có, KHÔNG tạo session mới nếu chưa tồn tại.
         //Nếu chưa có session → trả về null.
         // Nếu chưa có session hoặc chưa có user trong session → bắt đầu kiểm tra cookie.
@@ -52,13 +60,18 @@ public class AutoLoginFilter implements Filter {
                 UserDAO dao = new UserDAO();
                 Account acc = dao.getUserByToken(token);
 
-                if (acc != null) {
-                    // Đăng nhập lại tự động
-                    request.getSession(true).setAttribute("user", acc);
+                if (acc != null && !response.isCommitted()) {
+                    HttpSession s = request.getSession(false);
+                    if (s == null) s = request.getSession(true);
+                    s.setAttribute("user", acc);
                     System.out.println("AutoLoginFilter - User restored from token: " + acc.getEmail());
                 }
             }
         }
+
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
 
         chain.doFilter(servletRequest, servletResponse);
     }

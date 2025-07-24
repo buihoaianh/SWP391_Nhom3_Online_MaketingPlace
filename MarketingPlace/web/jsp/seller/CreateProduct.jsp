@@ -80,7 +80,7 @@
                                       ${errorMessage}
                                     </div>
                                   </c:if>
-                                <form class="row g-3 needs-validation" action="seller/create-product" method="post" enctype="multipart/form-data">
+                                <form class="row g-3 needs-validation" action="${pageContext.request.contextPath}/seller/create-product" method="post" enctype="multipart/form-data">
                                      Product Name 
                                     <div class="col-6">
                                         <label for="productName" class="form-label">Product Name</label>

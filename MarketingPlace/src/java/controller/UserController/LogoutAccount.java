@@ -54,6 +54,7 @@ public class LogoutAccount extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Xóa session
@@ -68,11 +69,16 @@ public class LogoutAccount extends HttpServlet {
         rememberCookie.setPath("/");
         response.addCookie(rememberCookie);
 
-        // Đặt thông báo
-        request.getSession(true).setAttribute("message", "Đăng xuất thành công!");
+        // Chặn cache sau khi logout
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
 
-        // Quay về home.jsp
-        request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
+        // Đặt thông báo (tùy chọn, nếu cần thì truyền qua redirect URL hoặc flash scope)
+        // request.getSession(true).setAttribute("message", "Đăng xuất thành công!");
+
+        // Quay về trang login
+        response.sendRedirect(request.getContextPath() + "/Home");
     }
 
     /** 

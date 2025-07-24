@@ -91,7 +91,7 @@ public class ProductController extends HttpServlet {
             List<Product> matchedProducts = new ArrayList<>();
 
             for (Categories c : categoryList) {
-                List<Product> productsByCat = daop.getProductsByCategoryId(c.getCategoryID());
+                List<Product> productsByCat = daop.getProductsByCategoryId(c.getCategoryID(), acc.getAccountID());
                 matchedProducts.addAll(productsByCat);
             }
 
