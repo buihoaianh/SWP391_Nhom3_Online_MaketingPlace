@@ -96,7 +96,6 @@
                                 <th>FULLNAME</th>
                                 <th>STATUS</th>
                                 <th>DESCRIPTION</th>
-                                <th>ACTION</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,26 +125,11 @@
                                     </span>
                                 </td>
                                 <td>${customer.description}</td>
-                                <td class="text-center">
-                                    <form action="${pageContext.request.contextPath}/seller/list-customer/change-customer-status" method="post">
-                                        <input type="hidden" name="accountId" value="${customer.accountID}" />
-                                        <button type="submit" class="btn btn-status
-                                                <c:choose>
-                                                <c:when test="${customer.status}">btn-danger</c:when>
-                                            <c:otherwise>btn-success</c:otherwise>
-                                            </c:choose>">
-                                            <c:choose>
-                                                <c:when test="${customer.status}">Inactive</c:when>
-                                                <c:otherwise>Active</c:otherwise>
-                                            </c:choose>
-                                        </button>
-                                    </form>
-                                </td>
                             </tr>
                         </c:forEach>
                         <c:if test="${empty customerList}">
                             <tr>
-                                <td colspan="6" class="text-center">No found Customer</td>
+                                <td colspan="5" class="text-center">No found Customer</td>
                             </tr>
                         </c:if>
                         </tbody>
