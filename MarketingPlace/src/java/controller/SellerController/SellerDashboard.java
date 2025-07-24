@@ -9,6 +9,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 import model.Account;
+import model.TopProduct;
 
 @WebServlet(name = "SellerDashboard", urlPatterns = {"/seller/seller-dashboard"})
 public class SellerDashboard extends HttpServlet {
@@ -53,6 +54,9 @@ public class SellerDashboard extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         int totalProducts = productDAO.getTotalProductsBySeller(sellerId);
         request.setAttribute("totalProducts", totalProducts);
+        
+        List<TopProduct> topProducts = productDAO.getTopSellingProductsBySeller(sellerId);
+        request.setAttribute("topProducts", topProducts);
 
         // Gửi tới JSP
         request.setAttribute("stats", stats);

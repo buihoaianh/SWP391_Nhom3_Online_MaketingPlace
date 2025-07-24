@@ -113,7 +113,7 @@
                             <span class="d-none d-lg-inline-flex">Notificatin</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
+                            <a href="${pageContext.request.contextPath}/admin/admin-profile" class="dropdown-item">
                                 <h6 class="fw-normal mb-0">Profile updated</h6>
                                 <small>15 minutes ago</small>
                             </a>
@@ -133,12 +133,12 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/Anhdaidien.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="${pageContext.request.contextPath}/${account.imageURL}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">F5 Refresh</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="${pageContext.request.contextPath}/admin/admin-profile" class="dropdown-item">My Profile</a>
+                            <a href="${pageContext.request.contextPath}/admin/admin-password" class="dropdown-item">Change Password</a>
                             <a href="LogoutAccount" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
