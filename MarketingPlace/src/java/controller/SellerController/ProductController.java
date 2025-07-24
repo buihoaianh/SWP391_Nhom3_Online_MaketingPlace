@@ -14,8 +14,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import model.Account;
 import model.Categories;
 import model.Product;
 
@@ -39,8 +41,10 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("user");
             ProductDAO dao = new ProductDAO();
-            List<Product> products = dao.getProducts();
+            List<Product> products = dao.getProducts(acc.getAccountID());
             request.setAttribute("products", products);
             request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
         } catch (Exception e) {
@@ -76,6 +80,8 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("user");
         String categoryName = request.getParameter("category");
         CategoriesDAO dao = new CategoriesDAO();
         ProductDAO daop = new ProductDAO();
@@ -91,7 +97,7 @@ public class ProductController extends HttpServlet {
 
             request.setAttribute("products", matchedProducts);
         } else {
-            List<Product> allProducts = daop.getProducts();
+            List<Product> allProducts = daop.getProducts(acc.getAccountID());
             request.setAttribute("products", allProducts);
         }
 

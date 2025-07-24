@@ -72,7 +72,7 @@
                                 <td>${po.reviewedBy}</td> 
                                 <td>${po.reviewDate}</td>
                                 <td>${po.rejectReason}</td>
-                                <td><a href="admin/request-detail?id=${po.requestId}" class="btn btn-primary">
+                                <td><a href="${pageContext.request.contextPath}/admin/request-detail?id=${po.requestId}" class="btn btn-primary">
                                         <i class="fa fa-eye"></i>
                                     </a></td>
                             </tr>

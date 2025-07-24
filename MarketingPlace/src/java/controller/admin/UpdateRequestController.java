@@ -33,6 +33,10 @@ public class UpdateRequestController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
          HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("user");
         int reviewerID = acc.getAccountID();
@@ -96,7 +100,45 @@ public class UpdateRequestController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("user");
+        int reviewerID = acc.getAccountID();
+        //Lấy HttpSession hiện tại để biết ai đang đăng nhập.
+        //Lấy Account từ session → chính là admin hiện tại.
+        //Lấy accountID của admin để ghi vào cột ReviewedBy.
+        
+        int requestID = Integer.parseInt(request.getParameter("id"));
+        String action = request.getParameter("action");
+        //lấy về được Approve hay là reject 
+
+        String status = "";
+        String reason = request.getParameter("reason") != null ? request.getParameter("reason") : "";
+        //status: chuẩn bị gán giá trị "Approve" hoặc "Reject".
+        //reason: nếu form có lý do từ chối, lấy nó. Nếu không có (null) thì để rỗng.
+
+        SellerRequestDAO dao = new SellerRequestDAO();
+
+        try {
+            if ("approve".equalsIgnoreCase(action)) {
+                status = "Approve";
+                // Cập nhật SellerRequests
+                dao.updateRequestStatus(requestID, status, reviewerID, null);
+                // Cập nhật trạng thái account → ACTIVE
+                dao.updateAccountStatusToActive(requestID);
+            } else if ("reject".equalsIgnoreCase(action)) {
+                status = "Reject";
+                //Gán status = "Reject" và gọi DAO cập nhật SellerRequests:
+                dao.updateRequestStatus(requestID, status, reviewerID, reason);
+            }
+
+            response.sendRedirect(request.getContextPath() + "/admin/requests");
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
     }
 
     /**

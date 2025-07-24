@@ -8,6 +8,7 @@ import controller.admin.*;
 import dao.CategoriesDAO;
 import dao.ColorDAO;
 import dao.ProductDAO;
+import dao.SellerRequestDAO;
 import dao.SizeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,6 +32,7 @@ import model.Color;
 import model.Product;
 import model.ProductImage;
 import model.ProductVariant;
+import model.SellerRequest;
 import model.Size;
 import utils.Helpers;
 
@@ -55,6 +57,19 @@ public class CreateProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session = request.getSession(false);
+            Account acc = session == null ? null : (Account) session.getAttribute("user");
+            // Nếu là seller (RoleID=2) thì phải có SellerRequest đã Approve
+            if (acc != null && acc.getRoleID() == 2) {
+                SellerRequestDAO reqDao = new SellerRequestDAO();
+                SellerRequest req = reqDao.getByAccountId(acc.getAccountID());
+                if (req == null || !"Approve".equalsIgnoreCase(req.getStatus())) {
+                    // Chuyển về trang form đệ trình request (hoặc trang báo lỗi)
+                    request.setAttribute("errorMessage", "Bạn chưa được duyệt seller request, không thể thêm sản phẩm.");
+                    request.getRequestDispatcher("/jsp/seller/ProductList.jsp").forward(request, response);
+                    return;
+                }
+            }
             CategoriesDAO cdao = new CategoriesDAO();
             List<Categories> categories = cdao.getAllCategories();
             request.setAttribute("categories", categories);
@@ -102,6 +117,18 @@ public class CreateProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("user");
+            if (acc != null && acc.getRoleID() == 2) {
+                SellerRequestDAO reqDao = new SellerRequestDAO();
+                SellerRequest req = reqDao.getByAccountId(acc.getAccountID());
+                if (req == null || !"Approve".equalsIgnoreCase(req.getStatus())) {
+                    // Không cho tạo, show lại form với thông báo
+                    request.setAttribute("errorMessage", "Bạn chưa được duyệt seller request, không thể thêm sản phẩm.");
+                    processRequest(request, response);
+                    return;
+                }
+            }
             ProductDAO pdao = new ProductDAO();
             // Lấy dữ liệu từ form
             String productName = request.getParameter("productName");
@@ -110,8 +137,6 @@ public class CreateProductController extends HttpServlet {
             // Part imagePart = request.getPart("image");
             Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
-            HttpSession session = request.getSession();
-            Account acc = (Account) session.getAttribute("user");
             int createdBy = acc.getAccountID();
 
             // Lấy danh sách biến thể sản phẩm

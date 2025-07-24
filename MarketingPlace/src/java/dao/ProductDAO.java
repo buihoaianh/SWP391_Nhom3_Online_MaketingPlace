@@ -103,16 +103,17 @@ public class ProductDAO extends ConnectDB {
         return list;
     }
 
-    public List<Product> getProducts() {
+    public List<Product> getProducts(int AccountId) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT p.*, c.CategoryName "
-                + "FROM Products p "
-                + "LEFT JOIN Categories c ON p.CategoryID = c.CategoryID "
-                + "WHERE p.isDeleted = 1 "
-                + "ORDER BY p.CreateProductDate DESC";
+        String query = "SELECT p.*, c.CategoryName \n" +
+            "        FROM Products p \n" +
+            "        LEFT JOIN Categories c ON p.CategoryID = c.CategoryID \n" +
+            "        WHERE p.isDeleted = 1 AND p.AccountID = ?\n" +
+            "        ORDER BY p.CreateProductDate DESC";
 
         try {
             ps = ConnectDB.getConnection().prepareStatement(query);
+            ps.setInt(1, AccountId);    
             rs = ps.executeQuery();
             while (rs.next()) {
                 Product o = new Product(

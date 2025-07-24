@@ -1,67 +1,92 @@
 
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%@page import="model.Product" %>
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
-        <meta charset="utf-8">
-        <title>DASHBOARD - Bootstrap Admin Template</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
-        <base href="${pageContext.request.contextPath}/">
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>List Categories</title>
 
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/bootstrap.css">
 
-        <!-- Icon Font Stylesheet -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/vendors/iconly/bold.css">
 
-        <!-- Libraries Stylesheet -->
-        <link href="${pageContext.request.contextPath}/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/vendors/bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/app.css">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/asset/images/favicon.svg" type="image/x-icon">
+        <style>
+            /* 1. ??t form v? font-size 0 ?? text th?a (text nodes) khÙng hi?n th? */
+.needs-validation {
+  font-size: 0;
+}
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+/* 2. KhÙi ph?c l?i font-size cho c·c ph?n t? form h?p l? */
+.needs-validation .form-label,
+.needs-validation .form-control,
+.needs-validation .form-select,
+.needs-validation textarea,
+.needs-validation button {
+  font-size: 1rem; /* ho?c kÌch th??c b?n mu?n */
+}
 
-        <!-- Template Stylesheet -->
-        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/list-seller.css" rel="stylesheet">
+/* 3. ??m b?o grid ho?t ??ng ?n ??nh */
+.needs-validation .row {
+  margin: 0 -0.5rem;
+}
+.needs-validation .col-6 {
+  padding: 0 0.5rem;
+}
+
+/* 4. ThÍm kho?ng c·ch gi?a c·c tr??ng */
+.needs-validation .col-6 {
+  margin-bottom: 1rem;
+}
+
+        </style>
+
     </head>
 
     <body>
-        <div class="container-xxl position-relative bg-white d-flex p-0">
-            <!-- Spinner Start -->
-            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
+        <div id="app">
+            <div id="sidebar" class="active">
+                <div class="sidebar-wrapper active">
+                    <div class="logo d-flex align-items-center">
+                        <a href="seller-dashboard">
+                            <img src="${pageContext.request.contextPath}/asset/images/logo/logo.png"
+                                 alt="Logo"
+                                 style="max-width: 180px; height: auto;">
+                        </a>
+                    </div>
+                    <jsp:include page="slider.jsp" />
+                    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
                 </div>
             </div>
-            <!-- Spinner End -->
-
-
-            <%@ include file="../../components/sidebarAdmin.jsp" %>
-
-            <div class="content">
-                <h1>Create Product</h1>
+            <div id="main">
+                <div class="main-content-card animate-fade-in">
+                    <h1>Create Product</h1>
                 <div class="container-fluid pt-4 px-4">
                     <div class="row g-4">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-light rounded h-100 p-4">
+                                <c:if test="${not empty errorMessage}">
+                                    <div class="alert alert-danger">
+                                      ${errorMessage}
+                                    </div>
+                                  </c:if>
                                 <form class="row g-3 needs-validation" action="seller/create-product" method="post" enctype="multipart/form-data">
-                                    <!-- Product Name -->
+                                     Product Name 
                                     <div class="col-6">
                                         <label for="productName" class="form-label">Product Name</label>
                                         <input type="text" class="form-control" id="productName" name="productName" required>
                                     </div>
-                                    <!-- Category -->
+                                     Category 
                                     <div class="col-6">
                                         <label for="categoryID" class="form-label">Category</label>
                                         <select class="form-select" id="categoryID" name="categoryID" required>
@@ -83,7 +108,7 @@
                                         <div class="preview-container"></div>
                                     </div>
 
-                                    <!-- Product Variant Table -->
+                                     Product Variant Table 
                                     <div class="col-12">
                                         <label class="form-label">Product Variant</label>
                                         <button type="button" id="addVariant" class="btn btn-success btn-sm" style="float: right; margin-bottom: 16px">Add Variant</button>
@@ -124,10 +149,10 @@
                                         </table>
                                     </div>
 
-                                    <!-- Submit Button -->
+                                     Submit Button 
                                     <div class="col-12">
                                         <button class="btn btn-primary" type="submit">Create Product</button>
-                                        <a class="btn btn-danger" href="admin/products">Cancel</a>
+                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/seller/products">Cancel</a>
                                     </div>
                                 </form>
 
@@ -135,8 +160,17 @@
                         </div>
                     </div>
                 </div>
+
+                </div>
             </div>
-            <!-- JavaScript Libraries -->
+
+            <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
+            
+            JavaScript Libraries 
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/lib/chart/chart.min.js"></script>
@@ -149,7 +183,7 @@
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Template Javascript -->
+             Template Javascript 
             <script src="${pageContext.request.contextPath}/js/main.js"></script>
 
             <script>
@@ -159,7 +193,7 @@
                                                 $("form").on("submit", function (event) {
                                                     if (tableBody.children.length === 0) {
                                                         alert("You must add at least one product variant.");
-                                                        event.preventDefault(); // NgƒÉn kh√¥ng cho g·ª≠i form
+                                                        event.preventDefault(); // Ng?n khÙng cho g?i form
                                                     }
                                                     if (hasDuplicateVariants()) {
                                                         alert("Duplicate product variants are not allowed. Please check color and size.");
@@ -178,7 +212,7 @@
                                                         let key = color + "-" + size;
                                                         if (variants.has(key)) {
                                                             isDuplicate = true;
-                                                            return false; // Tho√°t kh·ªèi v√≤ng l·∫∑p
+                                                            return false; // Tho·t kh?i vÚng l?p
                                                         }
                                                         variants.add(key);
                                                     });
@@ -186,8 +220,8 @@
                                                     return isDuplicate;
                                                 }
 
-                                                // X·ª≠ l√Ω n√∫t x√≥a, ƒë·∫£m b·∫£o lu√¥n c√≤n √≠t nh·∫•t m·ªôt d√≤ng
-                                                // X·ª≠ l√Ω x√≥a d√≤ng
+                                                // X? l˝ n˙t xÛa, ??m b?o luÙn cÚn Ìt nh?t m?t dÚng
+                                                // X? l˝ xÛa dÚng
                                                 tableBody.addEventListener("click", function (event) {
                                                     if (event.target.classList.contains("removeRow")) {
                                                         const row = event.target.closest("tr");
@@ -200,7 +234,7 @@
                                                 });
 
 
-                                                // X·ª≠ l√Ω th√™m d√≤ng m·ªõi
+                                                // X? l˝ thÍm dÚng m?i
                                                 $("#addVariant").click(function () {
                                                     let newRow = `
                    <tr>
@@ -226,11 +260,11 @@
                    </tr>`;
                                                     $("#productvariantsTable tbody").append(newRow);
                                                 });
-                                                // Preview h√¨nh ·∫£nh
+                                                // Preview hÏnh ?nh
                                                 window.previewImage = function (input) {
                                                     let files = input.files;
                                                     let container = $(input).siblings(".preview-container");
-                                                    container.empty(); // X√≥a c√°c ·∫£nh c≈©
+                                                    container.empty(); // XÛa c·c ?nh c?
 
                                                     if (files) {
                                                         Array.from(files).forEach(file => {
@@ -239,7 +273,7 @@
                                                                 let img = $("<img>")
                                                                         .attr("src", e.target.result)
                                                                         .addClass("img-preview")
-                                                                        .css({width: "50px", height: "50px", margin: "5px"}); // tu·ª≥ ch·ªânh th√™m
+                                                                        .css({width: "50px", height: "50px", margin: "5px"}); // tu? ch?nh thÍm
                                                                 container.append(img);
                                                             };
                                                             reader.readAsDataURL(file);

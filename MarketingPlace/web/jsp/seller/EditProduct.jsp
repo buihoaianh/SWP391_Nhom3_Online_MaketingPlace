@@ -3,67 +3,80 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<%@page import="model.Product" %>
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
-        <meta charset="utf-8">
-        <title>DASHBOARD - Bootstrap Admin Template</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
-        <base href="${pageContext.request.contextPath}/">
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>List Categories</title>
 
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/bootstrap.css">
 
-        <!-- Icon Font Stylesheet -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/vendors/iconly/bold.css">
 
-        <!-- Libraries Stylesheet -->
-        <link href="${pageContext.request.contextPath}/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/vendors/bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/app.css">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/asset/images/favicon.svg" type="image/x-icon">
+        <style>
+/* 1. Giấu toàn bộ text node trực tiếp trong form */
+.needs-validation {
+  font-size: 0;
+}
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+/* 2. Khôi phục lại font-size cho các thẻ div.col‑* (và con của chúng) */
+.needs-validation > div {
+  font-size: 1rem;      /* bật lại text cho tất cả container col- */
+}
 
-        <!-- Template Stylesheet -->
-        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/list-seller.css" rel="stylesheet">
+/* 3. Nếu cần, tinh chỉnh thêm spacing */
+.needs-validation .col-md-6,
+.needs-validation .col-12 {
+  margin-bottom: 1rem;
+}
+
+        </style>
+
     </head>
 
     <body>
-        <div class="container-xxl position-relative bg-white d-flex p-0">
-            <!-- Spinner Start -->
-            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
+        <div id="app">
+            <div id="sidebar" class="active">
+                <div class="sidebar-wrapper active">
+                    <div class="logo d-flex align-items-center">
+                        <a href="seller-dashboard">
+                            <img src="${pageContext.request.contextPath}/asset/images/logo/logo.png"
+                                 alt="Logo"
+                                 style="max-width: 180px; height: auto;">
+                        </a>
+                    </div>
+                    <jsp:include page="slider.jsp" />
+                    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
                 </div>
             </div>
-            <!-- Spinner End -->
-
-
-            <%@ include file="../../components/sidebarAdmin.jsp" %>
-
-            <div class="content">
-                <h1>Edit Product</h1>
+            <div id="main">
+                <div class="main-content-card animate-fade-in">
+                    <h1>Edit Product</h1>
                 <div class="container-fluid pt-4 px-4">
                     <div class="row g-4">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-light rounded h-100 p-4">
                                 <form class="row g-3 needs-validation" action="seller/edit-product" method="post" enctype="multipart/form-data">
-                                    <!-- Product Name -->
+                                     Product Name 
                                     <div class="col-md-6">
                                         <label for="productName" class="form-label">Product Name</label>
                                         <input type="hidden" class="form-control" id="productID" name="productID" value="${p.productId}">
                                         <input type="hidden" class="form-control" id="oldImage" name="oldImage" value="${p.thumbnailURL}">
                                         <input type="text" class="form-control" id="productName" name="productName" required value="${p.productName}">
                                     </div>
-                                    <!-- Category -->
+                                     Category 
                                     <div class="col-md-6">
                                         <label for="categoryID" class="form-label">Categories</label>
                                         <select class="form-select" id="categoryID" name="categoryID" required>
@@ -90,7 +103,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Status -->
+                                     Status 
                                     <div class="col-md-12">
                                         <label for="status" class="form-label">Status</label>
                                         <select class="form-select" id="status" name="status" required>
@@ -98,7 +111,7 @@
                                             <option value="Inactive" ${p.status eq 'Inactive' ? 'selected' : '' }>Inactive</option>
                                         </select>
                                     </div>
-                                    <!-- Product Variant Table -->
+                                     Product Variant Table 
                                     <div class="col-12">
                                         <label class="form-label">Product Variant</label>
                                         <button type="button" id="addVariant" class="btn btn-success btn-sm" style="float: right; margin-bottom: 16px">Add Variant</button>
@@ -141,10 +154,10 @@
                                         </table>
                                     </div>
 
-                                    <!-- Submit Button -->
+                                     Submit Button 
                                     <div class="col-12">
                                         <button class="btn btn-primary" type="submit">Edit Product</button>
-                                        <a class="btn btn-danger" href="admin/products">Cancel</a>
+                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/seller/products">Cancel</a>
                                     </div>
                                 </form>
 
@@ -152,8 +165,19 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                </div>
             </div>
-            <!-- JavaScript Libraries -->
+
+            <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/js/bootstrap.bundle.min.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/vendors/apexcharts/apexcharts.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/js/pages/dashboard.js"></script>
+            <script src="${pageContext.request.contextPath}/asset/js/main.js"></script>
+            
+             JavaScript Libraries 
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
             <script src="${pageContext.request.contextPath}/lib/chart/chart.min.js"></script>
@@ -166,7 +190,7 @@
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Template Javascript -->
+             Template Javascript 
             <script src="${pageContext.request.contextPath}/js/main.js"></script>
 
             <script>
@@ -267,3 +291,5 @@
     </body>
 
 </html>
+            
+            

@@ -19,6 +19,35 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class SellerRequestDAO {
+    
+    public SellerRequest getByAccountId(int accountId) throws Exception {
+        String sql = "SELECT TOP 1 requestId, accountId, requestDate, status, reviewedBy, reviewDate, rejectReason \n" +
+                    "    FROM SellerRequests \n" +
+                    "    WHERE accountId = ?\n" +
+                    "    ORDER BY requestDate DESC";
+        try (
+            PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql);
+        ) {
+            ps.setInt(1, accountId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    SellerRequest r = new SellerRequest();
+                    r.setRequestId(rs.getInt("requestId"));
+                    r.setAccountId(rs.getInt("accountId"));
+                    r.setRequestDate(rs.getTimestamp("requestDate"));
+                    r.setStatus(rs.getString("status"));
+                    r.setReviewedBy(rs.getObject("reviewedBy") != null
+                                  ? rs.getInt("reviewedBy")
+                                  : null);
+                    r.setReviewDate(rs.getTimestamp("reviewDate"));
+                    r.setRejectReason(rs.getString("rejectReason"));
+                    return r;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public List<SellerRequest> getRequestsByAccountID(int accountID) throws SQLException {
         String sql = "SELECT * FROM SellerRequests WHERE AccountID = ?";
