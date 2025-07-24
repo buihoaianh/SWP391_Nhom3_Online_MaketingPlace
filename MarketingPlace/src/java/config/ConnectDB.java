@@ -34,15 +34,7 @@ public class ConnectDB {
     }
 
     public ConnectDB() {
-
-
-
-
-        this("jdbc:sqlserver://localhost:1433;databaseName=Online_Maketingplace24_1", "sa", "123456");
-
-
-
-
+        this("jdbc:sqlserver://localhost:1433;databaseName=Online_Maketingplace24", "sa", "123456");
     }
 
     public static Connection getConnection() {

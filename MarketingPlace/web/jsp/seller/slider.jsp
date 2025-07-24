@@ -87,6 +87,12 @@
                         <span>View Profile</span>
                     </a>
                 </li>
+                <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/seller/seller-password" class='sidebar-link'>
+                        <i class="bi bi-lock-fill"></i>
+                        <span>Change Password</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-item">
                     <a href="${pageContext.request.contextPath}/LogoutAccount" class='sidebar-link'>

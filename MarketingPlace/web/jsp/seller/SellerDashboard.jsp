@@ -211,63 +211,61 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-12 col-xl-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4>Latest Comments</h4>
+                                            <h4>Top Selling Products</h4>
                                         </div>
                                         <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-hover table-lg">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Comment</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="col-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-md">
-                                                                        <img src="${pageContext.request.contextPath}/asset/images/faces/5.jpg">
-                                                                    </div>
-                                                                    <p class="font-bold ms-3 mb-0">Si Cantik</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">Congratulations on your graduation!</p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="col-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-md">
-                                                                        <img src="${pageContext.request.contextPath}/asset/images/faces/2.jpg">
-                                                                    </div>
-                                                                    <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">Wow amazing design! Can you make another
-                                                                    tutorial for
-                                                                    this design?</p>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                            <canvas id="topSellingChart" height="120"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-3">
-                            <div class="card">
-                                <div class="card-body py-4 px-5">
-                                    <div class="d-flex align-items-center">
-                                        <img src="${pageContext.request.contextPath}/${sessionScope.user.imageURL}"
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <script>
+                                                const ctx = document.getElementById('topSellingChart').getContext('2d');
+                                                const topSellingChart = new Chart(ctx, {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: [<c:forEach var="p" items="${topProducts}">"${p.productName}",</c:forEach>],
+                                                                datasets: [{
+                                                                        label: 'Quantity Sold',
+                                                                        data: [<c:forEach var="p" items="${topProducts}">${p.totalSold},</c:forEach>],
+                                                                        backgroundColor: '#435ebe'
+                                                                    }]
+                                                    },
+                                                    options: {
+                                                        responsive: true,
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false
+                                                            },
+                                                            tooltip: {
+                                                                enabled: true
+                                                            }
+                                                        },
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true,
+                                                                title: {
+                                                                    display: true,
+                                                                    text: 'Quantity Sold'
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                </script>
+
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body py-4 px-5">
+                                        <div class="d-flex align-items-center">
+                                            <img src="${pageContext.request.contextPath}/${sessionScope.user.imageURL}"
                                              alt="User Avatar"
                                              style="
                                              width: 80px;

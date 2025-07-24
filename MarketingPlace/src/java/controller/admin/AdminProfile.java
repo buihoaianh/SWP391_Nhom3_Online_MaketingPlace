@@ -2,30 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.UserController;
+package controller.admin;
 
-import dao.CategoriesDAO;
+import dao.UserDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Product;
-import dao.ProductDAO;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import model.Account;
-import model.Categories;
-import model.TopProduct;
 
 /**
  *
- * @author tulok
+ * @author Admin
  */
-@WebServlet(name = "Home", urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "AdminProfile", urlPatterns = {"/admin/admin-profile"})
+public class AdminProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,26 +34,18 @@ public class Home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ProductDAO dbProduct = new ProductDAO();
-
-        // Chỉ lấy 4 sản phẩm đầu tiên (hoặc nổi bật nếu có flag)
-        ArrayList<Product> allProducts = dbProduct.getAllProduct(); // hoặc getFeaturedProducts(4);
-        ArrayList<Product> newArrivalProducts = dbProduct.getLatestProducts(4);
-        ArrayList<Product> featuredProducts = new ArrayList<>();
-
-        for (int i = 0; i < Math.min(4, allProducts.size()); i++) {
-            featuredProducts.add(allProducts.get(i));
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminProfile</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminProfile at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
-        System.out.println("Số sản phẩm nổi bật: " + featuredProducts.size());
-
-        
-        CategoriesDAO dbCategory = new CategoriesDAO();
-        List<Categories> categories = dbCategory.getAllCategories();
-        request.setAttribute("products", featuredProducts);
-        request.setAttribute("categories", categories);
-        request.setAttribute("newarrivals", newArrivalProducts);
-        request.getRequestDispatcher("jsp/public/Home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,7 +60,16 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        Account acc = (Account) session.getAttribute("user");
+
+        if (acc != null) {
+            UserDAO dao = new UserDAO();
+            Account fullAccount = dao.getAccountById(acc.getAccountID());
+
+            request.setAttribute("account", fullAccount);
+            request.getRequestDispatcher("/jsp/admin/AdminProfile.jsp").forward(request, response);
+        }
     }
 
     /**
