@@ -141,16 +141,7 @@ public class CustomerDAO extends ConnectDB {
         return list;
     }
 
-    public boolean changeCustomerStatus(int accountId) {
-        String sql = "UPDATE Account SET Status = ~Status WHERE AccountID = ? AND RoleID = 3";
-        try (PreparedStatement ps = connect.prepareStatement(sql)) {
-            ps.setInt(1, accountId);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 
     public void updateCustomerDescriptionsFromMemberLevel() {
         String sql = """

@@ -5,6 +5,7 @@
 package controller.admin;
 
 import controller.UserController.*;
+import dao.DashboardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  *
@@ -28,12 +30,29 @@ private static final long serialVersionUID = 1L;
 //    }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-         request.getRequestDispatcher("/jsp/admin/Dashboard.jsp")
-               .forward(request, response);
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    DashboardDAO dao = new DashboardDAO();
 
-    }
+    int totalSellers = dao.getTotalSellers();
+    int totalCustomers = dao.getTotalCustomers();
+    int totalProducts = dao.getTotalProducts();
+
+    Map<String, Double> topSellers = dao.getTopSellersRevenue();
+    Map<String, Double> topCustomers = dao.getTopCustomersSpending();
+
+    request.setAttribute("totalSellers", totalSellers);
+    request.setAttribute("totalCustomers", totalCustomers);
+    request.setAttribute("totalProducts", totalProducts);
+
+    request.setAttribute("topSellers", topSellers);
+    request.setAttribute("topCustomers", topCustomers);
+
+    request.getRequestDispatcher("/jsp/admin/Dashboard.jsp")
+           .forward(request, response);
+}
+
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
