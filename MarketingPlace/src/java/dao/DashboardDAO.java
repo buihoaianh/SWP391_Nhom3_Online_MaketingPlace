@@ -1,15 +1,15 @@
 package dao;
 
-
 import config.ConnectDB;
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.text.DecimalFormat;
 
 public class DashboardDAO extends ConnectDB {
 
     public int getTotalSellers() {
-        String sql = "SELECT COUNT(*) FROM Account WHERE RoleID = 2";
+        String sql = "SELECT COUNT(DISTINCT AccountID) FROM SellerRequests WHERE Status = 'Approve'";
         try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);
@@ -42,6 +42,24 @@ public class DashboardDAO extends ConnectDB {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public String formatRevenue(double totalRevenue) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        return df.format(totalRevenue);
+    }
+
+    public double getTotalRevenue() {
+        String sql = "SELECT SUM(CAST(TotalAmount AS FLOAT)) FROM [Order] WHERE OrderStatusID = 2";
+        try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                double totalRevenue = rs.getDouble(1);
+                return totalRevenue;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
     }
 
     public Map<String, Double> getTopSellersRevenue() {
@@ -82,7 +100,24 @@ public class DashboardDAO extends ConnectDB {
         }
         return data;
     }
-    
-    
+
+    public Map<String, Integer> getProductCountByCategory() {
+        String sql = """
+    SELECT c.CategoryName, COUNT(p.ProductId) AS ProductCount
+    FROM Products p
+    JOIN Categories c ON p.CategoryID = c.CategoryID
+    GROUP BY c.CategoryName
+    ORDER BY ProductCount DESC
+    """;
+        Map<String, Integer> productCount = new LinkedHashMap<>();
+        try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                productCount.put(rs.getString("CategoryName"), rs.getInt("ProductCount"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productCount;
+    }
 
 }
