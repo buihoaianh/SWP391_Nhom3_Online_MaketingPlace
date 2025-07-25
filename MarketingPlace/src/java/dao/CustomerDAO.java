@@ -141,17 +141,6 @@ public class CustomerDAO extends ConnectDB {
         return list;
     }
 
-    public boolean changeCustomerStatus(int accountId) {
-        String sql = "UPDATE Account SET Status = ~Status WHERE AccountID = ? AND RoleID = 3";
-        try (PreparedStatement ps = connect.prepareStatement(sql)) {
-            ps.setInt(1, accountId);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public void updateCustomerDescriptionsFromMemberLevel() {
         String sql = """
         UPDATE A
@@ -180,6 +169,67 @@ public class CustomerDAO extends ConnectDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Account> getCustomersBySellerID(int sellerID) {
+        List<Account> list = new ArrayList<>();
+        String sql = """
+    SELECT DISTINCT a.*, r.RoleName, m.MemberName
+    FROM [Order] o
+    JOIN Account a ON o.CustomerID = a.AccountID
+    JOIN Roles r ON a.RoleID = r.RoleID
+    LEFT JOIN CustomerMemberLevel cml ON a.AccountID = cml.CustomerID
+    LEFT JOIN Member m ON cml.MemberID = m.MemberID
+    WHERE o.SellerID = ? AND a.RoleID = 3;
+    """;
+
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountID(rs.getInt("AccountID"));
+                acc.setFullName(rs.getString("FullName"));
+                acc.setStatus(rs.getBoolean("Status"));
+                acc.setDescription(rs.getString("MemberName"));
+                list.add(acc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Account> getCustomersBySellerIDWithPagination(int sellerID, int pageNumber, int pageSize) {
+        List<Account> list = new ArrayList<>();
+        String sql = """
+    SELECT DISTINCT a.*, r.RoleName, m.MemberName
+    FROM [Order] o
+    JOIN Account a ON o.CustomerID = a.AccountID
+    JOIN Roles r ON a.RoleID = r.RoleID
+    LEFT JOIN CustomerMemberLevel cml ON a.AccountID = cml.CustomerID
+    LEFT JOIN Member m ON cml.MemberID = m.MemberID
+    WHERE o.SellerID = ? AND a.RoleID = 3
+    ORDER BY a.AccountID
+    OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;
+    """;
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerID);
+            ps.setInt(2, (pageNumber - 1) * pageSize);  // Calculate the starting row based on the page number
+            ps.setInt(3, pageSize);  // The number of records per page
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setAccountID(rs.getInt("AccountID"));
+                acc.setFullName(rs.getString("FullName"));
+                acc.setStatus(rs.getBoolean("Status"));
+                acc.setDescription(rs.getString("MemberName"));
+                list.add(acc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static void main(String[] args) {

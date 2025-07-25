@@ -58,10 +58,10 @@
             <div class="d-flex py-3 align-items-center justify-content-between">
 
                 <!-- Logo -->
-                <a href="Home" class="logo d-flex align-items-center">
+                <a style="text-decoration: none" href="Home" class="logo d-flex align-items-center">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
                     <!-- <img src="${pageContext.request.contextPath}/assets/img/logo.webp" alt=""> -->
-                    <h1 class="sitename">eStore</h1>
+                    <h1 style="text-decoration: none"  class="sitename">eStore</h1>
                 </a>
 
                 <!-- Search -->
@@ -156,9 +156,10 @@
             <div class="position-relative">
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li><a href="Home" class="active">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="Contact">Contact</a></li>
+                        <li><a style="text-decoration: none" href="Home" class="active">Home</a></li>
+                        <li><a style="text-decoration: none" href="about.html">About</a></li>
+                        <li><a style="text-decoration: none" href="/MarketingPlace/Blog">Blogs</a></li>
+                        <li><a style="text-decoration: none" href="Contact">Contact</a></li>
 
                     </ul>
                 </nav>

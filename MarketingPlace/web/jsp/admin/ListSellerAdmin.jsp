@@ -136,6 +136,26 @@
 
                 </table>
 
+                <div class="d-flex justify-content-center mt-3">
+                    <ul class="pagination">
+                        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+                            <a class="page-link" href="?page=${currentPage - 1}&keyword=${keyword}">Previous</a>
+                        </li>
+
+                        <c:forEach var="i" begin="1" end="${totalPages}">
+                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                <a class="page-link" href="?page=${i}&keyword=${keyword}">${i}</a>
+                            </li>
+                        </c:forEach>
+
+                        <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+                            <a class="page-link" href="?page=${currentPage + 1}&keyword=${keyword}">Next</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+
             </div>
 
         </div>

@@ -1,7 +1,7 @@
 <%-- 
     Document   : slider
     Created on : Jun 18, 2025, 12:35:31 AM
-    Author     : Admin
+    Author     : chinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -85,6 +85,12 @@
                     <a href="${pageContext.request.contextPath}/seller/seller-profile" class='sidebar-link'>
                         <i class="iconly-boldShow"></i>
                         <span>View Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item active ">
+                    <a href="${pageContext.request.contextPath}/seller/seller-password" class='sidebar-link'>
+                        <i class="bi bi-lock-fill"></i>
+                        <span>Change Password</span>
                     </a>
                 </li>
 

@@ -34,6 +34,7 @@ public class FeedbackDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
+    //
     
     // lấy ra những orderID đã Success
     public List<Order> getSuccessfulOrders(int accountId) {
@@ -292,7 +293,12 @@ public class FeedbackDAO {
 
         return list;
     }
+<<<<<<< Updated upstream
 // 1. Insert Feedback chính
+=======
+    
+    // 1. Insert Feedback chính
+>>>>>>> Stashed changes
     public int insertFeedback(int accountId, String text, int rating, int variantId, int orderId) {
         String sql =
         "INSERT INTO [dbo].[Feedbacks] " +
@@ -300,6 +306,236 @@ public class FeedbackDAO {
         "VALUES (?, ?, ?, GETDATE(), ?, ?, 1)";
         try (
             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+<<<<<<< Updated upstream
+=======
+
+            ps.setInt(1, accountId);
+            ps.setString(2, text);
+            ps.setInt(3, rating);
+            ps.setInt(4, variantId);
+            ps.setInt(5, orderId);
+
+            int affected = ps.executeUpdate();
+            if (affected == 0) {
+                throw new SQLException("Chưa có dòng nào được insert vào Feedbacks");
+            }
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }   
+
+    // 2. Insert ảnh vào ImageFeedback
+    public boolean insertImageFeedback(int feedbackId, String imagePath) throws SQLException {
+        String sql = "INSERT INTO dbo.ImageFeedback (FeedbackID, ImageURL) VALUES (?, ?)";
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, feedbackId);
+            ps.setString(2, imagePath);
+            return ps.executeUpdate() == 1;
+        }
+    }
+
+    // 3. Cập nhật OrderDetails.Status
+    public void updateOrderDetailStatus(int orderDetailId, int status) {
+        String sql = "UPDATE OrderDetails SET Status = ? WHERE OrderDetailsID = ?";
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, status);
+            ps.setInt(2, orderDetailId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Phân biệt feedback còn “hiện hữu” hay đã bị xoá mềm (soft-delete).
+    public Feedbacks getFeedbackByOrderAndVariant(int orderId, int productVariantId) {
+        String sql = "SELECT * FROM Feedbacks WHERE OrderID = ? AND ProductVariantID = ? AND Status = 1";
+
+        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ps.setInt(2, productVariantId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Feedbacks f = new Feedbacks();
+                f.setFeedbackID(rs.getInt("FeedbackID"));
+                f.setAccountID(rs.getInt("AccountID"));
+                f.setFeedbackText(rs.getString("FeedbackText"));
+                f.setRating(rs.getInt("Rating"));
+                f.setCreateFeedbackDate(rs.getTimestamp("CreateFeedbackDate"));
+                f.setProductVariantID(rs.getInt("ProductVariantID"));
+                f.setPOrderID(rs.getInt("OrderID"));
+                f.setStatus(rs.getInt("Status"));
+                return f;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<String> getImageUrlsByFeedbackId(int feedbackId) {
+        List<String> images = new ArrayList<>();
+        String sql = "SELECT ImageURL FROM ImageFeedback WHERE FeedbackID = ?";
+        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, feedbackId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                images.add(rs.getString("ImageURL"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return images;
+    }
+    
+     public int updateFeedback(Feedbacks fb) throws SQLException {
+        String sql = 
+            "UPDATE dbo.Feedbacks\n" +
+            "   SET AccountID           = ?,\n" +
+            "       FeedbackText        = ?,\n" +
+            "       Rating              = ?,\n" +
+            "       CreateFeedbackDate  = ?,\n" +
+            "       ProductVariantID    = ?,\n" +
+            "       OrderID             = ?,\n" +
+            "       Status              = ?\n" +
+            " WHERE FeedbackID         = ?";
+
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+
+
+            ps.setInt(   1, fb.getAccountID());
+            ps.setString(2, fb.getFeedbackText());
+            ps.setInt(   3, fb.getRating());
+            ps.setTimestamp(4, new Timestamp(fb.getCreateFeedbackDate().getTime()));
+            ps.setInt(   5, fb.getProductVariantID());
+            ps.setInt(   6, fb.getPOrderID());
+            ps.setInt(   7, fb.getStatus());
+            ps.setInt(   8, fb.getFeedbackID());
+
+            return ps.executeUpdate();
+        }
+    }
+     
+     /** Xóa toàn bộ ảnh cũ của một feedback */
+    public void deleteImagesByFeedbackId(int feedbackId) throws SQLException {
+        String sql = "DELETE FROM dbo.ImageFeedback WHERE FeedbackID = ?";
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, feedbackId);
+            ps.executeUpdate();
+        }
+    }
+    
+     public void softResetFeedback(int feedbackId) throws SQLException {
+        // 1) Xóa ảnh cũ trước
+        deleteImagesByFeedbackId(feedbackId);
+
+        // 2) Reset feedback
+        String sql =
+          "UPDATE dbo.Feedbacks\n" +
+          "   SET Rating             = 0,\n" +
+          "       FeedbackText       = NULL,\n" +
+          "       Status             = 0,\n" +
+          "       CreateFeedbackDate = GETDATE()\n" +
+          " WHERE FeedbackID = ?";
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, feedbackId);
+            ps.executeUpdate();
+        }
+    }
+     
+     //seller
+     //lấy về tất cả các orderID đã thành công giao và nhận và của đúng thằng seller đang đăng nhập
+    public List<Order> getSuccessfulOrdersBySeller(int accountId) {
+            List<Order> list = new ArrayList<>();
+            String sql =
+                "SELECT o.OrderID, o.OrderDate, o.TotalAmount, o.CustomerID " +
+                "FROM [Order] o " +
+                "  JOIN Account a       ON o.SellerID      = a.AccountID " +
+                "  JOIN OrderStatus os  ON o.OrderStatusID = os.OrderStatusID " +
+                "WHERE a.AccountID = ? " +
+                "  AND os.OrderStatusName = 'Success'";
+
+            try (
+                 PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+
+                ps.setInt(1, accountId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Order order = new Order();
+                        order.setOrderId    (rs.getInt   ("OrderID"));
+                        order.setOrderDate  (rs.getDate  ("OrderDate"));
+                        order.setTotalAmount(rs.getString("TotalAmount"));
+                        order.setCustomerId(rs.getInt   ("CustomerID"));
+                        list.add(order);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+        }
+        return list;
+    }
+
+     
+     // Nếu cần lấy danh sách Feedback object với ảnh.
+        public List<Feedbacks> getFeedbacksWithImagesByOrderId(int orderId) {
+        String sql = ""
+          + "SELECT "
+          + "  f.FeedbackID, f.OrderID, f.AccountID, f.ProductVariantID, "
+          + "  f.Rating, f.FeedbackText, f.CreateFeedbackDate, f.Status, "
+          + "  i.ImageURL "
+          + "FROM Feedbacks f "
+          + "LEFT JOIN ImageFeedback i "
+          + "  ON f.FeedbackID = i.FeedbackID "
+          + "WHERE f.OrderID = ?";
+
+        Map<Integer, Feedbacks> map = new LinkedHashMap<>();
+        try (
+             PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int fid = rs.getInt("FeedbackID");
+
+                    // nếu chưa tạo object Feedback này thì khởi tạo
+                    Feedbacks fb = map.get(fid);
+                    if (fb == null) {
+                        fb = new Feedbacks();
+                        fb.setFeedbackID(fid);
+                        fb.setPOrderID(rs.getInt("OrderID"));
+                        fb.setAccountID(rs.getInt("AccountID"));
+                        fb.setProductVariantID(rs.getInt("ProductVariantID"));
+                        fb.setRating            (rs.getInt("Rating"));
+                        fb.setFeedbackText      (rs.getString("FeedbackText"));
+                        fb.setCreateFeedbackDate(rs.getTimestamp("CreateFeedbackDate"));
+                        fb.setStatus            (rs.getInt("Status"));
+                        map.put(fid, fb);
+                    }
+
+                    // thêm ảnh nếu có
+                    String url = rs.getString("ImageURL");
+                    if (url != null) {
+                        fb.getImageUrls().add(url);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>(map.values());
+    }
+
+    
+>>>>>>> Stashed changes
 
             ps.setInt(1, accountId);
             ps.setString(2, text);

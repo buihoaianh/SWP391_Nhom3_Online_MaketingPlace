@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 import model.Role;
 
 public class SellerDao extends ConnectDB {
+
     private final Logger logger;
     private Connection connect;
-
 
     public SellerDao() {
         this.logger = Logger.getLogger(this.getClass().getName());
@@ -33,24 +33,23 @@ public class SellerDao extends ConnectDB {
             e.printStackTrace();
         }
     }
-    
 
-    public List<Integer> getSellerAccountIDs() {
+    public List<Integer> getApprovedSellerIDs() {
         List<Integer> sellerIds = new ArrayList<>();
-        String sql = "SELECT AccountID FROM Account WHERE RoleID = 2";
+        String sql = "SELECT DISTINCT AccountID FROM SellerRequests WHERE Status = 'Approve'";
 
         try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 sellerIds.add(rs.getInt("AccountID"));
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
+
         return sellerIds;
     }
-    //lay 1 seller
 
+    //lay 1 seller
     public Account getSellerById(int accountId) {
         Account acc = null;
         String sql = "SELECT "
@@ -109,7 +108,7 @@ public class SellerDao extends ConnectDB {
     }
 
     public void printAllSellers() {
-        List<Integer> sellerIds = getSellerAccountIDs();
+        List<Integer> sellerIds = getApprovedSellerIDs();
         if (sellerIds.isEmpty()) {
             System.out.println("Not find seller (RoleID = 2).");
             return;
@@ -178,7 +177,118 @@ public class SellerDao extends ConnectDB {
         }
         return false;
     }
- 
+
+    public List<Account> getApprovedSellersByPage(int pageIndex, int pageSize) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT a.* FROM Account a "
+                + "JOIN SellerRequests sr ON a.AccountID = sr.AccountID "
+                + "WHERE sr.Status = 'Approve' AND a.RoleID = 2 "
+                + "ORDER BY a.AccountID "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, (pageIndex - 1) * pageSize);
+            ps.setInt(2, pageSize);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Account acc = new Account();
+                    acc.setAccountID(rs.getInt("AccountID"));
+                    acc.setRoleID(rs.getInt("RoleID"));
+                    acc.setImageURL(rs.getString("ImageURL"));
+                    acc.setFullName(rs.getString("FullName"));
+                    acc.setEmail(rs.getString("Email"));
+                    acc.setPassword(rs.getString("Password"));
+                    acc.setPhoneNumber(rs.getString("PhoneNumber"));
+                    acc.setAddress(rs.getString("Address"));
+                    acc.setCreateDate(rs.getTimestamp("CreateDate").toLocalDateTime());
+                    acc.setStatus(rs.getBoolean("Status"));
+                    acc.setDescription(rs.getString("Description"));
+                    list.add(acc);
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+
+        return list;
+    }
+
+    public int countApprovedSellers() {
+        String sql = "SELECT COUNT(DISTINCT a.AccountID) "
+                + "FROM Account a JOIN SellerRequests sr ON a.AccountID = sr.AccountID "
+                + "WHERE sr.Status = 'Approve' AND a.RoleID = 2";
+
+        try (PreparedStatement ps = connect.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        return 0;
+    }
+
+    public List<Account> searchSellerByPage(String keyword, int pageIndex, int pageSize) {
+        List<Account> list = new ArrayList<>();
+        String sql = "SELECT a.* FROM Account a "
+                + "JOIN Roles r ON a.RoleID = r.RoleID "
+                + "WHERE a.RoleID = 2 AND ("
+                + "    a.AccountID LIKE ? OR "
+                + "    a.FullName COLLATE Latin1_General_CI_AI LIKE ?"
+                + ") "
+                + "ORDER BY a.AccountID "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            ps.setInt(3, (pageIndex - 1) * pageSize);
+            ps.setInt(4, pageSize);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Account acc = new Account();
+                    acc.setAccountID(rs.getInt("AccountID"));
+                    acc.setRoleID(rs.getInt("RoleID"));
+                    acc.setImageURL(rs.getString("ImageURL"));
+                    acc.setFullName(rs.getString("FullName"));
+                    acc.setEmail(rs.getString("Email"));
+                    acc.setPassword(rs.getString("Password"));
+                    acc.setPhoneNumber(rs.getString("PhoneNumber"));
+                    acc.setAddress(rs.getString("Address"));
+                    Timestamp ts = rs.getTimestamp("CreateDate");
+                    acc.setCreateDate(ts != null ? ts.toLocalDateTime() : null);
+                    acc.setStatus(rs.getBoolean("Status"));
+                    acc.setDescription(rs.getString("Description"));
+                    list.add(acc);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int countSearchedSellers(String keyword) {
+        String sql = "SELECT COUNT(*) FROM Account a "
+                + "JOIN Roles r ON a.RoleID = r.RoleID "
+                + "WHERE a.RoleID = 2 AND ("
+                + "    a.AccountID LIKE ? OR "
+                + "    a.FullName COLLATE Latin1_General_CI_AI LIKE ?"
+                + ")";
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setString(1, "%" + keyword + "%");
+            ps.setString(2, "%" + keyword + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     public static void main(String[] args) {
         SellerDao dao = new SellerDao();

@@ -173,9 +173,19 @@
                     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
                 </div>
             </div>
+<<<<<<< Updated upstream
             <div id="main">
                 <div class="main-content-card animate-fade-in">
                     <h1>List Product</h1>
+=======
+            <!-- Spinner End -->
+
+
+           
+
+            <div class="content">
+                <h1>List Product1</h1>
+>>>>>>> Stashed changes
                 <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 10px;">
 
                     <form action="${pageContext.request.contextPath}/seller/products" method="post" style="display: flex; align-items: center;">

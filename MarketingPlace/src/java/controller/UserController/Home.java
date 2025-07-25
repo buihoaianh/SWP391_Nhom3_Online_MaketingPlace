@@ -5,20 +5,20 @@
 package controller.UserController;
 
 import dao.CategoriesDAO;
-import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Product;
 import dao.ProductDAO;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import model.Account;
 import model.Categories;
+import model.TopProduct;
 
 /**
  *
@@ -51,6 +51,8 @@ public class Home extends HttpServlet {
         }
 
         System.out.println("Số sản phẩm nổi bật: " + featuredProducts.size());
+
+        
         CategoriesDAO dbCategory = new CategoriesDAO();
         List<Categories> categories = dbCategory.getAllCategories();
         request.setAttribute("products", featuredProducts);

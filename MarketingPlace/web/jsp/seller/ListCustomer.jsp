@@ -55,6 +55,23 @@
                 font-weight: bold;
             }
 
+            .pagination {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+            .pagination .btn {
+                padding: 10px 20px;
+                text-decoration: none;
+                color: white;
+            }
+            .pagination .btn.active {
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+
+
         </style>
     </head>
 
@@ -77,9 +94,21 @@
                 <h2 class="text-center title">List Customer</h2>
                 <form class="search-box justify-content-center" action="${pageContext.request.contextPath}/seller/list-customer" method="get">
                     <input type="text" name="keyword" placeholder="Search by ID or Name..." class="form-control"/>
+
                     <button type="submit" class="btn btn-primary">Search</button>
                     <a href="${pageContext.request.contextPath}/seller/list-customer" class="btn btn-secondary">View All</a>
                 </form>
+
+                <form class="search-box justify-content-center" action="${pageContext.request.contextPath}/seller/list-customer" method="get">
+                    <select name="level" class="form-control" onchange="this.form.submit()">
+                        <option value="">All Levels</option>
+                        <option value="Silver Level Customers" ${levelFilter == 'Silver Level Customers' ? 'selected' : ''}>Silver Level</option>
+                        <option value="Gold Level Customers" ${levelFilter == 'Gold Level Customers' ? 'selected' : ''}>Gold Level</option>
+                        <option value="Diamond Level Customer" ${levelFilter == 'Diamond Level Customer' ? 'selected' : ''}>Diamond Level</option>
+                        <option value="Bronze Level Customers" ${levelFilter == 'Bronze Level Customers' ? 'selected' : ''}>Bronze Level</option>
+                    </select>
+                </form>
+
                 <c:if test="${not empty sessionScope.statusMessage}">
                     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                         ${sessionScope.statusMessage}
@@ -96,61 +125,67 @@
                                 <th>FULLNAME</th>
                                 <th>STATUS</th>
                                 <th>DESCRIPTION</th>
-                                <th>ACTION</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="customer" items="${customerList}" varStatus="loop">
-                            <tr>
-                                <td class="text-center">${loop.count}</td>
-                                <td class="text-center">
-                                    <a href="${pageContext.request.contextPath}/seller/list-customer-detail?id=${customer.accountID}" class="text-decoration-none">
-                                        ${customer.accountID}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/seller/list-customer-detail?id=${customer.accountID}" class="text-decoration-none">
-                                        ${customer.fullName}
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge
-                                          <c:choose>
-                                          <c:when test="${customer.status}">bg-success</c:when>
-                                        <c:otherwise>bg-secondary</c:otherwise>
-                                        </c:choose>">
-                                        <c:choose>
-                                            <c:when test="${customer.status}">Active</c:when>
-                                            <c:otherwise>Inactive</c:otherwise>
-                                        </c:choose>
-                                    </span>
-                                </td>
-                                <td>${customer.description}</td>
-                                <td class="text-center">
-                                    <form action="${pageContext.request.contextPath}/seller/list-customer/change-customer-status" method="post">
-                                        <input type="hidden" name="accountId" value="${customer.accountID}" />
-                                        <button type="submit" class="btn btn-status
-                                                <c:choose>
-                                                <c:when test="${customer.status}">btn-danger</c:when>
-                                            <c:otherwise>btn-success</c:otherwise>
-                                            </c:choose>">
+                            <c:forEach var="customer" items="${customerList}" varStatus="loop">
+                                <tr>
+                                    <td class="text-center">${loop.count}</td>
+                                    <td class="text-center">
+                                        <a href="${pageContext.request.contextPath}/seller/list-customer-detail?id=${customer.accountID}" class="text-decoration-none">
+                                            ${customer.accountID}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/seller/list-customer-detail?id=${customer.accountID}" class="text-decoration-none">
+                                            ${customer.fullName}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge
+                                              <c:choose>
+                                                  <c:when test="${customer.status}">bg-success</c:when>
+                                                  <c:otherwise>bg-secondary</c:otherwise>
+                                              </c:choose>">
                                             <c:choose>
-                                                <c:when test="${customer.status}">Inactive</c:when>
-                                                <c:otherwise>Active</c:otherwise>
+                                                <c:when test="${customer.status}">Active</c:when>
+                                                <c:otherwise>Inactive</c:otherwise>
                                             </c:choose>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        <c:if test="${empty customerList}">
-                            <tr>
-                                <td colspan="6" class="text-center">No found Customer</td>
-                            </tr>
-                        </c:if>
+                                    </td>
+                                    <td>${customer.description}</td>
+                                </tr>
+                            </c:forEach>
+
+                            <c:if test="${empty customerList}">
+                                <tr>
+                                    <td colspan="5" class="text-center">No found Customer</td>
+                                </tr>
+                            </c:if>
                         </tbody>
                     </table>
                 </div>
+
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a href="?page=${currentPage - 1}" class="btn btn-primary">Previous</a>
+                    </c:if>
+
+                    <c:forEach var="i" begin="1" end="${totalPages}" varStatus="status">
+                        <c:choose>
+                            <c:when test="${i == currentPage}">
+                                <a href="?page=${i}" class="btn btn-primary active">${i}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="?page=${i}" class="btn btn-primary">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="?page=${currentPage + 1}" class="btn btn-primary">Next</a>
+                    </c:if>
+                </div>
+
             </div>
         </div>
         <script src="${pageContext.request.contextPath}/asset/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>

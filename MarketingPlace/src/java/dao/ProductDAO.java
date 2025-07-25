@@ -17,11 +17,13 @@ import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.Account;
 import model.Categories;
 import model.Color;
 import model.ProductImage;
 import model.ProductVariant;
 import model.Size;
+import model.TopProduct;
 
 /**
  *
@@ -65,6 +67,76 @@ public class ProductDAO extends ConnectDB {
         }
         return count;
     }
+
+    public List<Product> getAllProducts() {
+        List<Product> list = new ArrayList<>();
+        String sql
+                = "SELECT "
+                + "  p.ProductID, p.ThumbnailURL, p.ProductName, p.Description, p.Status, p.isDeleted, "
+                + "  p.AccountID AS SellerID, "
+                + "  p.CategoryID, c.CategoryName "
+                + "FROM Products p "
+                + "LEFT JOIN Categories c ON p.CategoryID = c.CategoryID";
+
+        try (
+                PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("ProductID"));
+                p.setThumbnailURL(rs.getString("ThumbnailURL"));
+                p.setProductName(rs.getString("ProductName"));
+                p.setDescription(rs.getString("Description"));
+                p.setStatus(rs.getString("Status"));      // gán status
+                p.setIsDeleted(rs.getInt("isDeleted"));
+                p.setAccountId(rs.getInt("SellerID"));    // dùng alias SellerID
+
+                Categories cat = new Categories();
+                cat.setCategoryID(rs.getInt("CategoryID"));
+                cat.setCategoryName(rs.getString("CategoryName"));
+                p.setCategory(cat);
+
+                list.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Product> getProducts(int AccountId) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT p.*, c.CategoryName \n"
+                + "        FROM Products p \n"
+                + "        LEFT JOIN Categories c ON p.CategoryID = c.CategoryID \n"
+                + "        WHERE p.isDeleted = 1 AND p.AccountID = ?\n"
+                + "        ORDER BY p.CreateProductDate DESC";
+
+        try {
+            ps = ConnectDB.getConnection().prepareStatement(query);
+            ps.setInt(1, AccountId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product o = new Product(
+                        rs.getInt("productId"),
+                        rs.getString("thumbnailURL"),
+                        rs.getString("productName"),
+                        rs.getTimestamp("createProductDate"),
+                        rs.getString("description"),
+                        new Categories(rs.getString("CategoryName"))
+                );
+                o.setStatus(rs.getString("Status"));
+                list.add(o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+<<<<<<< Updated upstream
+=======
+     
      public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();
         String sql =
@@ -103,44 +175,11 @@ public class ProductDAO extends ConnectDB {
         return list;
     }
 
-    public List<Product> getProducts(int AccountId) {
-        List<Product> list = new ArrayList<>();
-        String query = "SELECT p.*, c.CategoryName \n" +
-            "        FROM Products p \n" +
-            "        LEFT JOIN Categories c ON p.CategoryID = c.CategoryID \n" +
-            "        WHERE p.isDeleted = 1 AND p.AccountID = ?\n" +
-            "        ORDER BY p.CreateProductDate DESC";
-
-        try {
-            ps = ConnectDB.getConnection().prepareStatement(query);
-            ps.setInt(1, AccountId);    
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Product o = new Product(
-                        rs.getInt("productId"),
-                        rs.getString("thumbnailURL"),
-                        rs.getString("productName"),
-                        rs.getTimestamp("createProductDate"),
-                        rs.getString("description"),
-                        new Categories(rs.getString("CategoryName"))
-                );
-                o.setStatus(rs.getString("Status"));
-                list.add(o);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+     
+>>>>>>> Stashed changes
 
     public void createProduct(Product po) {
-        String sql = "INSERT INTO [Products] ([AccountID]\n"
-                + "      ,[ThumbnailURL]\n"
-                + "      ,[ProductName]\n"
-                + "      ,[CategoryID]\n"
-                + "      ,[CreateProductDate]\n"
-                + "      ,[Description]\n"
-                + "      ,[Status]) VALUES (?, ?, ?, ?, ?,?,?)";
+       String sql = "INSERT INTO [Products] ([AccountID], [ThumbnailURL], [ProductName], [CategoryID], [CreateProductDate], [Description], [Status], [isDeleted]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = ConnectDB.getConnection(); //mo ket noi toi sql
@@ -152,6 +191,7 @@ public class ProductDAO extends ConnectDB {
             ps.setTimestamp(5, po.getCreateProductDate());
             ps.setString(6, po.getDescription());
             ps.setString(7, po.getStatus());
+            ps.setInt(8, 1);
             ps.executeUpdate();
 
             int productId = 0;
@@ -725,14 +765,15 @@ public class ProductDAO extends ConnectDB {
         return null;
     }
 
-    public List<Product> getProductsByCategoryId(int categoryId) {
+    public List<Product> getProductsByCategoryId(int categoryId, int AccountId) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT p.*, c.CategoryName FROM Products p "
                 + "JOIN Categories c ON p.CategoryID = c.CategoryID "
-                + "WHERE p.CategoryID = ?";
+                + "WHERE p.CategoryID = ? and p.AccountID = ?";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             pre.setInt(1, categoryId);
+            pre.setInt(2, AccountId);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Product p = new Product();
@@ -778,8 +819,7 @@ public class ProductDAO extends ConnectDB {
                 + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, pv.Price, c.CategoryName";
 
         try (
-                
-            PreparedStatement ps = connect.prepareStatement(sql)) {
+                PreparedStatement ps = connect.prepareStatement(sql)) {
 
             ps.setString(1, "%" + keyword + "%");
             ResultSet rs = ps.executeQuery();
@@ -789,14 +829,42 @@ public class ProductDAO extends ConnectDB {
                 p.setProductId(rs.getInt("ProductID"));
                 p.setProductName(rs.getString("ProductName"));
                 p.setThumbnailURL(rs.getString("ThumbnailURL"));
-                p.setPrice(rs.getDouble("Price")); 
-                p.setCategoryName(rs.getString("CategoryName")); 
+                p.setPrice(rs.getDouble("Price"));
+                p.setCategoryName(rs.getString("CategoryName"));
 
                 list.add(p);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return list;
+    }
+
+    public List<TopProduct> getTopSellingProductsBySeller(int sellerId) {
+        List<TopProduct> list = new ArrayList<>();
+        String sql = """
+        SELECT p.ProductName, SUM(od.Quantity) AS totalSold
+        FROM [Order] o
+        JOIN OrderDetails od ON o.OrderID = od.OrderID
+        JOIN ProductVariant pv ON od.ProductVariantID = pv.ProductVariantId
+        JOIN Products p ON pv.ProductId = p.ProductID
+        WHERE o.SellerID = ?
+        GROUP BY p.ProductName
+        ORDER BY totalSold DESC
+    """;
+
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("ProductName");
+                int sold = rs.getInt("totalSold");
+                list.add(new TopProduct(name, sold));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return list;
     }
 
