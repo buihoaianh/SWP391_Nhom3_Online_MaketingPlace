@@ -33,7 +33,7 @@ public class ConfirmCheckoutServlet extends HttpServlet {
         }
         
         if(user == null) {
-            request.getRequestDispatcher("/jsp/admin/loginRegister.jsp?tab=login").forward(request, response);
+            request.getRequestDispatcher("/jsp/guest/loginRegister.jsp?tab=login").forward(request, response);
             return;
         }
 
