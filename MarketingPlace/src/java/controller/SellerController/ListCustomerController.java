@@ -20,32 +20,63 @@ public class ListCustomerController extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        response.setContentType("text/html;charset=UTF-8");
+        Account seller = (Account) session.getAttribute("user");
+        if (seller == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+        int sellerID = seller.getAccountID();
+        int pageNumber = 1;
+        int pageSize = 5;  // Or retrieve it from the request
 
         String keyword = request.getParameter("keyword");
-        CustomerDAO dao = new CustomerDAO();
-
-        dao.updateCustomerDescriptionsFromMemberLevel();
-        dao.setUnrankedDescriptionForUnlinkedCustomers();
-
-        List<Account> customerList;
-
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            customerList = dao.searchCustomer(keyword.trim());
-        } else {
-            List<Integer> customerIds = dao.getCustomerAccountIDs();
-            customerList = new ArrayList<>();
-            for (Integer id : customerIds) {
-                Account acc = dao.getCustomerById(id);
-                if (acc != null) {
-                    customerList.add(acc);
-                }
-            }
+        String page = request.getParameter("page");
+        String levelFilter = request.getParameter("level");  // Get level filter from dropdown
+        if (page != null) {
+            pageNumber = Integer.parseInt(page);
         }
 
+        CustomerDAO dao = new CustomerDAO();
+        List<Account> customerList = dao.getCustomersBySellerIDWithPagination(sellerID, pageNumber, pageSize);
+
+        // Lọc theo cấp bậc nếu có
+        if (levelFilter != null && !levelFilter.isEmpty()) {
+            customerList = filterByLevel(customerList, levelFilter);
+        }
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            customerList = filterCustomerList(customerList, keyword);
+        }
+
+        int totalCustomers = dao.getCustomersBySellerID(sellerID).size();  // Get total customers for pagination
+        int totalPages = (int) Math.ceil((double) totalCustomers / pageSize);
+
         request.setAttribute("customerList", customerList);
-        request.getRequestDispatcher("/jsp/seller/ListCustomer.jsp")
-                .forward(request, response);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", pageNumber);
+        request.setAttribute("levelFilter", levelFilter);  // Pass the selected level back to the JSP
+        request.getRequestDispatcher("/jsp/seller/ListCustomer.jsp").forward(request, response);
+    }
+
+    private List<Account> filterCustomerList(List<Account> customerList, String keyword) {
+        List<Account> filteredList = new ArrayList<>();
+        for (Account acc : customerList) {
+            if (String.valueOf(acc.getAccountID()).contains(keyword)
+                    || acc.getFullName().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(acc);
+            }
+        }
+        return filteredList;
+    }
+
+    private List<Account> filterByLevel(List<Account> customerList, String levelFilter) {
+        List<Account> filteredList = new ArrayList<>();
+        for (Account acc : customerList) {
+            if (acc.getDescription() != null && acc.getDescription().equalsIgnoreCase(levelFilter)) {
+                filteredList.add(acc);
+            }
+        }
+        return filteredList;
     }
 
     @Override
@@ -62,6 +93,6 @@ public class ListCustomerController extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Servlet for displaying Customer list (RoleID = 3)";
+        return "Servlet for displaying Customer list with filter by level";
     }
 }

@@ -165,10 +165,7 @@
                             <div class="info-row"><span class="info-label">Email:</span> ${customerDetail.email}</div>
                             <div class="info-row"><span class="info-label">Phone Number:</span> ${customerDetail.phoneNumber}</div>
                             <div class="info-row"><span class="info-label">Address:</span> ${customerDetail.address}</div>
-                            <div class="info-row">
-                                <span class="info-label">Create Date:</span> 
-                                <fmt:formatDate value="${createDateAsDate}" pattern="EEE MMM dd HH:mm:ss z yyyy" />
-                            </div>
+                            
                             <div class="info-row">
                                 <span class="info-label">Status:</span>
                                 <c:choose>
