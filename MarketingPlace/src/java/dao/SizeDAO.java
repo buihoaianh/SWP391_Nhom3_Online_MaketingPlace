@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Size;
@@ -59,4 +60,29 @@ public class SizeDAO {
         }
         return null;
     }
+    
+    public int getOrInsertSizeIdByName(String sizeName) {
+    try {
+        String selectSql = "SELECT SizeId FROM Size WHERE SizeName = ?";
+        PreparedStatement ps = ConnectDB.getConnection().prepareStatement(selectSql);
+        ps.setString(1, sizeName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("SizeId");
+        }
+
+        String insertSql = "INSERT INTO Size(SizeName) VALUES(?)";
+        ps = ConnectDB.getConnection().prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, sizeName);
+        ps.executeUpdate();
+        rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return -1;
+}
+    
 }

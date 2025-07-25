@@ -163,14 +163,25 @@ public class CreateProductController extends HttpServlet {
             }
             // String imageName = Helpers.saveImage(imagePart, request);
 
+            ColorDAO colorDAO = new ColorDAO();
+            SizeDAO sizeDAO = new SizeDAO();
+
             for (int i = 0; i < colors.length; i++) {
+                String colorName = colors[i].trim();
+                String sizeName = sizes[i].trim();
+
+                int colorId = colorDAO.getOrInsertColorIdByName(colorName);
+                int sizeId = sizeDAO.getOrInsertSizeIdByName(sizeName);
+
                 ProductVariant variant = new ProductVariant(
-                        new Color(Integer.parseInt(colors[i])),
-                        new Size(Integer.parseInt(sizes[i])),
-                        Long.parseLong(prices[i]),
-                        Integer.parseInt(quantities[i]));
+                    new Color(colorId),
+                    new Size(sizeId),
+                    Long.parseLong(prices[i]),
+                    Integer.parseInt(quantities[i])
+                );
                 variants.add(variant);
             }
+
 
             // Lưu vào DB
             Product product = new Product(createdBy, imageNames.get(0).getImageUrl(), productName,

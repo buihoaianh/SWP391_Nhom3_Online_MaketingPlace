@@ -29,37 +29,26 @@
                ${pageContext.request.requestURI.endsWith("/admin") ? "active" : ""}">
                 <i class="fas fa-home text-dark"></i>Dashboard
             </a>
-            <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/list-seller" class="nav-link text-dark">
-                    <i class="fas fa-regular fa-user text-dark"></i>List Seller</a>
-            </div>
-            <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/getListCustomer" class="nav-link text-dark">
-                    <i class="fas fa-user-circle text-dark"></i>List Customer</a>
-            </div>
-            <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/products" class="nav-link text-dark">
-                    <i class="fas fa-user-circle text-dark"></i>List Product</a>
-            </div>
-                    
-            <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/requests" class="nav-link text-dark">
-                    <i class="fas fa-user-circle text-dark"></i>List Request</a>
-            </div>
 
-            <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/MemberURL" class="nav-link text-dark">
-                    <i class="fas fa-user-circle text-dark"></i>List Member Ranking</a>
-            </div>
+            <a href="${pageContext.request.contextPath}/admin/list-seller" class="nav-link text-dark">
+                <i class="fas fa-store text-dark"></i> List Seller
+            </a>
+            <a href="${pageContext.request.contextPath}/getListCustomer" class="nav-link text-dark">
+                <i class="fas fa-users text-dark"></i> List Customer
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/requests"  class="nav-link text-dark">
+                <i class="fas fa-box text-dark"></i> List Request
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/products" class="nav-link text-dark">
+                <i class="fas fa-box text-dark"></i> List Product
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/MemberURL" class="nav-link text-dark">
+                <i class="fas fa-medal text-dark"></i> List Member Ranking
+            </a>
+<!--            <a href="${pageContext.request.contextPath}/jsp/admin/Statistic.jsp" class="nav-link text-dark">
+                <i class="fas fa-chart-line text-dark"></i> Statistic
+            </a>-->
 
-            <div class="nav-item text-dark">
-                <a href="${pageContext.request.contextPath}/admin/MemberURL" class="nav-link text-dark">
-                    <i class="fas fa-user-circle text-dark"></i>Statistic</a>
-            </div>
-
-            <a href="widget.html" class="nav-item nav-link text-dark"><i class="fa fa-th me-2 text-dark"></i>Widgets</a>
-            <a href="table.html" class="nav-item nav-link text-dark"><i class="fa fa-table me-2 text-dark"></i>Tables</a>
-            <a href="chart.html" class="nav-item nav-link text-dark"><i class="fa fa-chart-bar me-2 text-dark"></i>Charts</a>
         </div>
     </nav>
 </div>
