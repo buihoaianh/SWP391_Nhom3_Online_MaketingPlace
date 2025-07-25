@@ -9,17 +9,27 @@ package model;
  * @author tulok
  */
 public class Discount {
+
     private int discountID;
     private String discountName;
     private String discountType;
-    private double discountValue;
-    private String status;
+    private String discountValue;
+    private boolean status;
     private String description;
+
+    public Discount(String discountName, String discountValue, String description, boolean status, String description1) {
+        this.discountName = discountName;
+        this.discountValue = discountValue;
+        this.status = status;
+        this.description = description;
+    }
+
+    
 
     public Discount() {
     }
 
-    public Discount(int discountID, String discountName, String discountType, double discountValue, String status, String description) {
+    public Discount(int discountID, String discountName, String discountType, String discountValue, boolean status, String description) {
         this.discountID = discountID;
         this.discountName = discountName;
         this.discountType = discountType;
@@ -52,19 +62,19 @@ public class Discount {
         this.discountType = discountType;
     }
 
-    public double getDiscountValue() {
+    public String getDiscountValue() {
         return discountValue;
     }
 
-    public void setDiscountValue(double discountValue) {
+    public void setDiscountValue(String discountValue) {
         this.discountValue = discountValue;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -75,6 +85,5 @@ public class Discount {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
 }

@@ -740,8 +740,7 @@ public class ProductDAO extends ConnectDB {
                 + "GROUP BY p.ProductID, p.ProductName, p.ThumbnailURL, pv.Price, c.CategoryName";
 
         try (
-                
-            PreparedStatement ps = connect.prepareStatement(sql)) {
+                PreparedStatement ps = connect.prepareStatement(sql)) {
 
             ps.setString(1, "%" + keyword + "%");
             ResultSet rs = ps.executeQuery();
@@ -751,8 +750,8 @@ public class ProductDAO extends ConnectDB {
                 p.setProductId(rs.getInt("ProductID"));
                 p.setProductName(rs.getString("ProductName"));
                 p.setThumbnailURL(rs.getString("ThumbnailURL"));
-                p.setPrice(rs.getDouble("Price")); 
-                p.setCategoryName(rs.getString("CategoryName")); 
+                p.setPrice(rs.getDouble("Price"));
+                p.setCategoryName(rs.getString("CategoryName"));
 
                 list.add(p);
             }
@@ -760,6 +759,49 @@ public class ProductDAO extends ConnectDB {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public List<Product> getProductsBySellerId(int sellerId) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT * FROM Products
+        WHERE AccountID = ?
+    """;
+
+        try (PreparedStatement ps = connect.prepareStatement(sql)) {
+            ps.setInt(1, sellerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("ProductID"));
+                p.setAccountId(rs.getInt("AccountID"));
+                p.setThumbnailURL(rs.getString("ThumbnailURL"));
+                p.setProductName(rs.getString("ProductName"));
+                p.setCategoryID(rs.getInt("CategoryID"));
+                p.setDiscountId(rs.getInt("DiscountID"));
+                p.setCreateProductDate(rs.getTimestamp("CreateProductDate"));
+                p.setDescription(rs.getString("Description"));
+                p.setStatus(rs.getString("Status"));
+                list.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public void assignDiscountToProduct(int productId, int discountId) {
+        String sql = "UPDATE Products SET DiscountID = ? WHERE ProductID = ?";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, discountId);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

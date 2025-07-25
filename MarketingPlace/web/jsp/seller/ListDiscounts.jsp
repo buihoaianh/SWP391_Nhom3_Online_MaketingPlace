@@ -264,7 +264,7 @@
                     </div>
 
                     <div class="add-new" style="margin: 10px 0;">
-                        <a href="CategoriesURL?service=insertForm">Add New Voucher</a>
+                        <a href="${pageContext.request.contextPath}/seller/add-discount" class="btn btn-success">Add New Voucher</a>
                     </div>
 
                     <table>

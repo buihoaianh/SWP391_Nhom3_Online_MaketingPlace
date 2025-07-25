@@ -5,6 +5,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -14,18 +15,20 @@ public class DiscountPeriod {
 
     private int discountPeriodID;
     private int discountID;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public DiscountPeriod() {
+    public DiscountPeriod(int discountId, LocalDate startDate1, LocalDate endDate1) {
     }
 
-    public DiscountPeriod(int discountPeriodID, int discountID, LocalDate startDate, LocalDate endDate) {
+    public DiscountPeriod(int discountPeriodID, int discountID, LocalDateTime startDate, LocalDateTime endDate) {
         this.discountPeriodID = discountPeriodID;
         this.discountID = discountID;
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+   
 
     public int getDiscountPeriodID() {
         return discountPeriodID;
@@ -43,20 +46,22 @@ public class DiscountPeriod {
         this.discountID = discountID;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
+
     
+
 }

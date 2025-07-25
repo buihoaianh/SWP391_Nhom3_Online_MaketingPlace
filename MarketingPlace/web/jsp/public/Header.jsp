@@ -158,6 +158,7 @@
                     <ul>
                         <li><a href="Home" class="active">Home</a></li>
                         <li><a href="about.html">About</a></li>
+                        <li><a href="/MarketingPlace/Blog">Blogs</a></li>
                         <li><a href="Contact">Contact</a></li>
 
                     </ul>
