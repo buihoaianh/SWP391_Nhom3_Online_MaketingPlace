@@ -40,10 +40,10 @@ public class UserDAO extends ConnectDB {
 
     public ResultSet getListProductOfCustomer(int customerId) {
         ResultSet rs = null;
-        String sql = "Select p.ProductName, od.Quantity, od.UnitPrice from OrderDetails od "
-                + "inner join [Order] o on o.OrderID = od.OrderID "
-                + "inner join Products p on od.ProductID = p.ProductID "
-                + "where o.CustomerID = ?";
+        String sql = "  select o.OrderID, a.FullName, o.TotalAmount ,o.OrderDate, os.OrderStatusName from [Order] o "
+                + "  inner join Account a on o.CustomerID = a.AccountID "
+                + "  inner join OrderStatus os on os.OrderStatusID = o.OrderStatusID "
+                + "  where o.CustomerID =  ?";
         try {
             PreparedStatement pre = connect.prepareStatement(sql);
             pre.setInt(1, customerId);

@@ -113,6 +113,15 @@
                         <%}%>
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item <%=currentPage == 1 ? "disabled" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=currentPage-1%>">Previous</a></li>
+                            <%for(int i = 1; i <= totalPage; i++) { %>
+                        <li class="page-item <%=currentPage == i ? "active" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=i%>"><%=i%></a></li>
+                            <%}%>
+                        <li class="page-item <%=currentPage == totalPage ? "disabled" : ""%>"><a class="page-link" href="getListCustomer?currentPage=<%=currentPage+1%>">Next</a></li>
+                    </ul>
+                </nav>
                 <!-- Modal -->
                 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

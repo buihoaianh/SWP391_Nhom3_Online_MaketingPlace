@@ -233,7 +233,7 @@
                                 <td colspan="2" >
                                     <button type="submit" name="status" value="Draft">Save as Draft</button>
                                     <button type="submit" name="status" value="Published">Publish</button>
-                                    <button type="button" onclick="window.location.href = 'BlogList.jsp'">Cancel</button>
+                                    <button type="button" onclick="window.location.href = 'BlogURL'">Cancel</button>
                                 </td>
                             </tr>
                         </table>

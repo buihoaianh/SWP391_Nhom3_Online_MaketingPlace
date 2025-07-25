@@ -88,10 +88,11 @@
                         <table class="table table-bordered text-center">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Số lượng</th>
-                                    <th>Đơn giá</th>
+                                    <th>ID</th>
+                                    <th>Customer Name</th>
+                                    <th>TotalAmount</th>
+                                    <th>OrderDate</th>
+                                    <th>OrderStatus</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,10 +102,11 @@
                                        index++;
                                 %>
                                 <tr>
-                                    <th><%=index%></th>
-                                    <td><%=rsCus.getString("ProductName")%></td>
-                                    <td><%=rsCus.getInt("Quantity")%></td>
-                                    <td><%=rsCus.getInt("UnitPrice")%></td>
+                                    <th><%=rsCus.getInt("OrderID")%></th>
+                                    <td><%=rsCus.getString("FullName")%></td>
+                                    <td><%=rsCus.getInt("TotalAmount")%></td>
+                                    <td><%=rsCus.getString("OrderDate")%></td>
+                                    <td><%=rsCus.getString("OrderStatusName")%></td>
                                     <%}
                                     } else {%>
                                 <tr>

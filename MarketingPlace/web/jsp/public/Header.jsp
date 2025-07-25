@@ -131,16 +131,10 @@
 
 
                     <!-- Cart -->
-                    <%
-                       if (session.getAttribute("user") != null) {
-                    %>
                     <a href="cartList" class="header-action-btn">
                         <i class="bi bi-cart3"></i>
                         <span id="quantityCart" class="badge"><%=cart != null ? cart.size() : 0%></span>
                     </a>
-                    <%
-                        }
-                    %>
 
                     <!-- Mobile Navigation Toggle -->
                     <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
