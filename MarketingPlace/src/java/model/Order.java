@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +70,11 @@ public class Order {
     public void setDetails(List<OrderDetail> details) {
         this.details = details;
     }
+<<<<<<< Updated upstream
+=======
+    
+    
+>>>>>>> Stashed changes
 
     public List<OrderItem> getItems() {
         return items;

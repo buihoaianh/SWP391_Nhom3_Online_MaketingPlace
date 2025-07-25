@@ -73,6 +73,7 @@
 
                                 <div class="mt-3">
                                     <c:choose>
+<<<<<<< Updated upstream
                                         
                                         <c:when test="${empty r.status}">
                                             <form action="${pageContext.request.contextPath}/admin/request/update" method="get" style="display:inline;">
@@ -89,6 +90,17 @@
                                             </form>
                                             <a href="${pageContext.request.contextPath}/admin/requests"
                                                class="btn btn-secondary btn-sm">← Back to List</a>
+=======
+                                        <c:when test="${not empty u.imageURL}">
+                                            <img src="${u.imageURL}"
+                                                 alt="Avatar"
+                                                 class="mb-3"
+                                                 style="width: 230px;
+                                                 height: 280px;
+                                                 object-fit: cover;
+                                                 border-radius: 12px;
+                                                 border: 2px solid #ddd;">
+>>>>>>> Stashed changes
                                         </c:when>
                                         
                                         <c:when test="${r.status eq 'Active'}">
@@ -113,10 +125,101 @@
                                         </c:when>
                                         
                                         <c:otherwise>
+<<<<<<< Updated upstream
                                             <a href="${pageContext.request.contextPath}/admin/requests"
                                                class="btn btn-secondary btn-sm">← Back to List</a>
                                         </c:otherwise>
                                     </c:choose>
+=======
+                                            <img src="${u.imageURL}"
+                                                 alt="Avatar"
+                                                 class="mb-3"
+                                                 style="width: 230px;
+                                                 height: 280px;
+                                                 object-fit: cover;
+                                                 border-radius: 12px;
+                                                 border: 2px solid #ddd;">
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <h3 class="card-title mb-1" style="font-size: 1.5rem;">
+                                        ${u.fullName}
+                                    </h3>
+                                    <p class="text-secondary mb-3" style="font-size: 1.1rem;">
+                                        Account ID: ${u.accountID}
+                                    </p>
+
+                                </div>
+
+                                <div class="col-md-8">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <th class="w-25">Role ID</th>
+                                                <td>${u.roleID}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>${u.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone Number</th>
+                                                <td>${u.phoneNumber}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Address</th>
+                                                <td>${u.address}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Create Date</th>
+                                                <td>
+                                                    ${u.createDate}
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Status</th>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${r.status eq 'Active'}">
+                                                            <span class="badge bg-success">Active</span>
+                                                        </c:when>
+                                                        <c:when test="${r.status eq 'Inactive'}">
+                                                            <span class="badge bg-secondary">Inactive</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="badge bg-warning text-dark">Inactive</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Description</th>
+                                                <td>${u.description}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                            
+                                            
+                                    <c:if test="${empty r.status}">
+                                        <a href="${pageContext.request.contextPath}/admin/request/update?action=approve&id=${r.requestId}"
+                                           class="btn btn-success btn-sm">
+                                            Approve
+                                        </a>
+
+                                        <form action="${pageContext.request.contextPath}/admin/request/reject" method="post" style="display:inline;">
+                                            <input type="hidden" name="requestId" value="${r.requestId}">
+                                            <input type="hidden" name="reason" value="Bạn đã bị vi band"> <!-- hoặc cho người dùng nhập -->
+                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                        </form>
+                                    </c:if>
+
+                                    <a href="${pageContext.request.contextPath}/admin/requests"
+                                       class="btn btn-secondary btn-sm">
+                                        ← Back to List
+                                    </a>
+>>>>>>> Stashed changes
                                 </div>
                             </div>
                         </div>

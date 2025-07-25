@@ -27,8 +27,12 @@ public class OrderDetail {
         this.order = order;
         this.productVariant = productVariant;
     }
+<<<<<<< Updated upstream
     
     
+=======
+
+>>>>>>> Stashed changes
     public OrderDetail(int orderDetailsId, int orderId, int productVariantId, int quantity, String unitPrice, Order order, int Status, ProductVariant productVariant) {
         this.orderDetailsId = orderDetailsId;
         this.orderId = orderId;
@@ -66,6 +70,11 @@ public class OrderDetail {
     public void setStatus(int Status) {
         this.Status = Status;
     }
+<<<<<<< Updated upstream
+=======
+    
+    
+>>>>>>> Stashed changes
 
     public Order getOrder() {
         return order;
