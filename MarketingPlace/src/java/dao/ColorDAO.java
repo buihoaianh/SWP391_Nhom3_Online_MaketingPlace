@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Color;
@@ -58,6 +59,28 @@ public class ColorDAO {
         }
         return null;
     }
-    
+    public int getOrInsertColorIdByName(String colorName) {
+        try {
+            String selectSql = "SELECT ColorId FROM Color WHERE ColorName = ?";
+            PreparedStatement ps = ConnectDB.getConnection().prepareStatement(selectSql);
+            ps.setString(1, colorName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ColorId");
+            }
+
+            String insertSql = "INSERT INTO Color(ColorName) VALUES(?)";
+            ps = ConnectDB.getConnection().prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, colorName);
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
     
 }

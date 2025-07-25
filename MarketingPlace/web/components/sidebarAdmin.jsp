@@ -60,13 +60,19 @@
                class="nav-item nav-link text-dark ${pageContext.request.requestURI.endsWith('/admin') ? 'active' : ''}">
                 <i class="fas fa-home text-dark"></i> Dashboard
             </a>
+
             <a href="${pageContext.request.contextPath}/admin/list-seller" class="nav-link text-dark">
                 <i class="fas fa-store text-dark"></i> List Seller
             </a>
             <a href="${pageContext.request.contextPath}/getListCustomer" class="nav-link text-dark">
                 <i class="fas fa-users text-dark"></i> List Customer
             </a>
-            <a href="${pageContext.request.contextPath}/getListCustomer" class="nav-link text-dark">
+
+            <a href="${pageContext.request.contextPath}/admin/requests"  class="nav-link text-dark">
+                <i class="fas fa-box text-dark"></i> List Request
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/products" class="nav-link text-dark">
+
                 <i class="fas fa-box text-dark"></i> List Product
             </a>
             <a href="${pageContext.request.contextPath}/admin/MemberURL" class="nav-link text-dark">
@@ -75,6 +81,7 @@
 <!--            <a href="${pageContext.request.contextPath}/jsp/admin/Statistic.jsp" class="nav-link text-dark">
                 <i class="fas fa-chart-line text-dark"></i> Statistic
             </a>-->
+
         </div>
     </nav>
 </div>
