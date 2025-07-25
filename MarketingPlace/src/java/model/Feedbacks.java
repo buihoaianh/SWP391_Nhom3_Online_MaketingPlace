@@ -46,6 +46,11 @@ public class Feedbacks {
         this.POrderID = POrderID;
     }
 
+<<<<<<< Updated upstream
+=======
+    
+    
+>>>>>>> Stashed changes
     public List<String> getImageUrls() {
         return imageUrls;
     }
@@ -53,6 +58,11 @@ public class Feedbacks {
     public void setImageUrls(List<String> imageUrls) {
         this.imageUrls = imageUrls;
     }
+<<<<<<< Updated upstream
+=======
+    
+    
+>>>>>>> Stashed changes
 
     public int getFeedbackID() {
         return FeedbackID;

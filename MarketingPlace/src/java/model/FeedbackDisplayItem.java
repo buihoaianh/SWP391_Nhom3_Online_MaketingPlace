@@ -34,6 +34,11 @@ public class FeedbackDisplayItem {
     private int rating;
     private long totalPrice;
 
+    private String feedbackText;
+    private List<String> feedbackImages; // vì 1 feedback có thể có nhiều ảnh
+    private Date feedbackDate;
+    private int rating;
+    private long totalPrice;
 
 
     public FeedbackDisplayItem() {
@@ -77,6 +82,27 @@ public class FeedbackDisplayItem {
         this.totalPrice = totalPrice;
     }
 
+    public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName, String customerName, String feedbackText, List<String> feedbackImages, Date feedbackDate, int rating) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderDetailId = orderDetailId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.productVariantId = productVariantId;
+        this.productName = productName;
+        this.thumbnailUrl = thumbnailUrl;
+        this.sizeName = sizeName;
+        this.colorName = colorName;
+        this.categoryName = categoryName;
+        this.customerName = customerName;
+        this.feedbackText = feedbackText;
+        this.feedbackImages = feedbackImages;
+        this.feedbackDate = feedbackDate;
+        this.rating = rating;
+    }
+    
+    
+
     public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName) {
         this.orderId = orderId;
         this.orderDate = orderDate;
@@ -106,6 +132,41 @@ public class FeedbackDisplayItem {
         this.customerName = customerName;
     }
 
+<<<<<<< Updated upstream
+=======
+    public FeedbackDisplayItem(int orderId, Date orderDate, int orderDetailId, int quantity, String unitPrice, int productVariantId, String productName, String thumbnailUrl, String sizeName, String colorName, String categoryName, String customerName, String feedbackText, List<String> feedbackImages, Date feedbackDate, int rating, long totalPrice) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderDetailId = orderDetailId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.productVariantId = productVariantId;
+        this.productName = productName;
+        this.thumbnailUrl = thumbnailUrl;
+        this.sizeName = sizeName;
+        this.colorName = colorName;
+        this.categoryName = categoryName;
+        this.customerName = customerName;
+        this.feedbackText = feedbackText;
+        this.feedbackImages = feedbackImages;
+        this.feedbackDate = feedbackDate;
+        this.rating = rating;
+        this.totalPrice = totalPrice;
+    }
+    
+    
+
+    public long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    
+    
+
+>>>>>>> Stashed changes
     public String getFeedbackText() {
         return feedbackText;
     }
@@ -137,6 +198,7 @@ public class FeedbackDisplayItem {
     public void setRating(int rating) {
         this.rating = rating;
     }
+<<<<<<< Updated upstream
 
     public long getTotalPrice() {
         return totalPrice;
@@ -145,6 +207,10 @@ public class FeedbackDisplayItem {
     public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
     }
+=======
+    
+    
+>>>>>>> Stashed changes
     
 
     public String getCustomerName() { 

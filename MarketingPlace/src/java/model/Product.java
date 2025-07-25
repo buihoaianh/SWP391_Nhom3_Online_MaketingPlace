@@ -17,7 +17,10 @@ public class Product {
     private String description;
     private String status;
     private double price;
+<<<<<<< Updated upstream
     private String categoryName;
+=======
+>>>>>>> Stashed changes
     private int isDeleted;
     private Account account;
 
@@ -112,6 +115,7 @@ public class Product {
     this.price = price;
 }
 
+<<<<<<< Updated upstream
     public Product(int productId, String productName, String thumbnailURL, double price, String categoryName) {
         this.productId = productId;
         this.productName = productName;
@@ -120,6 +124,8 @@ public class Product {
         this.categoryName = categoryName;
     }
 
+=======
+>>>>>>> Stashed changes
     public int getIsDeleted() {
         return isDeleted;
     }
@@ -136,7 +142,10 @@ public class Product {
         this.account = account;
     }
     
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
 
     public int getProductId() {
         return productId;
